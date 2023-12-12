@@ -1,5 +1,5 @@
 export const APP_NAME = "Strata"
-export const REDIRECT_URL = "microblog://signin/"
+export const REDIRECT_URL = "strata://signin/"
 export const BASE_ACCOUNT_ENDPOINT = "https://micro.blog/account"
 export const LOGIN_INCORRECT = 1
 export const LOGIN_ERROR = 2
