@@ -10,10 +10,9 @@ export default App = types.model('App', {
 
     hydrate: flow(function*() {
       console.log("App:hydrate")
+      yield App.set_current_initial_theme()
       self.is_hydrating = true
-
       Auth.hydrate().then(async () => {
-        await App.set_current_initial_theme()
         App.set_is_hydrating(false)
       })
     }),
