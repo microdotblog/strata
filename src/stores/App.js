@@ -37,6 +37,9 @@ export default App = types.model('App', {
   theme_navigation_icon_color() {
     return self.theme === "dark" ? "#9CA3AF" : "#000"
   },
+  theme_input_contrast_background_color() {
+    return self.theme === "dark" ? "#171c24" : "#f2f2f2"
+  },
   theme_text_color() {
     return self.theme === "dark" ? "#fff" : "#000"
   },
