@@ -1,5 +1,5 @@
 import { types, flow } from 'mobx-state-tree'
-// import Auth from './Auth'
+import Auth from './Auth'
 
 export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false)
@@ -9,14 +9,10 @@ export default App = types.model('App', {
   hydrate: flow(function* () {
     console.log("App:hydrate")
     self.is_hydrating = true
-    
-    setTimeout(() => {
-      App.set_is_hydrating(false)
-    }, 500)
 
-    // Auth.hydrate().then(async () => {
-    //   App.set_is_hydrating(false)
-    // })
+    Auth.hydrate().then(async () => {
+      App.set_is_hydrating(false)
+    })
   }),
   
   set_is_hydrating: flow(function* (is_hydrating) {
