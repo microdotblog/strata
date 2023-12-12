@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer, Provider } from 'mobx-react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import App from './../stores/App';
@@ -14,6 +14,9 @@ function NotesScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Notes Screen</Text>
+      <TouchableOpacity style={{ marginTop: 25 }} onPress={Auth.logout_all_user}>
+        <Text style={{ color: "red" }}>Logout...</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -27,13 +30,13 @@ function LoadingScreen() {
 }
 
 @observer
-export default class MainApp extends React.Component{
-  
-  async componentDidMount(){
+export default class MainApp extends React.Component {
+
+  async componentDidMount() {
     App.hydrate()
   }
-  
-  render(){
+
+  render() {
     return (
       <Provider app={App}>
         <NavigationContainer theme={{
@@ -54,21 +57,21 @@ export default class MainApp extends React.Component{
                     headerShown: false
                   }}
                 />
-              :
+                :
                 !Auth.is_logged_in() ?
-                <Stack.Screen
-                  name="Login"
-                  component={LoginScreen}
-                  options={{
-                    title: 'Sign in',
-                  }}
-                />
-                : <Stack.Screen name="Notes" component={NotesScreen} />
+                  <Stack.Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{
+                      title: 'Sign in',
+                    }}
+                  />
+                  : <Stack.Screen name="Notes" component={NotesScreen} />
             }
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
     )
   }
-  
+
 }
