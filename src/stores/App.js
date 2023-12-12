@@ -20,7 +20,6 @@ export default App = types.model('App', {
   }),
   
   set_is_hydrating: flow(function* (is_hydrating) {
-    console.log("App:set_is_hydrating", is_hydrating)
     self.is_hydrating = is_hydrating
   })
 
