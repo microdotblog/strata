@@ -2,7 +2,8 @@ import { types, flow } from 'mobx-state-tree'
 import Auth from './Auth'
 
 export default App = types.model('App', {
-  is_hydrating: types.optional(types.boolean, false)
+  is_hydrating: types.optional(types.boolean, false),
+  theme: types.optional(types.string, "light")
 })
 .actions(self => ({
 
@@ -21,11 +22,17 @@ export default App = types.model('App', {
 
 }))
 .views(self => ({
+  is_dark_mode(){
+    return self.theme === "dark"
+  },
   theme_accent_color(){
     return "#f80"
   },
   theme_background_color() {
     return self.theme === "dark" ? "#1d2530" : "#fff"
+  },
+  theme_navbar_background_color() {
+    return self.theme === "dark" ? "#212936" : "#fff"
   },
   theme_navigation_icon_color() {
     return self.theme === "dark" ? "#9CA3AF" : "#000"
