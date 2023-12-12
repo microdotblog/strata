@@ -1,39 +1,57 @@
 import * as React from 'react';
+import { observer, Provider } from 'mobx-react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import App from './../stores/App';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
 
-function HomeScreen() {
+function NotesScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+      <Text>Notes Screen</Text>
     </View>
   );
 }
 
-function SettingsScreen() {
+function LoadingScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings Screen</Text>
+      <Text>Loading...</Text>
     </View>
   )
 }
 
-function App() {
+@observer
+export default class MainApp extends React.Component{
   
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Settings" component={SettingsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+  async componentDidMount(){
+    App.hydrate()
+  }
+  
+  render(){
+    return (
+      <Provider app={App}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Notes">
+            {
+              App.is_hydrating ?
+                <Stack.Screen
+                  name="Loading"
+                  component={LoadingScreen}
+                  options={{
+                    headerShown: false
+                  }}
+                />
+              :
+                <Stack.Screen name="Notes" component={NotesScreen} />
+            }
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    )
+  }
   
 }
-
-export default App
