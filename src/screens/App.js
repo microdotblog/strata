@@ -8,6 +8,7 @@ import Auth from './../stores/Auth';
 import LoginScreen from './login/Login';
 import ProfileImage from './../components/profile_image';
 import { SheetProvider } from "react-native-actions-sheet";
+import "./../components/sheets/sheets";
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
