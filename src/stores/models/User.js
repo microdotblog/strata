@@ -15,7 +15,9 @@ export default User = types.model('User', {
 
     hydrate: flow(function*() {
       console.log("User:hydrate", self.username)
-      yield self.fetch_notebooks()
+      if (self.token() != null) {
+        yield self.fetch_notebooks()
+      }
     }),
 
     afterCreate: flow(function*() {
