@@ -7,6 +7,7 @@ import App from './../stores/App';
 import Auth from './../stores/Auth';
 import LoginScreen from './login/Login';
 import ProfileImage from './../components/profile_image';
+import { SheetProvider } from "react-native-actions-sheet";
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -39,7 +40,7 @@ export default class MainApp extends React.Component {
 
   render() {
     return (
-      <Provider app={App}>
+      <SheetProvider>
         <NavigationContainer theme={{
           dark: App.is_dark_mode(),
           colors: {
@@ -74,7 +75,7 @@ export default class MainApp extends React.Component {
             }
           </Stack.Navigator>
         </NavigationContainer>
-      </Provider>
+      </SheetProvider>
     )
   }
 
