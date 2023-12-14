@@ -1,6 +1,9 @@
+import Auth from "../stores/Auth"
+
 export const APP_NAME = "Strata"
 export const REDIRECT_URL = "strata://signin/"
-export const BASE_ACCOUNT_ENDPOINT = "https://micro.blog/account"
+export const BASE_ENDPOINT = "https://micro.blog"
+export const BASE_ACCOUNT_ENDPOINT = `${BASE_ENDPOINT}/account`
 export const LOGIN_INCORRECT = 1
 export const LOGIN_ERROR = 2
 export const LOGIN_SUCCESS = 3
@@ -65,6 +68,28 @@ class MicroBlogApi {
     } catch (error) {
       console.log(error)
       return LOGIN_ERROR
+    }
+  }
+
+  async fetch_notebooks() {
+    console.log('MicroBlogApi:fetch_notebooks');
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes/notebooks`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+      console.log("MicroBlogApi:fetch_notebooks:response", data)
+      return data
+
+    } catch (error) {
+      console.log(error)
+      return API_ERROR
     }
   }
 
