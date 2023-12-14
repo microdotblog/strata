@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import App from './../stores/App';
 import Auth from './../stores/Auth';
 import LoginScreen from './login/Login';
+import ProfileImage from './../components/profile_image';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -66,7 +67,10 @@ export default class MainApp extends React.Component {
                       title: 'Sign in',
                     }}
                   />
-                  : <Stack.Screen name="Notes" component={NotesScreen} />
+                  :
+                  <Stack.Screen name="Notes" component={NotesScreen} options={{
+                    headerLeft: () => <ProfileImage />
+                  }} />
             }
           </Stack.Navigator>
         </NavigationContainer>

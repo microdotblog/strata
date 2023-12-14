@@ -79,6 +79,11 @@ export default App = types.model('App', {
     },
     theme_default_font_size() {
       return 17
+    },
+    now() {
+      let now = new Date()
+      now.setHours(0, 0, 0, 0)
+      return now.getTime()
     }
   }))
   .create();
