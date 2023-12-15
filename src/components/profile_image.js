@@ -10,7 +10,13 @@ export default class ProfileImage extends React.Component {
   render() {
     if (Auth.selected_user != null) {
       return (
-        <TouchableOpacity style={{ width: 28, height: 28, marginRight: 12 }}
+        <TouchableOpacity
+          onPress={() => App.open_sheet("menu-sheet")}
+          style={{
+            width: 28,
+            height: 28,
+            marginRight: 12
+          }}
         >
           {
             Auth.selected_user.avatar != null && Auth.selected_user.avatar !== "" ?

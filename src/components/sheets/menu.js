@@ -12,7 +12,7 @@ export default class MenuSheet extends React.Component {
   render() {
     return (
       <ActionSheet
-        id={this.props.sheetId}
+        id={this.props.sheet_id}
         snapPoints={[40, 75, 100]}
         initialSnapIndex={[1]}
         overdrawEnabled={true}

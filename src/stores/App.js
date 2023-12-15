@@ -1,6 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 import Auth from './Auth'
 import { Appearance, AppState } from 'react-native'
+import { SheetManager } from "react-native-actions-sheet";
 
 export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
@@ -49,6 +50,13 @@ export default App = types.model('App', {
     change_current_theme: flow(function*(color) {
       console.log("App:change_current_theme", color)
       self.theme = color
+    }),
+
+    open_sheet: flow(function*(sheet_name = null) {
+      console.log("App:open_sheet", sheet_name)
+      if (sheet_name != null) {
+        SheetManager.show(sheet_name)
+      }
     }),
 
   }))
