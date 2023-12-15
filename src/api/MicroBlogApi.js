@@ -93,6 +93,28 @@ class MicroBlogApi {
     }
   }
 
+  async fetch_notes(notebook_id, user_token) {
+    console.log('MicroBlogApi:fetch_notes');
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes/notebooks/${notebook_id}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user_token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+      console.log("MicroBlogApi:fetch_notes:response", data)
+      return data
+
+    } catch (error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+
 }
 
 export default new MicroBlogApi()
