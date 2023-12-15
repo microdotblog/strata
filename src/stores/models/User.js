@@ -2,6 +2,7 @@ import { types, flow } from 'mobx-state-tree';
 import Tokens from './../Tokens';
 import Notebook from './Notebook';
 import MicroBlogApi, { API_ERROR } from '../../api/MicroBlogApi';
+import { SheetManager } from "react-native-actions-sheet";
 
 export default User = types.model('User', {
   username: types.identifier,
@@ -24,6 +25,13 @@ export default User = types.model('User', {
       self.hydrate()
     }),
 
+    check_for_exisence_of_secret_token: flow(function*() {
+      console.log("User:check_for_exisence_of_secret_token", self.secret_token() != null)
+      if (self.secret_token() == null) {
+        SheetManager.show("secret-key-prompt-sheet")
+      }
+    }),
+
     fetch_notebooks: flow(function*() {
       console.log("User:fetch_notebooks")
       const data = yield MicroBlogApi.fetch_notebooks()
@@ -38,6 +46,10 @@ export default User = types.model('User', {
 
     token() {
       return Tokens.token_for_username(self.username, "user")?.token
+    },
+
+    secret_token() {
+      return Tokens.secret_token_for_username(self.username, "secret")?.token
     }
 
   }))

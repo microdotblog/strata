@@ -65,6 +65,9 @@ export default App = types.model('App', {
     theme_background_color() {
       return self.theme === "dark" ? "#1d2530" : "#fff"
     },
+    theme_background_color_secondary() {
+      return self.theme === "dark" ? "#1F2937" : "#fff"
+    },
     theme_navbar_background_color() {
       return self.theme === "dark" ? "#212936" : "#fff"
     },
@@ -82,6 +85,24 @@ export default App = types.model('App', {
     },
     theme_default_font_size() {
       return 17
+    },
+    theme_navbar_background_color() {
+      return self.theme === "dark" ? "#212936" : "#fff"
+    },
+    theme_button_background_color() {
+      return self.theme === "dark" ? "#374151" : "#F9FAFB"
+    },
+    theme_button_text_color() {
+      return self.theme === "dark" ? "#E5E7EB" : "#1F2937"
+    },
+    theme_input_background_color() {
+      return self.theme === "dark" ? "#1d2530" : "#f2f2f2"
+    },
+    theme_alt_border_color() {
+      return self.theme === "dark" ? "#374151" : "#F9FAFB"
+    },
+    theme_alt_background_div_color() {
+      return self.theme === "dark" ? "#5a5a5a" : "#eff1f3"
     },
     now() {
       let now = new Date()

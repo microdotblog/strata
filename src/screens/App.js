@@ -6,23 +6,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import App from './../stores/App';
 import Auth from './../stores/Auth';
 import LoginScreen from './login/Login';
+import NotesScreen from './notes/Notes';
 import ProfileImage from './../components/profile_image';
 import { SheetProvider } from "react-native-actions-sheet";
 import "./../components/sheets/sheets";
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
-
-function NotesScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Notes Screen</Text>
-      <TouchableOpacity style={{ marginTop: 25 }} onPress={Auth.logout_all_user}>
-        <Text style={{ color: "red" }}>Logout...</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
 
 function LoadingScreen() {
   return (
