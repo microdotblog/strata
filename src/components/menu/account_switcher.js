@@ -5,7 +5,7 @@ import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 import { SFSymbol } from 'react-native-sfsymbols';
 // IMAGES
-//import AddAccountImage from './../../assets/icons/add_account.png';
+import AddAccountImage from './../../assets/icons/add_account.png';
 
 @observer
 export default class AccountSwitcher extends React.Component {
@@ -43,8 +43,8 @@ export default class AccountSwitcher extends React.Component {
             />
           </View>
           <View>
-            <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>{Auth.selected_user.full_name}</Text>
-            <Text style={{ color: App.theme_button_text_color() }}>@{Auth.selected_user.username}</Text>
+            {/* <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>{Auth.selected_user.full_name}</Text> */}
+            <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>@{Auth.selected_user.username}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -101,7 +101,7 @@ export default class AccountSwitcher extends React.Component {
             )
           })
         }
-        {this._render_add_account_button()}
+        {/*this._render_add_account_button()*/}
         {this._render_account_logout_button()}
       </View>
     )
@@ -142,7 +142,7 @@ export default class AccountSwitcher extends React.Component {
                 />
               </View>
               :
-              null
+              <Image style={{ width: 30, height: 30, marginRight: 18, marginLeft: 6, tintColor: App.theme_button_text_color() }} source={AddAccountImage} />
           }
 
           <Text style={{ color: App.theme_button_text_color(), marginLeft: 6 }}>Add Account...</Text>
@@ -165,7 +165,7 @@ export default class AccountSwitcher extends React.Component {
           borderColor: App.theme_alt_background_div_color(),
           paddingTop: 15,
           paddingBottom: 10,
-          marginTop: 15
+          //marginTop: 15
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', width: "100%", justifyContent: 'center' }}>

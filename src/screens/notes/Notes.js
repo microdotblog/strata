@@ -8,7 +8,6 @@ import Auth from '../../stores/Auth'
 export default class NotesScreen extends React.Component {
 
   componentDidMount = async () => {
-    console.log("MOUNTED NOTES")
     if (Auth.selected_user != null) {
       Auth.selected_user.check_for_exisence_of_secret_token()
     }
@@ -18,9 +17,6 @@ export default class NotesScreen extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Notes Screen</Text>
-        <TouchableOpacity style={{ marginTop: 25 }} onPress={Auth.logout_all_user}>
-          <Text style={{ color: "red" }}>Logout...</Text>
-        </TouchableOpacity>
       </View>
     )
   }
