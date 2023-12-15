@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import User from './models/User'
 import Tokens from './Tokens'
 import Toast from 'react-native-simple-toast';
+import { SheetManager } from "react-native-actions-sheet";
 
 export default Auth = types.model('Auth', {
   users: types.optional(types.array(User), []),
@@ -86,6 +87,7 @@ export default Auth = types.model('Auth', {
 
     logout_user: flow(function*(user = null) {
       console.log("Auth:logout_user", user)
+      SheetManager.hide("menu-sheet")
       if (user == null) {
         user = self.selected_user
       }
