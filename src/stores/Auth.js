@@ -64,6 +64,7 @@ export default Auth = types.model('Auth', {
         // TODO: JUST UPDATE THE USER AND SELECT
         self.selected_user = existing_user
         self.is_selecting_user = false
+        existing_user.hydrate()
       }
       else {
         const new_user = User.create(data)

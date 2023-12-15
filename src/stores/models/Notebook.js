@@ -19,15 +19,17 @@ export default Notebook = types.model('Notebook', {
     }),
 
     afterCreate: flow(function*() {
-      yield self.hydrate()
+      if (!self.notes) {
+        yield self.hydrate()
+      }
     }),
 
     fetch_notes: flow(function*() {
       console.log("Notebook:fetch_notes", self.id)
       const data = yield MicroBlogApi.fetch_notes(self.id, self.token())
       console.log("Notebook:fetch_notes", data)
-      if (data !== API_ERROR) {
-
+      if (data !== API_ERROR && data.items) {
+        self.notes = data.items
       }
     })
 

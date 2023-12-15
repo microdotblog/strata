@@ -83,9 +83,8 @@ class MicroBlogApi {
         }
       })
 
-      const data = await response.json()
-      console.log("MicroBlogApi:fetch_notebooks:response", data)
-      return data
+      const data = await response.text()
+      return JSON.parse(data)
 
     } catch (error) {
       console.log(error)
@@ -105,9 +104,8 @@ class MicroBlogApi {
         }
       })
 
-      const data = await response.json()
-      console.log("MicroBlogApi:fetch_notes:response", data)
-      return data
+      const data = await response.text()
+      return JSON.parse(data)
 
     } catch (error) {
       console.log(error)

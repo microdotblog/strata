@@ -22,10 +22,6 @@ export default User = types.model('User', {
       }
     }),
 
-    afterCreate: flow(function*() {
-      yield self.hydrate()
-    }),
-
     check_for_exisence_of_secret_token: flow(function*() {
       console.log("User:check_for_exisence_of_secret_token", !!self.secret_token())
       if (!self.secret_token()) {
@@ -45,7 +41,7 @@ export default User = types.model('User', {
             existing_notebook.hydrate()
           }
           else {
-            self.notebooks.push(notebook)
+            self.notebooks.push({ username: self.username, ...notebook })
           }
         })
         self.set_selected_notebook()
