@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { observer, Provider } from 'mobx-react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react';
+import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import App from './../stores/App';

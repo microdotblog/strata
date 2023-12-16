@@ -28,8 +28,11 @@ export default Notebook = types.model('Notebook', {
       console.log("Notebook:fetch_notes", self.id)
       const data = yield MicroBlogApi.fetch_notes(self.id, self.token())
       console.log("Notebook:fetch_notes", data)
-      if (data !== API_ERROR && data.items) {
-        self.notes = data.items
+      if (data !== API_ERROR && Array.isArray(data.items)) {
+        self.notes = data.items.map(note => ({
+          username: self.username,
+          ...note
+        }))
       }
     })
 
@@ -38,6 +41,14 @@ export default Notebook = types.model('Notebook', {
 
     token() {
       return Tokens.token_for_username(self.username, "user")?.token
+    },
+
+    ordered_notes() {
+      return [...self.notes].sort((a, b) => {
+        const dateA = new Date(a.date_published).getTime()
+        const dateB = new Date(b.date_published).getTime()
+        return dateB - dateA
+      })
     },
 
   }))

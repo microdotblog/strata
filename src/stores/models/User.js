@@ -49,7 +49,7 @@ export default User = types.model('User', {
     }),
 
     set_selected_notebook: flow(function*(notebook = null) {
-      if (!self.selected_notebook && self.notebooks.length > 0 && !notebook) {
+      if (self.selected_notebook == null && self.notebooks.length > 0) {
         self.selected_notebook = self.notebooks[0]
       }
       else if (notebook) {

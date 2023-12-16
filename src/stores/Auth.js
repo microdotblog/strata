@@ -64,14 +64,14 @@ export default Auth = types.model('Auth', {
         // TODO: JUST UPDATE THE USER AND SELECT
         self.selected_user = existing_user
         self.is_selecting_user = false
-        existing_user.hydrate()
+        yield existing_user.hydrate()
       }
       else {
         const new_user = User.create(data)
         self.users.push(new_user)
         self.selected_user = new_user
         self.is_selecting_user = false
-        new_user.hydrate()
+        yield new_user.hydrate()
       }
       console.log("Auth:create_and_select_new_user:users", self.users.length)
     }),
