@@ -21,4 +21,19 @@ export default Note = types.model('Note', {
 
   }))
   .views(self => ({
+
+    decrypted_text() {
+      return self.content_text
+      // if (this.secret_token()) {
+      //   return self.content_text
+      // }
+      // else {
+      //   return false
+      // }
+    },
+
+    secret_token() {
+      return Tokens.secret_token_for_username(self.username, "secret")?.token
+    }
+
   }))
