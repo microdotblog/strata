@@ -15,7 +15,7 @@ export default App = types.model('App', {
       yield App.set_current_initial_theme()
       self.is_hydrating = true
       Auth.hydrate().then(async () => {
-        await App.set_is_hydrating(false)
+        App.set_is_hydrating(false)
         App.set_up_url_listener()
       })
     }),
