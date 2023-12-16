@@ -4,8 +4,7 @@ import { View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 import { SFSymbol } from 'react-native-sfsymbols';
-// IMAGES
-import AddAccountImage from './../../assets/icons/add_account.png';
+import { SvgXml } from 'react-native-svg';
 
 @observer
 export default class AccountSwitcher extends React.Component {
@@ -122,28 +121,37 @@ export default class AccountSwitcher extends React.Component {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {
-            Platform.OS === 'ios' ?
-              <View
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 50,
-                  marginRight: 8,
-                  backgroundColor: App.theme_input_background_color(),
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+          <View
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 50,
+              marginRight: 8,
+              backgroundColor: App.theme_input_background_color(),
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+            {
+              Platform.OS === 'ios' ?
                 <SFSymbol
                   name={'plus'}
                   color={App.theme_text_color()}
                   style={{ height: 18, width: 18 }}
                   multicolor={true}
                 />
-              </View>
-              :
-              <Image style={{ width: 30, height: 30, marginRight: 18, marginLeft: 6, tintColor: App.theme_button_text_color() }} source={AddAccountImage} />
-          }
+                :
+                <SvgXml
+                  style={{
+                    height: 20,
+                    width: 20
+                  }}
+                  color={App.theme_text_color()}
+                  xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>'
+                />
+            }
+          </View>
 
           <Text style={{ color: App.theme_button_text_color(), marginLeft: 6 }}>Add Account...</Text>
         </View>
