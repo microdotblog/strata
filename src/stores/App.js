@@ -1,7 +1,8 @@
 import { types, flow } from 'mobx-state-tree'
 import Auth from './Auth'
-import { Appearance, AppState } from 'react-native'
+import { Appearance, AppState, Linking } from 'react-native'
 import { SheetManager } from "react-native-actions-sheet";
+import Login from './Login';
 
 export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
@@ -14,7 +15,8 @@ export default App = types.model('App', {
       yield App.set_current_initial_theme()
       self.is_hydrating = true
       Auth.hydrate().then(async () => {
-        App.set_is_hydrating(false)
+        await App.set_is_hydrating(false)
+        App.set_up_url_listener()
       })
     }),
 
@@ -50,6 +52,22 @@ export default App = types.model('App', {
     change_current_theme: flow(function*(color) {
       console.log("App:change_current_theme", color)
       self.theme = color
+    }),
+
+    set_up_url_listener: flow(function*() {
+      console.log("App:set_up_url_listener")
+      Linking.addEventListener('url', (event) => {
+        console.log("App:set_up_url_listener:event", event)
+        if (event?.url && event?.url.indexOf('/signin/') > -1) {
+          Login.trigger_login_from_url(event.url)
+        }
+      })
+      Linking.getInitialURL().then((value) => {
+        console.log("App:set_up_url_listener:getInitialURL", value)
+        if (value?.indexOf('/signin/') > -1) {
+          Login.trigger_login_from_url(value)
+        }
+      })
     }),
 
     open_sheet: flow(function*(sheet_name = null) {
