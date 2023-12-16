@@ -36,15 +36,10 @@ class MicroBlogApi {
   async login_with_email(email) {
     console.log('MicroBlogApi:login_with_email', email);
 
-    const platformParams = Platform.select({
-      android: { app_name: APP_NAME },
-      ios: { is_mobile: 1 }
-    })
-
     const queryParams = new URLSearchParams({
       email: email,
       redirect_url: REDIRECT_URL,
-      ...platformParams
+      app_name: APP_NAME
     }).toString()
 
     const url = `${BASE_ACCOUNT_ENDPOINT}/signin?${queryParams}`
