@@ -1,9 +1,11 @@
 import { types, flow, applySnapshot, destroy } from 'mobx-state-tree';
 import Token from './models/Token'
+import App from './App';
 import SFInfo from 'react-native-sensitive-info'
 
 export default Tokens = types.model('Tokens', {
-  tokens: types.optional(types.array(Token), [])
+  tokens: types.optional(types.array(Token), []),
+  temp_secret_token: types.maybeNull(types.string)
 })
   .actions(self => ({
 
@@ -12,6 +14,7 @@ export default Tokens = types.model('Tokens', {
       const data = yield SFInfo.getItem('Tokens', {})
       if (data) {
         applySnapshot(self, JSON.parse(data))
+        self.temp_secret_token = null
         console.log("Tokens:hydrate:with_data")
       }
       if (return_data) {
@@ -43,7 +46,31 @@ export default Tokens = types.model('Tokens', {
       if (existing_token != null) {
         destroy(existing_token)
       }
-    })
+    }),
+
+    set_temp_secret_token: flow(function*(token = null) {
+      self.temp_secret_token = token
+    }),
+
+    add_new_secret_token: flow(function*(username, secret_token = null) {
+      if (secret_token == null && self.temp_secret_token == null) {
+        return false
+      }
+      else if (secret_token == null && self.temp_secret_token != null) {
+        secret_token = self.temp_secret_token
+      }
+      console.log("Tokens:add_new_secret_token", username)
+      const existing_token = self.secret_token_for_username(username)
+      if (existing_token != null) {
+        // There might be an existing secret token for a given user, but the token changed.
+        // Destroying it so we can create a new one as the identifier is tied to the token.
+        destroy(existing_token)
+      }
+      const new_token = Token.create({ token: secret_token, username: username, type: "secret" })
+      self.tokens.push(new_token)
+      App.close_sheet("secret-key-prompt-sheet")
+      return new_token
+    }),
 
   }))
   .views(self => ({

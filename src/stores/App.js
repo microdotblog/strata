@@ -77,6 +77,13 @@ export default App = types.model('App', {
       }
     }),
 
+    close_sheet: flow(function*(sheet_name = null) {
+      console.log("App:close_sheet", sheet_name)
+      if (sheet_name != null) {
+        SheetManager.hide(sheet_name)
+      }
+    }),
+
   }))
   .views(self => ({
     is_dark_mode() {

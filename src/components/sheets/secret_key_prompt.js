@@ -1,11 +1,14 @@
 import ActionSheet from "react-native-actions-sheet";
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, TextInput, Button, Keyboard } from 'react-native';
+import App from '../../stores/App'
 import Auth from '../../stores/Auth'
+import Tokens from "../../stores/Tokens";
 
 @observer
 export default class SecretKeyPromptSheet extends React.Component {
+
   render() {
     return (
       <ActionSheet
@@ -25,9 +28,39 @@ export default class SecretKeyPromptSheet extends React.Component {
           <Text style={{ color: App.theme_text_color(), fontWeight: "600", paddingBottom: 15 }}>
             Enter your saved key:
           </Text>
-          <Text>
-            {Auth.selected_user.username}
-          </Text>
+          <TextInput
+            multiline={true}
+            placeholderTextColor="lightgrey"
+            placeholder={"Enter your saved key"}
+            returnKeyType={'done'}
+            blurOnSubmit={true}
+            autoFocus={false}
+            autoCorrect={false}
+            autoCapitalize="none"
+            clearButtonMode={'while-editing'}
+            enablesReturnKeyAutomatically={true}
+            underlineColorAndroid={'transparent'}
+            style={{
+              backgroundColor: App.theme_input_contrast_background_color(),
+              fontSize: 17,
+              borderColor: App.theme_accent_color(),
+              borderWidth: 1,
+              minHeight: 70,
+              width: "100%",
+              borderRadius: 5,
+              marginVertical: 8,
+              padding: 8,
+              color: App.theme_text_color()
+            }}
+            onChangeText={(text) => Tokens.set_temp_secret_token(text)}
+            value={Tokens.temp_secret_token}
+          />
+          <Button
+            title="Continue"
+            color={App.theme_accent_color()}
+            onPress={() => { Tokens.add_new_secret_token(Auth.selected_user.username); Keyboard.dismiss() }}
+            disabled={Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 68}
+          />
         </SafeAreaView>
       </ActionSheet>
     )

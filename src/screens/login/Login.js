@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TextInput, Button, ActivityIndicator, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Text, TextInput, Button, ActivityIndicator, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
 import Login from './../../stores/Login';
 import App from '../../stores/App'
 
@@ -28,7 +28,7 @@ export default class LoginScreen extends React.Component {
           style={{
             backgroundColor: App.theme_input_contrast_background_color(),
             fontSize: 17,
-            borderColor: `${!Login.show_error ? "#f80" : "#ea053b"}`,
+            borderColor: `${!Login.show_error ? App.theme_accent_color() : "#ea053b"}`,
             borderWidth: 1,
             height: 50,
             width: "100%",
@@ -43,7 +43,7 @@ export default class LoginScreen extends React.Component {
         />
         <Button
           title="Continue"
-          color="#f80"
+          color={App.theme_accent_color()}
           onPress={() => { Login.trigger_login(); Keyboard.dismiss() }}
           disabled={!Login.can_submit()}
         />
