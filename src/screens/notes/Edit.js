@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { TextInput, KeyboardAvoidingView } from 'react-native';
+import Posting from '../../stores/Posting'
 // import App from '../../stores/App'
 // import Auth from '../../stores/Auth'
 
@@ -36,6 +37,11 @@ export default class EditNoteModalScreen extends React.Component {
           enablesReturnKeyAutomatically={true}
           underlineColorAndroid={'transparent'}
           inputAccessoryViewID={this.input_accessory_view_id}
+          value={Posting.note_text}
+          onChangeText={(text) => !Posting.is_sending_note ? Posting.set_note_text(text) : null}
+          onSelectionChange={({ nativeEvent: { selection } }) => {
+            Posting.set_text_selection(selection)
+          }}
         />
       </KeyboardAvoidingView>
     )
