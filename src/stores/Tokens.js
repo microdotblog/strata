@@ -44,6 +44,7 @@ export default Tokens = types.model('Tokens', {
       console.log("Tokens:destroy_token", username)
       const tokens_to_destroy = self.tokens.filter(t => t.username === username)
       tokens_to_destroy.forEach(token => destroy(token))
+      self.temp_secret_token = null
     }),
 
     set_temp_secret_token: flow(function*(token = null) {
