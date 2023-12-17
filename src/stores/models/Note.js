@@ -22,6 +22,10 @@ export default Note = types.model('Note', {
   }))
   .views(self => ({
 
+    is_locked() {
+      return !this.secret_token()
+    },
+
     decrypted_text() {
       return self.content_text
       // if (this.secret_token()) {
