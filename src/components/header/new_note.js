@@ -11,6 +11,7 @@ export default class NewNoteButton extends React.Component {
 
   render() {
     if (Auth.selected_user != null) {
+      const has_secret_token = Auth.selected_user.secret_token()
       const plusIcon = `
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -25,9 +26,9 @@ export default class NewNoteButton extends React.Component {
           onPress={() => Auth.selected_user.secret_token() ? App.navigate_to_screen("NewNote") : App.open_sheet("secret-key-prompt-sheet")}
         >
           {
-            Platform.OS !== 'ios' ?
+            Platform.OS === 'ios' ?
               <SFSymbol
-                name={Auth.selected_user.secret_token() ? 'plus' : 'lock'}
+                name={has_secret_token ? 'plus' : 'lock'}
                 color={App.theme_text_color()}
                 style={{ height: 20, width: 20 }}
                 multicolor={true}
@@ -35,11 +36,11 @@ export default class NewNoteButton extends React.Component {
               :
               <SvgXml
                 style={{
-                  height: 22,
-                  width: 22
+                  height: has_secret_token ? 22 : 20,
+                  width: has_secret_token ? 22 : 20
                 }}
                 color={App.theme_text_color()}
-                xml={Auth.selected_user.secret_token() ? plusIcon : lockIcon}
+                xml={has_secret_token ? plusIcon : lockIcon}
               />
           }
         </TouchableOpacity>
