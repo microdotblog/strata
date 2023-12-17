@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Text, View } from 'react-native';
-import { NavigationContainer, NavigationContext } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import App from './../stores/App';
 import Auth from './../stores/Auth';
@@ -9,6 +8,7 @@ import LoadingScreen from './loading/Loading';
 import LoginScreen from './login/Login';
 import NotesScreen from './notes/Notes';
 import NewNoteModalScreen from './notes/New';
+import EditNoteModalScreen from './notes/Edit';
 import ProfileImage from './../components/header/profile_image';
 import NewNoteButton from '../components/header/new_note';
 import { SheetProvider } from "react-native-actions-sheet";
@@ -63,7 +63,8 @@ export default class MainApp extends React.Component {
                       }} />
                     </Stack.Group>
                     <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                      <Stack.Screen name="NewNote" component={NewNoteModalScreen} />
+                      <Stack.Screen name="NewNote" component={NewNoteModalScreen} options={{ title: "New Note" }} />
+                      <Stack.Screen name="EditNote" component={EditNoteModalScreen} options={{ title: "Edit Note" }} />
                     </Stack.Group>
                   </>
             }

@@ -5,12 +5,12 @@ import { View, Text } from 'react-native';
 // import Auth from '../../stores/Auth'
 
 @observer
-export default class NewNoteModalScreen extends React.Component {
+export default class EditNoteModalScreen extends React.Component {
 
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text>New note</Text>
+        <Text>Edit note</Text>
       </View>
     )
   }
