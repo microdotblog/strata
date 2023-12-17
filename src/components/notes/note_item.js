@@ -57,14 +57,6 @@ export default class NoteItem extends React.Component {
                 note.title && <Text style={{ color: App.theme_text_color(), marginBottom: 4, fontWeight: "600" }}>{note.title}</Text>
               }
               <Text style={{ color: App.theme_text_color() }}>{note.decrypted_text()}</Text>
-              {
-                __DEV__ ?
-                  <>
-                    <Text style={{ color: App.theme_text_color(), marginBottom: 15, marginTop: 15 }}>{note.encrypted_text()}</Text>
-                    <Text style={{ color: App.theme_text_color() }}>{note.content_text}</Text>
-                  </>
-                  : null
-              }
             </>
         }
       </TouchableOpacity>
