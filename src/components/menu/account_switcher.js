@@ -11,7 +11,7 @@ export default class AccountSwitcher extends React.Component {
 
   _render_current_user = () => {
     return (
-      <TouchableOpacity
+      <View
         //onPress={() => profileScreen(Auth.selected_user.username, App.current_screen_id)}
         style={{
           flexDirection: 'row',
@@ -26,6 +26,7 @@ export default class AccountSwitcher extends React.Component {
           borderBottomLeftRadius: 0,
           borderBottomRightRadius: 0
         }}
+        activeOpacity={1}
       >
         <View style={{
           flexDirection: 'row',
@@ -46,7 +47,7 @@ export default class AccountSwitcher extends React.Component {
             <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>@{Auth.selected_user.username}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     )
   }
 
