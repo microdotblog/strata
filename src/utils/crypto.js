@@ -7,7 +7,7 @@ class CryptoUtils {
     const encryptedData = Buffer.from(encryptedText, 'base64')
     let decrypted = decipher.update(encryptedData)
     decrypted = Buffer.concat([decrypted, decipher.final()])
-    return decrypted.toString()
+    return decrypted.slice(0, -16).toString()
   }
 
   static decrypt(text, secretToken) {
