@@ -50,6 +50,14 @@ export default Tokens = types.model('Tokens', {
       self.temp_secret_token = token
     }),
 
+    set_temp_secret_token_from_url: flow(function*(url) {
+      console.log("Tokens:set_temp_secret_token_from_url")
+      const token = url.split('/qrcode/')[1]
+      if (token) {
+        self.temp_secret_token = token
+      }
+    }),
+
     add_new_secret_token: flow(function*(username, secret_token = null) {
       if (secret_token == null && self.temp_secret_token == null) {
         return false

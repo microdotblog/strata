@@ -1,8 +1,9 @@
 import { types, flow } from 'mobx-state-tree'
 import Auth from './Auth'
-import { Appearance, AppState, Linking } from 'react-native'
+import { Appearance, AppState, Linking, Alert } from 'react-native'
 import { SheetManager } from "react-native-actions-sheet";
 import Login from './Login';
+import Tokens from './Tokens';
 
 export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
@@ -61,11 +62,29 @@ export default App = types.model('App', {
         if (event?.url && event?.url.indexOf('/signin/') > -1) {
           Login.trigger_login_from_url(event.url)
         }
+        else if (event?.url && event?.url.indexOf('/qrcode/') > -1) {
+          if (!Auth.selected_user) {
+            Alert.alert("Please sign in before adding a secret key")
+          }
+          else {
+            Tokens.set_temp_secret_token_from_url(event.url)
+            App.open_sheet("secret-key-prompt-sheet")
+          }
+        }
       })
       Linking.getInitialURL().then((value) => {
         console.log("App:set_up_url_listener:getInitialURL", value)
         if (value?.indexOf('/signin/') > -1) {
           Login.trigger_login_from_url(value)
+        }
+        else if (value?.indexOf('/qrcode/') > -1) {
+          if (!Auth.selected_user) {
+            Alert.alert("Please sign in before adding a secret key")
+          }
+          else {
+            Tokens.set_temp_secret_token_from_url(value)
+            App.open_sheet("secret-key-prompt-sheet")
+          }
         }
       })
     }),
@@ -73,7 +92,10 @@ export default App = types.model('App', {
     open_sheet: flow(function*(sheet_name = null) {
       console.log("App:open_sheet", sheet_name)
       if (sheet_name != null) {
-        SheetManager.show(sheet_name)
+        const sheet_is_open = SheetManager.get(sheet_name)?.current?.isOpen()
+        if (!sheet_is_open) {
+          SheetManager.show(sheet_name)
+        }
       }
     }),
 
