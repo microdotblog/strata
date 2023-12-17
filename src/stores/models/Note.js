@@ -1,4 +1,5 @@
 import { types, flow } from 'mobx-state-tree';
+import CryptoUtils from '../../utils/crypto';
 // import MicroBlogApi, { API_ERROR, DELETE_ERROR, LOGIN_TOKEN_INVALID } from '../../api/MicroBlogApi';
 
 const Microblog = types.model('_microblog', {
@@ -27,13 +28,18 @@ export default Note = types.model('Note', {
     },
 
     decrypted_text() {
-      return self.content_text
-      // if (this.secret_token()) {
-      //   return self.content_text
-      // }
-      // else {
-      //   return false
-      // }
+      //return self.content_text
+      if (this.secret_token()) {
+        try {
+          const decryptedText = CryptoUtils.decrypt(self.content_text, this.secret_token());
+          return decryptedText;
+        } catch (error) {
+          console.log("Decryption failed:", error);
+          return self.content_text;
+        }
+      } else {
+        return self.content_text;
+      }
     },
 
     secret_token() {
