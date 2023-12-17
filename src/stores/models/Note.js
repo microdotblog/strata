@@ -42,6 +42,20 @@ export default Note = types.model('Note', {
       }
     },
 
+    encrypted_text() {
+      if (self.content_text && this.secret_token()) {
+        try {
+          const encryptedText = CryptoUtils.encrypt(this.decrypted_text(), this.secret_token())
+          return encryptedText
+        } catch (error) {
+          console.error("Encryption failed:", error)
+          return null
+        }
+      } else {
+        return null
+      }
+    },
+
     secret_token() {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
     }
