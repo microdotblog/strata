@@ -78,14 +78,14 @@ export default Reply = types.model('Reply', {
           }
           action = `[](${url})`
           console.log("TEXT OPTION", action)
-          self.reply_text = self.reply_text.InsertTextStyle(action, self.text_selection, true, url)
+          self.note_text = self.note_text.InsertTextStyle(action, self.text_selection, true, url)
         }
         else {
-          self.reply_text = self.reply_text.InsertTextStyle(action, self.text_selection, true)
+          self.note_text = self.note_text.InsertTextStyle(action, self.text_selection, true)
         }
       }
       else {
-        self.reply_text = self.reply_text.InsertTextStyle(action, self.text_selection, is_link)
+        self.note_text = self.note_text.InsertTextStyle(action, self.text_selection, is_link)
       }
     }),
 

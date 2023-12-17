@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { TextInput, KeyboardAvoidingView } from 'react-native';
+import { TextInput, KeyboardAvoidingView, InputAccessoryView } from 'react-native';
 import Posting from '../../stores/Posting'
+import PostingToolbar from '../../components/keyboard/posting_toolbar';
 // import App from '../../stores/App'
 // import Auth from '../../stores/Auth'
 
@@ -47,6 +48,16 @@ export default class NewNoteModalScreen extends React.Component {
             Posting.set_text_selection(selection)
           }}
         />
+        {
+          Platform.OS === 'ios' ?
+            <InputAccessoryView nativeID={this.input_accessory_view_id}>
+              <PostingToolbar />
+            </InputAccessoryView>
+            :
+            <>
+              <PostingToolbar />
+            </>
+        }
       </KeyboardAvoidingView>
     )
   }
