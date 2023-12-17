@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { TouchableOpacity, View, Image } from 'react-native';
-import Auth from './../stores/Auth';
-import App from './../stores/App';
+import Auth from './../../stores/Auth';
+import App from './../../stores/App';
 
 @observer
 export default class ProfileImage extends React.Component {

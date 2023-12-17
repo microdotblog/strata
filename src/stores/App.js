@@ -5,6 +5,8 @@ import { SheetManager } from "react-native-actions-sheet";
 import Login from './Login';
 import Tokens from './Tokens';
 
+let NAVIGATION = null;
+
 export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
   theme: types.optional(types.string, "light")
@@ -103,6 +105,20 @@ export default App = types.model('App', {
       console.log("App:close_sheet", sheet_name)
       if (sheet_name != null) {
         SheetManager.hide(sheet_name)
+      }
+    }),
+
+    set_navigation: flow(function*(navigation = null) {
+      if (navigation) {
+        console.log("App:set_navigation")
+        NAVIGATION = navigation
+      }
+    }),
+
+    navigate_to_screen: flow(function*(screen_name = null) {
+      console.log("App:navigate_to_screen", screen_name)
+      if (screen_name != null && NAVIGATION != null) {
+        NAVIGATION.navigate(screen_name)
       }
     }),
 
