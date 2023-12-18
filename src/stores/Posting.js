@@ -1,5 +1,5 @@
 import { types, flow } from 'mobx-state-tree';
-import { Platform } from 'react-native'
+import { Platform, Alert } from 'react-native'
 //import MicroBlogApi, { API_ERROR, POST_ERROR } from '../api/MicroBlogApi'
 import Auth from './Auth'
 import Clipboard from '@react-native-clipboard/clipboard'
@@ -23,18 +23,23 @@ export default Reply = types.model('Reply', {
       self.note_request_id = new Date().getTime()
       if (note_id !== self.note_id || self.note_text === "") {
         self.note_text = note_text
+        self.note_id = note_id
       }
       self.is_sending_note = false
-      console.log("Posting:hydrate:note_id", self.note_id)
+    }),
+
+    reset: flow(function*() {
+      self.note_text = ""
+      self.note_id = null
+      self.is_sending_note = false
     }),
 
     set_note_text: flow(function*(value) {
-      console.log("Posting:set_note_text", value)
       self.note_text = value
     }),
 
     send_note: flow(function*() {
-      console.log("Posting:send_reply", self.reply_text)
+      console.log("Posting:send_note", self.note_text)
       if (!self.is_sending_note && self.note_text !== " ") {
         self.is_sending_note = true
         // const data = yield MicroBlogApi.send_note(self.note_id, self.note_text)
@@ -48,9 +53,8 @@ export default Reply = types.model('Reply', {
         //   Alert.alert("Whoops", "Could not save note. Please try again.")
         // }
         self.is_sending_note = false
-        return false
       }
-      return false
+      Alert.alert("Whoops", "Could not save note. Please try again.")
     }),
 
     handle_text_action: flow(function*(action) {
@@ -98,8 +102,12 @@ export default Reply = types.model('Reply', {
 
     posting_enabled() {
       const { selected_user } = Auth
-      return selected_user.username != null && selected_user.token() != null
+      return selected_user.token() != null
     },
+
+    posting_button_enabled() {
+      return this.posting_enabled() && self.note_text.length > 0
+    }
 
   }))
   .create({})

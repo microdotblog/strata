@@ -14,6 +14,10 @@ export default class EditNoteModalScreen extends React.Component {
     this.input_accessory_view_id = "input_toolbar";
   }
 
+  componentWillUnmount() {
+    Posting.reset()
+  }
+
   render() {
     return (
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: App.theme_background_color() }}>

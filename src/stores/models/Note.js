@@ -1,4 +1,6 @@
 import { types, flow } from 'mobx-state-tree';
+import App from '../App';
+import Posting from '../Posting';
 import CryptoUtils from '../../utils/crypto';
 // import MicroBlogApi, { API_ERROR, DELETE_ERROR, LOGIN_TOKEN_INVALID } from '../../api/MicroBlogApi';
 
@@ -19,6 +21,12 @@ export default Note = types.model('Note', {
   _microblog: types.maybeNull(Microblog)
 })
   .actions(self => ({
+
+    prep_and_open_posting: flow(function*() {
+      console.log("Note:prep_and_open_posting", self.id)
+      yield Posting.hydrate(self.decrypted_text(), self.id)
+      App.navigate_to_screen("EditNote")
+    }),
 
   }))
   .views(self => ({

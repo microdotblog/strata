@@ -12,7 +12,7 @@ export default class NoteItem extends React.Component {
     const { note } = this.props
     return (
       <TouchableOpacity
-        onPress={() => note.is_locked() ? App.open_sheet("secret-key-prompt-sheet") : App.navigate_to_screen("EditNote")}
+        onPress={() => note.is_locked() ? App.open_sheet("secret-key-prompt-sheet") : note.prep_and_open_posting()}
         style={{
           padding: 12,
           backgroundColor: App.theme_note_background_color(),
