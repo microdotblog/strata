@@ -122,6 +122,13 @@ export default App = types.model('App', {
       }
     }),
 
+    go_back: flow(function*() {
+      console.log("App:go_back")
+      if (NAVIGATION != null) {
+        NAVIGATION.goBack()
+      }
+    }),
+
   }))
   .views(self => ({
     is_dark_mode() {

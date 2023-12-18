@@ -11,6 +11,8 @@ import NewNoteModalScreen from './notes/New';
 import EditNoteModalScreen from './notes/Edit';
 import ProfileImage from './../components/header/profile_image';
 import NewNoteButton from '../components/header/new_note';
+import NoteSaveEditButton from '../components/header/note_save_edit';
+import CloseModalButton from '../components/header/close';
 import { SheetProvider } from "react-native-actions-sheet";
 import "./../components/sheets/sheets";
 
@@ -63,8 +65,24 @@ export default class MainApp extends React.Component {
                       }} />
                     </Stack.Group>
                     <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                      <Stack.Screen name="NewNote" component={NewNoteModalScreen} options={{ title: "New Note" }} />
-                      <Stack.Screen name="EditNote" component={EditNoteModalScreen} options={{ title: "Edit Note" }} />
+                      <Stack.Screen
+                        name="NewNote"
+                        component={NewNoteModalScreen}
+                        options={{
+                          title: "New Note",
+                          headerLeft: () => <CloseModalButton />,
+                          headerRight: () => <NoteSaveEditButton title="Create" />
+                        }}
+                      />
+                      <Stack.Screen
+                        name="EditNote"
+                        component={EditNoteModalScreen}
+                        options={{
+                          title: "Edit Note",
+                          headerLeft: () => <CloseModalButton />,
+                          headerRight: () => <NoteSaveEditButton title="Save" />
+                        }}
+                      />
                     </Stack.Group>
                   </>
             }
