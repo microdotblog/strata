@@ -31,7 +31,8 @@ class CryptoUtils {
     encrypted = Buffer.concat([encrypted, cipher.final()])
     // const authTag = cipher.getAuthTag() // AUTH TAG doesn't seem to be available...
     // return Buffer.concat([iv, encrypted, authTag]).toString('base64')
-    return Buffer.concat([iv, encrypted]).toString('base64')
+    // TODO: crypto.randomBytes(16) is a temporary measure
+    return Buffer.concat([iv, encrypted, crypto.randomBytes(16)]).toString('base64')
   }
 
   static encrypt(text, secretToken) {
