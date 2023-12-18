@@ -36,7 +36,6 @@ export default Note = types.model('Note', {
     },
 
     decrypted_text() {
-      //return self.content_text
       if (this.secret_token()) {
         try {
           const decryptedText = CryptoUtils.decrypt(self.content_text, this.secret_token());
@@ -47,20 +46,6 @@ export default Note = types.model('Note', {
         }
       } else {
         return self.content_text;
-      }
-    },
-
-    encrypted_text() {
-      if (self.content_text && this.secret_token()) {
-        try {
-          const encryptedText = CryptoUtils.encrypt(this.decrypted_text(), this.secret_token())
-          return encryptedText
-        } catch (error) {
-          console.error("Encryption failed:", error)
-          return null
-        }
-      } else {
-        return null
       }
     },
 
