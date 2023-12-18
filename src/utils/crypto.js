@@ -29,6 +29,8 @@ class CryptoUtils {
     const cipher = crypto.createCipheriv('aes-256-gcm', key, iv)
     let encrypted = cipher.update(text, 'utf8')
     encrypted = Buffer.concat([encrypted, cipher.final()])
+    // const authTag = cipher.getAuthTag() // AUTH TAG doesn't seem to be available...
+    // return Buffer.concat([iv, encrypted, authTag]).toString('base64')
     return Buffer.concat([iv, encrypted]).toString('base64')
   }
 

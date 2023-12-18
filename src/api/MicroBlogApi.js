@@ -9,6 +9,7 @@ export const LOGIN_ERROR = 2
 export const LOGIN_SUCCESS = 3
 export const LOGIN_TOKEN_INVALID = 4
 export const API_ERROR = 5
+export const POST_ERROR = 6
 
 class MicroBlogApi {
 
@@ -105,6 +106,33 @@ class MicroBlogApi {
     } catch (error) {
       console.log(error)
       return API_ERROR
+    }
+  }
+
+  async post_note(text, user_token, notebook_id = null, id = null, is_sharing = null, is_unsharing = null) {
+    console.log('MicroBlogApi:post_note')
+
+    let form = new FormData()
+    if (text !== null) form.append('text', text)
+    if (notebook_id !== null) form.append('notebook_id', notebook_id)
+    if (id !== null) form.append('id', id)
+    if (is_sharing !== null) form.append('is_sharing', is_sharing)
+    if (is_unsharing !== null) form.append('is_unsharing', is_unsharing)
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${user_token}`
+        },
+        body: form
+      })
+      const data = await response.text()
+      return data
+
+    } catch (error) {
+      console.log(error)
+      return POST_ERROR
     }
   }
 

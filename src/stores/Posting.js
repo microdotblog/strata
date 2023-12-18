@@ -1,7 +1,8 @@
 import { types, flow } from 'mobx-state-tree';
 import { Platform, Alert } from 'react-native'
-//import MicroBlogApi, { API_ERROR, POST_ERROR } from '../api/MicroBlogApi'
+import MicroBlogApi, { POST_ERROR } from '../api/MicroBlogApi'
 import Auth from './Auth'
+import App from './App';
 import Clipboard from '@react-native-clipboard/clipboard'
 import CryptoUtils from '../utils/crypto';
 
@@ -39,22 +40,38 @@ export default Reply = types.model('Reply', {
       self.note_text = value
     }),
 
+    return_encrypted_note_text: flow(function*(text) {
+      if (text && Auth.selected_user.secret_token()) {
+        try {
+          const encryptedText = CryptoUtils.encrypt(text, Auth.selected_user.secret_token())
+          return encryptedText
+        } catch (error) {
+          console.error("Encryption failed:", error)
+          return null
+        }
+      } else {
+        return null
+      }
+    }),
+
     send_note: flow(function*() {
       console.log("Posting:send_note", self.note_text)
       if (!self.is_sending_note && self.note_text !== " " && self.posting_enabled()) {
-        const encrypted_text = self.encrypted_note_text(self.note_text)
+        const encrypted_text = yield self.return_encrypted_note_text(self.note_text)
         if (encrypted_text != null) {
           self.is_sending_note = true
-          // const data = yield MicroBlogApi.send_note(self.note_id, self.note_text)
-          // console.log("Posting:send_reply:data", data)
-          // if (data !== POST_ERROR) {
-          //   self.note_text = ""
-          //   self.is_sending_note = false
-          //   return true
-          // }
-          // else {
-          //   Alert.alert("Whoops", "Could not save note. Please try again.")
-          // }
+          const data = yield MicroBlogApi.post_note(encrypted_text, Auth.selected_user.token(), Auth.selected_user.selected_notebook?.id, self.note_id)
+          console.log("Posting:send_note:data", data)
+          if (data !== POST_ERROR) {
+            Auth.selected_user.selected_notebook?.fetch_notes()
+            self.note_text = ""
+            self.note_id = null
+            self.is_sending_note = false
+            App.go_back()
+          }
+          else {
+            Alert.alert("Whoops", "Could not save note. Please try again.")
+          }
           self.is_sending_note = false
         }
         else {
@@ -113,20 +130,6 @@ export default Reply = types.model('Reply', {
 
     posting_button_enabled() {
       return this.posting_enabled() && self.note_text.length > 0
-    },
-
-    encrypted_note_text(text) {
-      if (text && Auth.selected_user.secret_token()) {
-        try {
-          const encryptedText = CryptoUtils.encrypt(text, Auth.selected_user.secret_token())
-          return encryptedText
-        } catch (error) {
-          console.error("Encryption failed:", error)
-          return null
-        }
-      } else {
-        return null
-      }
     }
 
   }))
