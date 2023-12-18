@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { TextInput, KeyboardAvoidingView, InputAccessoryView } from 'react-native';
+import { TextInput, KeyboardAvoidingView, InputAccessoryView, ActivityIndicator, View } from 'react-native';
 import Posting from '../../stores/Posting'
 import PostingToolbar from '../../components/keyboard/posting_toolbar';
-// import App from '../../stores/App'
+import App from '../../stores/App'
 // import Auth from '../../stores/Auth'
 
 @observer
@@ -43,6 +43,7 @@ export default class EditNoteModalScreen extends React.Component {
           onSelectionChange={({ nativeEvent: { selection } }) => {
             Posting.set_text_selection(selection)
           }}
+          editable={!Posting.is_sending_note}
         />
         {
           Platform.OS === 'ios' ?
@@ -53,6 +54,23 @@ export default class EditNoteModalScreen extends React.Component {
             <>
               <PostingToolbar />
             </>
+        }
+        {
+          Posting.is_sending_note ?
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                height: 200,
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 10
+              }}
+            >
+              <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
+            </View>
+            : null
         }
       </KeyboardAvoidingView>
     )
