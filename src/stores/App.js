@@ -183,7 +183,7 @@ export default App = types.model('App', {
       return self.theme === "dark" ? "#5a5a5a" : "#eff1f3"
     },
     theme_note_background_color() {
-      return self.theme === "dark" ? "#1F2937" : "#f2f2f2"
+      return self.theme === "dark" ? "#1F2937" : "#FFF9D6"
     },
     theme_note_shadow_color() {
       return self.theme === "dark" ? "#707070" : "#333333"
