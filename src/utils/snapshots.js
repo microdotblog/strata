@@ -7,7 +7,7 @@ import Auth from './../stores/Auth';
 
 function debounce(func, wait) {
   let timeout
-  return function (...args) {
+  return function(...args) {
     const context = this
     clearTimeout(timeout)
     timeout = setTimeout(() => func.apply(context, args), wait)
@@ -21,4 +21,4 @@ onSnapshot(Auth, debounce(
   snapshot => {
     AsyncStorage.setItem('Auth', JSON.stringify(snapshot));
     console.log("SNAPSHOT:::AUTH")
-  }, debounce_ms ))
+  }, debounce_ms))

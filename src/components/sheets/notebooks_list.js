@@ -3,10 +3,16 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { SafeAreaView, Text } from 'react-native';
 import App from '../../stores/App'
-//import Auth from '../../stores/Auth'
+import Auth from '../../stores/Auth'
 
 @observer
 export default class NotebooksListSheet extends React.Component {
+
+  componentDidMount = async () => {
+    if (Auth.selected_user != null) {
+      await Auth.selected_user.fetch_notebooks()
+    }
+  }
 
   render() {
     return (
@@ -21,6 +27,7 @@ export default class NotebooksListSheet extends React.Component {
         id={this.props.sheet_id}
       >
         <SafeAreaView style={{ justifyContent: "center", alignItems: "center" }}>
+          <Text style={{ fontWeight: '800', marginBottom: 25, color: App.theme_text_color() }}>Select or create a notebook</Text>
           <Text style={{ color: App.theme_text_color(), fontWeight: "400", paddingVertical: 15 }}>
             Notes in Micro.blog are encrypted. To sync notes across devices, you will need to save a secret key so the notes can be decrypted later. If you lose your key, you will lose access to your notes too.
           </Text>

@@ -34,7 +34,7 @@ export default User = types.model('User', {
       const data = yield MicroBlogApi.fetch_notebooks()
       console.log("User:fetch_notebooks:data", data)
       if (data !== API_ERROR && data.items != null) {
-        console.log("User:fetch_notebooks:items", data.items)
+        console.log("User:fetch_notebooks:items", data.items.length)
         data.items.forEach((notebook) => {
           const existing_notebook = self.notebooks.find(n => n.id === notebook.id)
           if (existing_notebook) {
