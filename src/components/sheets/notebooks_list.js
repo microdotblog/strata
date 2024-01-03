@@ -1,7 +1,6 @@
 import ActionSheet from "react-native-actions-sheet"
 import * as React from 'react'
 import { observer } from 'mobx-react'
-import { SafeAreaView } from 'react-native'
 import App from '../../stores/App'
 import Auth from '../../stores/Auth'
 import NotebooksHeader from "../notebooks/notebooks_header"
@@ -21,17 +20,12 @@ export default class NotebooksListSheet extends React.Component {
       <ActionSheet
         containerStyle={{
           backgroundColor: App.theme_background_color_secondary(),
-          padding: 15,
-          paddingHorizontal: 12,
-          borderRadius: 8,
-          elevation: 2
+          padding: 15
         }}
         id={this.props.sheet_id}
       >
-        <SafeAreaView>
-          <NotebooksHeader />
-          <NotebooksList />
-        </SafeAreaView>
+        <NotebooksHeader />
+        <NotebooksList />
       </ActionSheet>
     )
   }

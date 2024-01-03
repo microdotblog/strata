@@ -20,9 +20,9 @@ export default class NotesList extends React.Component {
           paddingHorizontal: 15,
           paddingVertical: 10,
           width: '100%',
-          backgroundColor: App.theme_input_background_color(),
+          backgroundColor: App.theme_input_contrast_background_color(),
         }}>
-        <TouchableOpacity onPress={() => App.open_sheet("notebooks-list")}>
+        <TouchableOpacity style={{ backgroundColor: App.theme_alt_border_color(), paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 }} onPress={() => App.open_sheet("notebooks-list")}>
           <Text style={{ color: App.theme_text_color(), fontWeight: "500", fontSize: 16 }}>
             {selected_notebook?.title}
           </Text>
