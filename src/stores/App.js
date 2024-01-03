@@ -191,6 +191,9 @@ export default App = types.model('App', {
     theme_section_background_color() {
       return self.theme === "dark" ? "#374151" : "#E5E7EB"
     },
+    theme_danger_color() {
+      return self.theme === "dark" ? "red" : "red"
+    },
     now() {
       let now = new Date()
       now.setHours(0, 0, 0, 0)
