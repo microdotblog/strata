@@ -85,7 +85,16 @@ export default User = types.model('User', {
     delete_notebook: flow(function*(notebook = null) {
       console.log("User:delete_notebook", notebook)
       if (notebook) {
-
+        // Before deleting the notebook, let's set a new default one
+        if (self.selected_notebook === notebook && self.notebooks.length > 1) {
+          const notebooks_without_notebook_deleting = self.notebooks.filter(n => n !== notebook)
+          if (notebooks_without_notebook_deleting) {
+            self.set_selected_notebook(notebooks_without_notebook_deleting[0])
+          }
+        }
+        else {
+          self.selected_notebook = null
+        }
       }
     }),
 
