@@ -1,7 +1,7 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, destroy } from 'mobx-state-tree';
 import Tokens from './../Tokens';
 import Notebook from './Notebook';
-import MicroBlogApi, { API_ERROR } from '../../api/MicroBlogApi';
+import MicroBlogApi, { API_ERROR, DELETE_ERROR } from '../../api/MicroBlogApi';
 import { SheetManager } from "react-native-actions-sheet";
 import { Alert } from 'react-native';
 
@@ -86,7 +86,7 @@ export default User = types.model('User', {
       console.log("User:delete_notebook", notebook)
       if (notebook) {
         // Before deleting the notebook, let's set a new default one
-        if (self.selected_notebook === notebook && self.notebooks.length > 1) {
+        if (self.notebooks.length > 1) {
           const notebooks_without_notebook_deleting = self.notebooks.filter(n => n !== notebook)
           if (notebooks_without_notebook_deleting) {
             self.set_selected_notebook(notebooks_without_notebook_deleting[0])
@@ -94,6 +94,15 @@ export default User = types.model('User', {
         }
         else {
           self.selected_notebook = null
+        }
+        // OK, now let's go and delete that notebook
+        const data = yield MicroBlogApi.delete_notebook(notebook.id)
+        if (data !== DELETE_ERROR) {
+          destroy(notebook)
+          self.fetch_notebooks()
+        }
+        else {
+          Alert.alert("Couldn't delete your notebook...", "Please try again.")
         }
       }
     }),

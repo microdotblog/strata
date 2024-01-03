@@ -10,6 +10,7 @@ export const LOGIN_SUCCESS = 3
 export const LOGIN_TOKEN_INVALID = 4
 export const API_ERROR = 5
 export const POST_ERROR = 6
+export const DELETE_ERROR = 7
 
 class MicroBlogApi {
 
@@ -133,6 +134,31 @@ class MicroBlogApi {
     } catch (error) {
       console.log(error)
       return POST_ERROR
+    }
+  }
+
+  async delete_notebook(notebook_id) {
+    console.log('MicroBlogApi:delete_notebook', notebook_id);
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes/notebooks/${notebook_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+      if (data.error) {
+        return DELETE_ERROR
+      } else {
+        return true
+      }
+
+    } catch (error) {
+      console.log(error)
+      return DELETE_ERROR
     }
   }
 
