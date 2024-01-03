@@ -48,12 +48,15 @@ export default User = types.model('User', {
       }
     }),
 
-    set_selected_notebook: flow(function*(notebook = null) {
+    set_selected_notebook: flow(function*(notebook = null, should_fetch = false) {
       if (self.selected_notebook == null && self.notebooks.length > 0) {
         self.selected_notebook = self.notebooks[0]
       }
       else if (notebook) {
         self.selected_notebook = notebook
+      }
+      if (should_fetch) {
+        notebook.hydrate()
       }
     })
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import App from './../../stores/App';
 import Auth from './../../stores/Auth';
 
@@ -12,7 +12,7 @@ export default class NotebookItem extends React.Component {
     const is_selected = notebook === Auth.selected_user?.selected_notebook
     return (
       <TouchableOpacity
-        onPress={() => Auth.selected_user.set_selected_notebook(notebook)}
+        onPress={() => Auth.selected_user.set_selected_notebook(notebook, true)}
         key={`notebook_${notebook.id}`}
         style={{
           marginBottom: 8,
