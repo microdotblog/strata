@@ -1,30 +1,16 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import Auth from './../../stores/Auth';
 import App from '../../stores/App';
+import NotebookItem from './notebook_item';
 
 @observer
 export default class NotebooksList extends React.Component {
 
   _render_notebooks = () => {
     return Auth.selected_user.notebooks.map((notebook) => {
-      const is_selected = notebook === Auth.selected_user.selected_notebook
-      return (
-        <TouchableOpacity
-          onPress={() => Auth.selected_user.set_selected_notebook(notebook)}
-          key={`notebook_${notebook.id}`}
-          style={{
-            marginBottom: 8,
-            padding: 12,
-            borderRadius: 8,
-            backgroundColor: App.theme_input_contrast_background_color(),
-            opacity: is_selected ? 1 : .6
-          }}
-        >
-          <Text style={{ fontSize: 18, fontWeight: "600", color: App.theme_text_color() }}>{notebook.title}</Text>
-        </TouchableOpacity>
-      )
+      return <NotebookItem key={`notebook_${notebook.id}`} notebook={notebook} />
     })
   }
 
