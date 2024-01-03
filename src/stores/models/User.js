@@ -3,6 +3,7 @@ import Tokens from './../Tokens';
 import Notebook from './Notebook';
 import MicroBlogApi, { API_ERROR } from '../../api/MicroBlogApi';
 import { SheetManager } from "react-native-actions-sheet";
+import { Alert } from 'react-native';
 
 export default User = types.model('User', {
   username: types.identifier,
@@ -58,7 +59,35 @@ export default User = types.model('User', {
       if (should_fetch) {
         notebook.hydrate()
       }
-    })
+    }),
+
+    trigger_notebook_delete: flow(function*(notebook = null) {
+      if (notebook) {
+        Alert.alert(
+          "Delete notebook?",
+          "Are you sure you want to delete this notebook? All your notes in this notebook will be deleted.",
+          [
+            {
+              text: "Cancel",
+              style: 'cancel',
+            },
+            {
+              text: "Delete",
+              onPress: () => self.delete_notebook(notebook),
+              style: 'destructive'
+            },
+          ],
+          { cancelable: false },
+        )
+      }
+    }),
+
+    delete_notebook: flow(function*(notebook = null) {
+      console.log("User:delete_notebook", notebook)
+      if (notebook) {
+
+      }
+    }),
 
   }))
   .views(self => ({

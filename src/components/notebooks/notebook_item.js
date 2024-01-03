@@ -59,7 +59,10 @@ export default class NotebookItem extends React.Component {
                 />
             }
           </TouchableOpacity>
-          <TouchableOpacity hitSlop={2}>
+          <TouchableOpacity
+            onPress={() => Auth.selected_user.trigger_notebook_delete(notebook)}
+            hitSlop={2}
+          >
             {
               Platform.OS === "ios" ?
                 <SFSymbol
