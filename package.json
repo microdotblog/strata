@@ -21,7 +21,7 @@
     "mobx-react": "^9.1.0",
     "mobx-state-tree": "^5.4.0",
     "react": "18.2.0",
-    "react-native": "0.73.0",
+    "react-native": "0.73.1",
     "react-native-actions-sheet": "^0.9.0-alpha.24",
     "react-native-gesture-handler": "^2.14.0",
     "react-native-quick-base64": "^2.0.8",
