@@ -23,7 +23,7 @@ export default class NotesList extends React.Component {
           backgroundColor: App.theme_input_contrast_background_color(),
         }}>
         <TouchableOpacity style={{ backgroundColor: App.theme_alt_border_color(), paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 }} onPress={() => App.open_sheet("notebooks-list")}>
-          <Text style={{ color: App.theme_text_color(), fontWeight: "500", fontSize: 16 }}>
+          <Text style={{ color: App.theme_text_color(), fontWeight: "500", fontSize: 15 }}>
             {selected_notebook?.title}
           </Text>
         </TouchableOpacity>
@@ -52,7 +52,7 @@ export default class NotesList extends React.Component {
             keyExtractor={this._key_extractor}
             renderItem={this.render_note}
             contentContainerStyle={{
-              paddingTop: 8,
+              paddingTop: 0,
               paddingHorizontal: 12
             }}
             refreshControl={
