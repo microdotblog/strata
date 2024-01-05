@@ -48,6 +48,15 @@ export default Note = types.model('Note', {
         return self.content_text;
       }
     },
+    
+    truncated_text(num_chars = 100) {
+      var s = self.decrypted_text();
+      if (s.length > num_chars) {
+        s = s.substring(0, num_chars - 1);
+        s = s + "...";
+      }
+      return s;
+    },
 
     secret_token() {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
