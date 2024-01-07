@@ -119,8 +119,7 @@ export default User = types.model('User', {
         }
         const notebook = Notebook.create(notebook_object)
         if (notebook) {
-          yield App.set_is_creating_notebook(false)
-          yield App.close_sheet("notebooks-list")
+          App.set_is_creating_notebook(false)
           self.notebooks.push(notebook)
           self.set_selected_notebook(notebook, true)
         }
