@@ -9,7 +9,9 @@ let NAVIGATION = null;
 
 export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
-  theme: types.optional(types.string, "light")
+  theme: types.optional(types.string, "light"),
+  is_creating_notebook: types.optional(types.boolean, false),
+  temp_notebook_name: types.optional(types.string, "")
 })
   .actions(self => ({
 
@@ -127,6 +129,19 @@ export default App = types.model('App', {
       if (NAVIGATION != null) {
         NAVIGATION.goBack()
       }
+    }),
+
+    set_is_creating_notebook: flow(function*(is_creating = !self.is_creating_notebook) {
+      console.log("App:set_is_creating_notebook", is_creating)
+      self.is_creating_notebook = is_creating
+      if (!is_creating) {
+        self.temp_notebook_name = ""
+      }
+    }),
+
+    set_temp_notebook_name: flow(function*(text) {
+      console.log("App:set_temp_notebook_name", text)
+      self.temp_notebook_name = text
     }),
 
   }))

@@ -162,6 +162,31 @@ class MicroBlogApi {
     }
   }
 
+  async create_notebook(name) {
+    console.log('MicroBlogApi:create_notebook', name);
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes/notebooks?name=${name}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+      if (data.error) {
+        return POST_ERROR
+      } else {
+        return data
+      }
+
+    } catch (error) {
+      console.log(error)
+      return POST_ERROR
+    }
+  }
+
 }
 
 export default new MicroBlogApi()

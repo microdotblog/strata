@@ -1,7 +1,8 @@
 import { types, flow, destroy } from 'mobx-state-tree';
 import Tokens from './../Tokens';
 import Notebook from './Notebook';
-import MicroBlogApi, { API_ERROR, DELETE_ERROR } from '../../api/MicroBlogApi';
+import App from './../App';
+import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
 import { SheetManager } from "react-native-actions-sheet";
 import { Alert } from 'react-native';
 
@@ -107,6 +108,29 @@ export default User = types.model('User', {
       }
     }),
 
+    create_notebook: flow(function*(name) {
+      console.log("User:create_notebook", name)
+      const data = yield MicroBlogApi.create_notebook(name)
+      if (data != POST_ERROR) {
+        const notebook_object = {
+          id: data.id,
+          title: data.name
+        }
+        const notebook = Notebook.create(notebook_object)
+        if (notebook) {
+          self.notebooks.push(notebook)
+          self.set_selected_notebook(notebook, true)
+        }
+        // Maybe put the below into the if statement above
+        // and add a few more checks to see if it failed to create 
+        App.set_is_creating_notebook(false)
+        App.close_sheet("notebooks-list")
+      }
+      else {
+        Alert.alert("Couldn't create your notebook...", "Please try again.")
+      }
+    })
+
   }))
   .views(self => ({
 
@@ -116,6 +140,10 @@ export default User = types.model('User', {
 
     secret_token() {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
+    },
+
+    can_create_notebook() {
+      return true// self.is_premium || self.notebooks?.length == 0
     }
 
   }))
