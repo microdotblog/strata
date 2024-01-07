@@ -89,7 +89,7 @@ class MicroBlogApi {
     }
   }
 
-  async fetch_notes(notebook_id, user_token) {
+  async fetch_notes(notebook_id, user_token = Auth.selected_user?.token()) {
     console.log('MicroBlogApi:fetch_notes');
 
     try {
