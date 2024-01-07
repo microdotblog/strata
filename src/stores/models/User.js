@@ -114,7 +114,8 @@ export default User = types.model('User', {
       if (data != POST_ERROR) {
         const notebook_object = {
           id: data.id,
-          title: data.name
+          title: data.name,
+          username: self.username
         }
         const notebook = Notebook.create(notebook_object)
         if (notebook) {
