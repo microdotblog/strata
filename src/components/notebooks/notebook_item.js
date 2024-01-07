@@ -133,6 +133,7 @@ export default class NotebookItem extends React.Component {
             placeholder="Notebook name"
             autoFocus={true}
             blurOnSubmit={true}
+            editable={!notebook.is_setting_notebook_name}
             onChangeText={(text) => notebook.set_temp_notebook_name(text)}
             value={notebook.temp_notebook_name}
             onSubmitEditing={() => { notebook.rename_notebook(); Keyboard.dismiss() }}

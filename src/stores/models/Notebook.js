@@ -96,7 +96,7 @@ export default Notebook = types.model('Notebook', {
     },
 
     can_save_rename() {
-      return self.temp_notebook_name != null && self.temp_notebook_name != ""
+      return self.temp_notebook_name != null && self.temp_notebook_name != "" && self.temp_notebook_name !== self.title
     }
 
   }))
