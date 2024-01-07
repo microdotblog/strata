@@ -46,6 +46,23 @@ export default User = types.model('User', {
             self.notebooks.push({ username: self.username, ...notebook })
           }
         })
+
+        // We also need to check if there are notebooks that no longer exist
+        const notebooks_to_delete = self.notebooks.filter(notebook =>
+          !data.items.some(item => item.id === notebook.id)
+        )
+
+        if (notebooks_to_delete.some(notebook => notebook.id === self.selected_notebook.id)) {
+          const new_selected = self.notebooks.find(notebook =>
+            !notebooks_to_delete.includes(notebook)
+          )
+          self.selected_notebook = new_selected || null
+        }
+
+        self.notebooks = self.notebooks.filter(notebook =>
+          !notebooks_to_delete.includes(notebook)
+        )
+
         self.set_selected_notebook()
       }
     }),
