@@ -15,7 +15,7 @@ export default class NotebooksList extends React.Component {
   }
 
   render() {
-    if (Auth.selected_user != null && Auth.selected_user.notebooks) {
+    if (Auth.selected_user != null && Auth.selected_user.notebooks && !App.is_creating_notebook) {
       const notebooks_wording = Auth.selected_user.notebooks.length > 1 ? "notebooks" : "notebook"
       return (
         <View>

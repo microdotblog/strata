@@ -15,6 +15,10 @@ export default class NotebooksListSheet extends React.Component {
     }
   }
 
+  componentWillUnmount = async () => {
+    App.set_is_creating_notebook(false)
+  }
+
   render() {
     return (
       <ActionSheet

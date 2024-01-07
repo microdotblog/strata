@@ -89,7 +89,7 @@ class MicroBlogApi {
     }
   }
 
-  async fetch_notes(notebook_id, user_token) {
+  async fetch_notes(notebook_id, user_token = Auth.selected_user?.token()) {
     console.log('MicroBlogApi:fetch_notes');
 
     try {
@@ -159,6 +159,36 @@ class MicroBlogApi {
     } catch (error) {
       console.log(error)
       return DELETE_ERROR
+    }
+  }
+
+  async create_or_rename_notebook(name, id = null) {
+    console.log('MicroBlogApi:create_or_rename_notebook', name, id);
+
+    let url = `${BASE_ENDPOINT}/notes/notebooks?name=${encodeURIComponent(name)}`
+    if (id !== null) {
+      url += `&id=${encodeURIComponent(id)}`
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+      if (data.error) {
+        return POST_ERROR
+      } else {
+        return data
+      }
+
+    } catch (error) {
+      console.log(error)
+      return POST_ERROR
     }
   }
 
