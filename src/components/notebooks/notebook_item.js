@@ -9,6 +9,10 @@ import { SvgXml } from 'react-native-svg';
 @observer
 export default class NotebookItem extends React.Component {
 
+  componentWillUnmount = async () => {
+    this.props?.notebook?.set_is_renaming_notebook(false)
+  }
+
   render() {
     const { notebook } = this.props
     const is_selected = (notebook === Auth.selected_user?.selected_notebook) || notebook.is_renaming_notebook
