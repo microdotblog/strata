@@ -118,13 +118,11 @@ export default User = types.model('User', {
         }
         const notebook = Notebook.create(notebook_object)
         if (notebook) {
+          yield App.set_is_creating_notebook(false)
+          yield App.close_sheet("notebooks-list")
           self.notebooks.push(notebook)
           self.set_selected_notebook(notebook, true)
         }
-        // Maybe put the below into the if statement above
-        // and add a few more checks to see if it failed to create 
-        App.set_is_creating_notebook(false)
-        App.close_sheet("notebooks-list")
       }
       else {
         Alert.alert("Couldn't create your notebook...", "Please try again.")
