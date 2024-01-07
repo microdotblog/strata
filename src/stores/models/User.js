@@ -144,7 +144,14 @@ export default User = types.model('User', {
       else {
         Alert.alert("Couldn't create your notebook...", "Please try again.")
       }
-    })
+    }),
+
+    reset_notebook_state: flow(function*(notebook) {
+      const found_notebook = self.notebooks.find(n => n === notebook)
+      if (found_notebook) {
+        found_notebook.set_is_renaming_notebook(false)
+      }
+    }),
 
   }))
   .views(self => ({

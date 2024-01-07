@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Text, TouchableOpacity, View, Platform, ActivityIndicator } from 'react-native';
+import { Text, TouchableOpacity, View, Platform, ActivityIndicator, TextInput, Keyboard } from 'react-native';
 import App from './../../stores/App';
 import Auth from './../../stores/Auth';
 import { SFSymbol } from 'react-native-sfsymbols';
@@ -10,7 +10,7 @@ import { SvgXml } from 'react-native-svg';
 export default class NotebookItem extends React.Component {
 
   componentWillUnmount = async () => {
-    this.props?.notebook?.set_is_renaming_notebook(false)
+    Auth.selected_user?.reset_notebook_state(this.props?.notebook)
   }
 
   render() {
@@ -116,9 +116,27 @@ export default class NotebookItem extends React.Component {
             justifyContent: "space-between"
           }}
         >
-          <View>
-            <Text style={{ fontSize: 18, fontWeight: "600", color: App.theme_text_color() }}>{notebook.title}</Text>
-          </View>
+          <TextInput
+            enablesReturnKeyAutomatically={true}
+            underlineColorAndroid={'transparent'}
+            returnKeyType={'go'}
+            style={{
+              backgroundColor: App.theme_input_contrast_background_color(),
+              fontSize: 18,
+              borderColor: App.theme_accent_color(),
+              borderWidth: 1,
+              width: "70%",
+              borderRadius: 5,
+              padding: 8,
+              color: App.theme_text_color()
+            }}
+            placeholder="Notebook name"
+            autoFocus={true}
+            blurOnSubmit={true}
+            onChangeText={(text) => notebook.set_temp_notebook_name(text)}
+            value={notebook.temp_notebook_name}
+            onSubmitEditing={() => { notebook.rename_notebook(); Keyboard.dismiss() }}
+          />
           {
             notebook.is_setting_notebook_name ?
               <ActivityIndicator color={App.theme_accent_color()} />
@@ -133,6 +151,10 @@ export default class NotebookItem extends React.Component {
                 <TouchableOpacity
                   onPress={() => notebook.rename_notebook()}
                   hitSlop={8}
+                  disabled={!notebook.can_save_rename()}
+                  style={{
+                    opacity: notebook.can_save_rename() ? 1 : .5
+                  }}
                 >
                   {
                     Platform.OS === "ios" ?

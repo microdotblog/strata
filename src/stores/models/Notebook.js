@@ -75,6 +75,11 @@ export default Notebook = types.model('Notebook', {
       }
     }),
 
+    set_temp_notebook_name: flow(function*(text) {
+      console.log("Notebook:set_temp_notebook_name", text)
+      self.temp_notebook_name = text
+    }),
+
   }))
   .views(self => ({
 
