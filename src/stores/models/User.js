@@ -127,7 +127,7 @@ export default User = types.model('User', {
 
     create_notebook: flow(function*(name) {
       console.log("User:create_notebook", name)
-      const data = yield MicroBlogApi.create_notebook(name)
+      const data = yield MicroBlogApi.create_or_rename_notebook(name)
       if (data != POST_ERROR) {
         const notebook_object = {
           id: data.id,

@@ -162,11 +162,16 @@ class MicroBlogApi {
     }
   }
 
-  async create_notebook(name) {
-    console.log('MicroBlogApi:create_notebook', name);
+  async create_or_rename_notebook(name, id = null) {
+    console.log('MicroBlogApi:create_or_rename_notebook', name, id);
+
+    let url = `${BASE_ENDPOINT}/notes/notebooks?name=${encodeURIComponent(name)}`
+    if (id !== null) {
+      url += `&id=${encodeURIComponent(id)}`
+    }
 
     try {
-      const response = await fetch(`${BASE_ENDPOINT}/notes/notebooks?name=${name}`, {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${Auth.selected_user?.token()}`,
