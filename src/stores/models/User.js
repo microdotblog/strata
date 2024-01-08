@@ -41,6 +41,9 @@ export default User = types.model('User', {
           const existing_notebook = self.notebooks.find(n => n.id === notebook.id)
           if (existing_notebook) {
             existing_notebook.hydrate()
+            if (existing_notebook.title !== notebook.title) {
+              existing_notebook.update_title(notebook.title)
+            }
           }
           else {
             self.notebooks.push({ username: self.username, ...notebook })

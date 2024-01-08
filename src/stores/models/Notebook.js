@@ -31,6 +31,12 @@ export default Notebook = types.model('Notebook', {
       }
     }),
 
+    update_title: flow(function*(title = null) {
+      if (title) {
+        self.title = title
+      }
+    }),
+
     fetch_notes: flow(function*() {
       console.log("Notebook:fetch_notes", self.id)
       const data = yield MicroBlogApi.fetch_notes(self.id, self.token())
