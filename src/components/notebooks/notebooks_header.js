@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Text, View, TouchableOpacity, TextInput, Button, Keyboard } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Button, Keyboard, ActivityIndicator } from 'react-native';
 import App from '../../stores/App'
 import Auth from '../../stores/Auth'
 import { SFSymbol } from 'react-native-sfsymbols';
@@ -95,12 +95,17 @@ export default class NotebooksHeader extends React.Component {
                 value={App.temp_notebook_name}
                 onSubmitEditing={() => { Auth.selected_user?.create_notebook(App.temp_notebook_name); Keyboard.dismiss() }}
               />
-              <Button
-                title="Add Notebook"
-                color={App.theme_accent_color()}
-                onPress={() => { Auth.selected_user?.create_notebook(App.temp_notebook_name); Keyboard.dismiss() }}
-                disabled={App.temp_notebook_name == "" || App.temp_notebook_name?.length < 1}
-              />
+              {
+                Auth.selected_user?.is_saving_new_notebook ?
+                  <ActivityIndicator style={{ marginTop: 17 }} color={App.theme_accent_color()} />
+                  :
+                  <Button
+                    title="Add Notebook"
+                    color={App.theme_accent_color()}
+                    onPress={() => { Auth.selected_user?.create_notebook(App.temp_notebook_name); Keyboard.dismiss() }}
+                    disabled={App.temp_notebook_name == "" || App.temp_notebook_name?.length < 1}
+                  />
+              }
             </View>
             : null
         }

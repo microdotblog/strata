@@ -3,7 +3,6 @@ import Tokens from './../Tokens';
 import Notebook from './Notebook';
 import App from './../App';
 import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
-import { SheetManager } from "react-native-actions-sheet";
 import { Alert } from 'react-native';
 
 export default User = types.model('User', {
@@ -13,12 +12,14 @@ export default User = types.model('User', {
   default_site: types.maybeNull(types.string),
   is_premium: types.maybeNull(types.boolean),
   notebooks: types.optional(types.array(Notebook), []),
-  selected_notebook: types.maybeNull(types.reference(Notebook))
+  selected_notebook: types.maybeNull(types.reference(Notebook)),
+  is_saving_new_notebook: types.optional(types.boolean, false),
 })
   .actions(self => ({
 
     hydrate: flow(function*() {
       console.log("User:hydrate", self.username)
+      self.is_saving_new_notebook = false
       if (self.token()) {
         yield self.fetch_notebooks()
       }
@@ -27,7 +28,7 @@ export default User = types.model('User', {
     check_for_exisence_of_secret_token: flow(function*() {
       console.log("User:check_for_exisence_of_secret_token", !!self.secret_token())
       if (!self.secret_token()) {
-        SheetManager.show("secret-key-prompt-sheet")
+        App.open_sheet("secret-key-prompt-sheet")
       }
     }),
 
@@ -130,6 +131,7 @@ export default User = types.model('User', {
 
     create_notebook: flow(function*(name) {
       console.log("User:create_notebook", name)
+      self.is_saving_new_notebook = true
       const data = yield MicroBlogApi.create_or_rename_notebook(name)
       if (data != POST_ERROR) {
         const notebook_object = {
@@ -147,6 +149,7 @@ export default User = types.model('User', {
       else {
         Alert.alert("Couldn't create your notebook...", "Please try again.")
       }
+      self.is_saving_new_notebook = false
     }),
 
     reset_notebook_state: flow(function*(notebook) {
