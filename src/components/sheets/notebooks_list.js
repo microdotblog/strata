@@ -24,8 +24,11 @@ export default class NotebooksListSheet extends React.Component {
       <ActionSheet
         containerStyle={{
           backgroundColor: App.theme_background_color_secondary(),
-          padding: 15
+          padding: 15,
+          paddingTop: 0
         }}
+        gestureEnabled={true}
+        useBottomSafeAreaPadding={true}
         id={this.props.sheet_id}
       >
         <NotebooksHeader />

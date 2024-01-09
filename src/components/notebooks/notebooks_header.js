@@ -13,7 +13,8 @@ export default class NotebooksHeader extends React.Component {
     return (
       <View style={{
         flexDirection: "column",
-        width: "100%"
+        width: "100%",
+        marginTop: 15
       }}>
         <View style={{
           flexDirection: "row",

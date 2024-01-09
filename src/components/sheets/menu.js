@@ -13,10 +13,9 @@ export default class MenuSheet extends React.Component {
     return (
       <ActionSheet
         id={this.props.sheet_id}
-        snapPoints={[40, 75, 100]}
-        initialSnapIndex={[1]}
+        //snapPoints={[40, 75, 100]}
+        //initialSnapIndex={[1]}
         overdrawEnabled={true}
-        useBottomSafeAreaPadding={true}
         gestureEnabled={true}
         containerStyle={{
           backgroundColor: App.theme_background_color_secondary()
