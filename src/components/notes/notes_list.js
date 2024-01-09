@@ -53,7 +53,8 @@ export default class NotesList extends React.Component {
             renderItem={this.render_note}
             contentContainerStyle={{
               paddingTop: 0,
-              paddingHorizontal: 12
+              paddingHorizontal: 12,
+              paddingBottom: 45
             }}
             refreshControl={
               <RefreshControl
