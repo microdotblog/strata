@@ -38,7 +38,13 @@ export default Note = types.model('Note', {
     decrypted_text() {
       if (this.secret_token()) {
         try {
-          const decryptedText = CryptoUtils.decrypt(self.content_text, this.secret_token());
+          var decryptedText;
+          if (this._microblog.is_shared) {
+            decryptedText = self.content_text;
+          }
+          else {
+            decryptedText = CryptoUtils.decrypt(self.content_text, this.secret_token());
+          }
           return decryptedText;
         } catch (error) {
           console.log("Decryption failed:", error);
