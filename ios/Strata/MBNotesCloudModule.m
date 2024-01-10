@@ -1,24 +1,24 @@
 //
-//  MBNotesKeyModule.m
+//  MBNotesCloudModule.m
 //  Strata
 //
 //  Created by Manton Reece on 1/10/24.
 //
 
-#import "MBNotesKeyModule.h"
+#import "MBNotesCloudModule.h"
 
 #import <CloudKit/CloudKit.h>
 
 static NSString* const kNotesCloudContainer = @"iCloud.blog.micro.shared";
 static NSString* const kNotesSettingsType = @"Setting";
 
-@implementation MBNotesKeyModule
+@implementation MBNotesCloudModule
 
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(setNotesKey:(NSString *)key)
 {
-  NSLog(@"setting notes key");
+  [self saveKeyToCloud:key];
 }
 
 RCT_EXPORT_METHOD(getNotesKey:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
@@ -64,6 +64,32 @@ RCT_EXPORT_METHOD(getNotesKey:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromi
       }];
 
       [db addOperation:op];
+    }
+  }];
+}
+
+- (void) saveKeyToCloud:(NSString *)key
+{
+  CKContainer* container = [CKContainer containerWithIdentifier:kNotesCloudContainer];
+
+  [container accountStatusWithCompletionHandler:^(CKAccountStatus status, NSError* error) {
+    if (status != CKAccountStatusAvailable) {
+      NSLog(@"iCloud: User not signed in to iCloud.");
+    }
+    else {
+      CKDatabase* db = [container privateCloudDatabase];
+      CKRecord* record = [[CKRecord alloc] initWithRecordType:kNotesSettingsType];
+
+      [record setObject:key forKey:@"notesKey"];
+      
+      [db saveRecord:record completionHandler:^(CKRecord* record, NSError* error) {
+        if (error) {
+          NSLog(@"iCloud: Error saving record: %@", error);
+        }
+        else {
+          NSLog(@"iCloud: Saved secret key to the cloud.");
+        }
+      }];
     }
   }];
 }

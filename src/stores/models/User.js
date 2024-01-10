@@ -4,7 +4,7 @@ import Notebook from './Notebook';
 import App from './../App';
 import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
 import { Alert, NativeModules } from 'react-native';
-const { MBNotesKeyModule } = NativeModules;
+const { MBNotesCloudModule } = NativeModules;
 
 export default User = types.model('User', {
   username: types.identifier,
@@ -29,7 +29,7 @@ export default User = types.model('User', {
     check_for_exisence_of_secret_token: flow(function*() {
       console.log("User:check_for_exisence_of_secret_token", !!self.secret_token())
       if (!self.secret_token()) {
-        MBNotesKeyModule.getNotesKey().then(cloud_key => {
+        MBNotesCloudModule.getNotesKey().then(cloud_key => {
           console.log("Got iCloud notes key:", cloud_key);          
           App.open_sheet("secret-key-prompt-sheet")
         });
