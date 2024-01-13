@@ -6,6 +6,7 @@ import { SFSymbol } from 'react-native-sfsymbols';
 import { SvgXml } from 'react-native-svg';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
+import { MenuView } from '@react-native-menu/menu';
 
 @observer
 export default class NoteItem extends React.Component {
@@ -106,55 +107,84 @@ export default class NoteItem extends React.Component {
         }}
         enabled={!note.is_locked()}
       >
-        <TouchableOpacity
-          onPress={() => note.is_locked() ? App.open_sheet("secret-key-prompt-sheet") : note.prep_and_open_posting()}
-          style={{
-            padding: 12,
-            backgroundColor: App.theme_note_background_color(),
-            borderRadius: 12,
-            opacity: note.is_locked() ? .5 : 1
+        <MenuView
+          shouldOpenOnLongPress={true}
+          onPressAction={({ nativeEvent }) => {
+            const event_id = nativeEvent.event
+            if (event_id === "delete_note") {
+              this._trigger_delete()
+            }
           }}
+          actions={[
+            // {
+            //   title: "Share...",
+            //   id: "share_note",
+            //   image: Platform.select({
+            //     ios: 'share'
+            //   })
+            // },
+            {
+              title: "Delete...",
+              id: "delete_note",
+              image: Platform.select({
+                ios: 'trash'
+              }),
+              attributes: {
+                destructive: true
+              }
+            }
+          ]}
         >
-          {
-            note.is_locked() ?
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                {
-                  Platform.OS === 'ios' ?
-                    <SFSymbol
-                      name={'lock'}
-                      color={App.theme_text_color()}
-                      style={{ height: 20, width: 20 }}
-                      multicolor={true}
-                    />
-                    :
-                    <SvgXml
-                      style={{
-                        height: 20,
-                        width: 20
-                      }}
-                      color={App.theme_text_color()}
-                      xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <TouchableOpacity
+            onPress={() => note.is_locked() ? App.open_sheet("secret-key-prompt-sheet") : note.prep_and_open_posting()}
+            style={{
+              padding: 12,
+              backgroundColor: App.theme_note_background_color(),
+              borderRadius: 12,
+              opacity: note.is_locked() ? .5 : 1
+            }}
+          >
+            {
+              note.is_locked() ?
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  {
+                    Platform.OS === 'ios' ?
+                      <SFSymbol
+                        name={'lock'}
+                        color={App.theme_text_color()}
+                        style={{ height: 20, width: 20 }}
+                        multicolor={true}
+                      />
+                      :
+                      <SvgXml
+                        style={{
+                          height: 20,
+                          width: 20
+                        }}
+                        color={App.theme_text_color()}
+                        xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                     </svg>'
-                    />
-                }
-                <Text style={{ color: App.theme_text_color(), fontWeight: "600", marginTop: 8 }}>Note locked</Text>
-              </View>
-              :
-              <>
-                {
-                  note.title && <Text style={{ color: App.theme_text_color(), marginBottom: 4, fontWeight: "600" }}>{note.title}</Text>
-                }
-                <Text style={{ color: App.theme_text_color() }}>{note.truncated_text()}</Text>
-              </>
-          }
-        </TouchableOpacity>
-      </Swipeable>
+                      />
+                  }
+                  <Text style={{ color: App.theme_text_color(), fontWeight: "600", marginTop: 8 }}>Note locked</Text>
+                </View>
+                :
+                <>
+                  {
+                    note.title && <Text style={{ color: App.theme_text_color(), marginBottom: 4, fontWeight: "600" }}>{note.title}</Text>
+                  }
+                  <Text style={{ color: App.theme_text_color() }}>{note.truncated_text()}</Text>
+                </>
+            }
+          </TouchableOpacity>
+        </MenuView>
+      </Swipeable >
     )
   }
 
