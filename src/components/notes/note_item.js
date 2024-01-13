@@ -104,6 +104,7 @@ export default class NoteItem extends React.Component {
         containerStyle={{
           marginTop: 15,
         }}
+        enabled={!note.is_locked()}
       >
         <TouchableOpacity
           onPress={() => note.is_locked() ? App.open_sheet("secret-key-prompt-sheet") : note.prep_and_open_posting()}
