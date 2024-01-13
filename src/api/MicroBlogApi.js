@@ -110,7 +110,7 @@ class MicroBlogApi {
     }
   }
 
-  async post_note(text, user_token, notebook_id = null, id = null, is_sharing = null, is_unsharing = null) {
+  async post_note(text = null, user_token, notebook_id = null, id = null, is_sharing = null, is_unsharing = null) {
     console.log('MicroBlogApi:post_note')
 
     let form = new FormData()
@@ -129,6 +129,9 @@ class MicroBlogApi {
         body: form
       })
       const data = await response.text()
+      if (data.error) {
+        return POST_ERROR
+      }
       return data
 
     } catch (error) {
