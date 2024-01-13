@@ -34,6 +34,13 @@ export default Note = types.model('Note', {
       App.navigate_to_screen("EditNote")
     }),
 
+    trigger_action: flow(function*(action_name) {
+      console.log("Note:trigger_action", action_name)
+      if (action_name === "delete_note") {
+        self.prompt_and_trigger_delete()
+      }
+    }),
+
     prompt_and_trigger_delete: flow(function*() {
       console.log("Note:prompt_and_trigger_delete", self.id)
       Alert.alert(

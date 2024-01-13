@@ -46,7 +46,7 @@ export default class NoteItem extends React.Component {
     const press_handler = () => {
       this._swipeable?.current?.close()
       if (text === "Delete") {
-        this._trigger_delete()
+        this.props.note?.trigger_action("delete_note")
       }
     };
 
@@ -90,10 +90,6 @@ export default class NoteItem extends React.Component {
     );
   }
 
-  _trigger_delete = () => {
-    this.props.note?.prompt_and_trigger_delete()
-  }
-
   render() {
     const { note } = this.props
     if (note.is_locked()) {
@@ -117,18 +113,25 @@ export default class NoteItem extends React.Component {
           shouldOpenOnLongPress={true}
           onPressAction={({ nativeEvent }) => {
             const event_id = nativeEvent.event
-            if (event_id === "delete_note") {
-              this._trigger_delete()
-            }
+            note.trigger_action(event_id)
           }}
           actions={[
-            // {
-            //   title: "Share...",
-            //   id: "share_note",
-            //   image: Platform.select({
-            //     ios: 'share'
-            //   })
-            // },
+            note._microblog.is_shared ? {
+              ...{
+                title: "Unshare...",
+                id: "unshare_note",
+                image: Platform.select({
+                  ios: 'xmark'
+                })
+              }
+            } :
+              {
+                title: "Share & publish...",
+                id: "share_note",
+                image: Platform.select({
+                  ios: 'square.and.arrow.up'
+                })
+              },
             {
               title: "Delete...",
               id: "delete_note",
@@ -161,10 +164,10 @@ export default class NoteItem extends React.Component {
               note._microblog.is_shared ?
                 <View
                   style={{
-                    backgroundColor: App.theme_alt_border_color(),
+                    backgroundColor: App.theme_background_color(),
                     alignSelf: "flex-start",
                     padding: 1,
-                    paddingHorizontal: 7,
+                    paddingHorizontal: 8,
                     borderRadius: 8,
                     marginTop: 8,
                     flexDirection: "row",
@@ -191,7 +194,7 @@ export default class NoteItem extends React.Component {
                         </svg>'
                       />
                   }
-                  <Text style={{ color: App.theme_text_color(), marginLeft: 3 }}>Shared</Text>
+                  <Text style={{ color: App.theme_text_color(), marginLeft: 5 }}>Shared</Text>
                 </View>
                 : null
             }
