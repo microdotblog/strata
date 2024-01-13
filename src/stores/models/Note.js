@@ -39,7 +39,7 @@ export default Note = types.model('Note', {
       if (this.secret_token()) {
         try {
           var decryptedText;
-          if (this._microblog.is_shared) {
+          if (self._microblog.is_shared) {
             decryptedText = self.content_text;
           }
           else {
@@ -54,7 +54,7 @@ export default Note = types.model('Note', {
         return self.content_text;
       }
     },
-    
+
     truncated_text(num_chars = 100) {
       var s = self.decrypted_text();
       if (s.length > num_chars) {
