@@ -19,9 +19,14 @@ export default Note = types.model('Note', {
   content_html: types.maybeNull(types.string),
   url: types.maybeNull(types.string),
   date_published: types.maybeNull(types.string),
-  _microblog: types.maybeNull(Microblog)
+  _microblog: types.maybeNull(Microblog),
+  is_updating: types.optional(types.boolean, false)
 })
   .actions(self => ({
+
+    afterCreate() {
+      self.is_updating = false
+    },
 
     prep_and_open_posting: flow(function*() {
       console.log("Note:prep_and_open_posting", self.id)
@@ -51,12 +56,14 @@ export default Note = types.model('Note', {
 
     delete_note: flow(function*() {
       console.log("Note:delete_note", self.id)
+      self.is_updating = true
       const data = yield MicroBlogApi.delete_note(self.id)
       if (data !== DELETE_ERROR) {
         getParent(self, 2)?.remove_note(self)
       }
       else {
         Alert.alert("Couldn't delete your note...", "Please try again.")
+        self.is_updating = false
       }
     }),
 
@@ -98,6 +105,10 @@ export default Note = types.model('Note', {
 
     secret_token() {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
-    }
+    },
+
+    can_do_action() {
+      return !this.is_locked() && !self.is_updating
+    },
 
   }))
