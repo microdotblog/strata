@@ -192,6 +192,31 @@ class MicroBlogApi {
     }
   }
 
+  async delete_note(note_id) {
+    console.log('MicroBlogApi:delete_note', note_id);
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes/${note_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.json()
+      if (data.error) {
+        return DELETE_ERROR
+      } else {
+        return true
+      }
+
+    } catch (error) {
+      console.log(error)
+      return DELETE_ERROR
+    }
+  }
+
 }
 
 export default new MicroBlogApi()

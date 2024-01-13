@@ -1,8 +1,9 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 import App from '../App';
 import Posting from '../Posting';
 import CryptoUtils from '../../utils/crypto';
-// import MicroBlogApi, { API_ERROR, DELETE_ERROR, LOGIN_TOKEN_INVALID } from '../../api/MicroBlogApi';
+import MicroBlogApi, { DELETE_ERROR } from '../../api/MicroBlogApi';
+import { Alert } from 'react-native';
 
 const Microblog = types.model('_microblog', {
   is_encrypted: types.boolean,
@@ -26,6 +27,37 @@ export default Note = types.model('Note', {
       console.log("Note:prep_and_open_posting", self.id)
       yield Posting.hydrate(self.decrypted_text(), self.id)
       App.navigate_to_screen("EditNote")
+    }),
+
+    prompt_and_trigger_delete: flow(function*() {
+      console.log("Note:prompt_and_trigger_delete", self.id)
+      Alert.alert(
+        "Delete note?",
+        "Are you sure you want to delete this note?",
+        [
+          {
+            text: "Cancel",
+            style: 'cancel',
+          },
+          {
+            text: "Delete",
+            onPress: () => self.delete_note(),
+            style: 'destructive'
+          },
+        ],
+        { cancelable: false },
+      )
+    }),
+
+    delete_note: flow(function*() {
+      console.log("Note:delete_note", self.id)
+      const data = yield MicroBlogApi.delete_note(self.id)
+      if (data !== DELETE_ERROR) {
+        getParent(self, 2)?.remove_note(self)
+      }
+      else {
+        Alert.alert("Couldn't delete your note...", "Please try again.")
+      }
     }),
 
   }))

@@ -89,7 +89,7 @@ export default class NoteItem extends React.Component {
   }
 
   _trigger_delete = () => {
-    console.log("_trigger_delete")
+    this.props.note?.prompt_and_trigger_delete()
   }
 
   render() {

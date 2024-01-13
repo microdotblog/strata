@@ -1,4 +1,4 @@
-import { types, flow } from 'mobx-state-tree';
+import { types, flow, destroy } from 'mobx-state-tree';
 import Note from './Note';
 import Tokens from './../Tokens';
 import MicroBlogApi, { API_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
@@ -84,6 +84,12 @@ export default Notebook = types.model('Notebook', {
     set_temp_notebook_name: flow(function*(text) {
       console.log("Notebook:set_temp_notebook_name", text)
       self.temp_notebook_name = text
+    }),
+
+    remove_note: flow(function*(note) {
+      console.log("Notebook:remove_note", note)
+      destroy(note)
+      self.fetch_notes()
     }),
 
   }))
