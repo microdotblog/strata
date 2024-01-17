@@ -35,6 +35,7 @@ RCT_EXPORT_METHOD(getNotesKey:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromi
   [container accountStatusWithCompletionHandler:^(CKAccountStatus status, NSError* error) {
     if (status != CKAccountStatusAvailable) {
       NSLog(@"iCloud: User not signed in to iCloud.");
+      handler(nil);
     }
     else {
       CKDatabase* db = [container privateCloudDatabase];
