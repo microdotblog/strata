@@ -59,7 +59,7 @@ export default class SecretKeyPromptSheet extends React.Component {
             title="Continue"
             color={App.theme_accent_color()}
             onPress={() => { Tokens.add_new_secret_token(Auth.selected_user.username); Keyboard.dismiss() }}
-            disabled={Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 68}
+            disabled={Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 64}
           />
         </SafeAreaView>
       </ActionSheet>
