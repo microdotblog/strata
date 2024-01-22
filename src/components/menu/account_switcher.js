@@ -184,6 +184,24 @@ export default class AccountSwitcher extends React.Component {
     )
   }
 
+  _render_premium_only = () => {
+    if (!Auth.selected_user.can_use_notes()) {
+      return (
+        <View
+          style={{
+            paddingVertical: 8,
+            backgroundColor: App.theme_button_background_color(),
+            paddingHorizontal: 16
+          }}
+        >
+          <Text style={{ fontWeight: "700", color: App.theme_text_color(), marginBottom: 10 }}>Notes requires a Micro.blog Premium subscription.</Text>
+          <Text style={{ color: App.theme_text_color() }}>With notes you can jot down ideas for blog posts, share notes with unique, hidden URLs on your blog, and sync notes across platforms with end-to-end encryption.</Text>
+        </View>
+      )
+    }
+    return null
+  }
+
   render() {
     if (Auth.selected_user != null) {
       return (
@@ -194,6 +212,7 @@ export default class AccountSwitcher extends React.Component {
           }}
         >
           {this._render_current_user()}
+          {this._render_premium_only()}
           {this._render_account_switcher()}
         </View>
       )

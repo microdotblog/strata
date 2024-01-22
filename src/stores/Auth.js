@@ -73,6 +73,7 @@ export default Auth = types.model('Auth', {
         self.is_selecting_user = false
         yield new_user.hydrate()
       }
+      App.check_current_user_can_use_notes()
       console.log("Auth:create_and_select_new_user:users", self.users.length)
     }),
 

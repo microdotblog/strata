@@ -40,15 +40,17 @@ export default class NotesList extends React.Component {
   }
 
   render() {
-    if (Auth.selected_user != null && Auth.selected_user.selected_notebook != null) {
+    const { selected_user } = Auth
+
+    if (selected_user != null && selected_user.selected_notebook != null) {
       return (
         <>
           {this._return_header()}
           <FlashList
             estimatedItemSize={150}
             initialNumToRender={15}
-            data={Auth.selected_user.selected_notebook.ordered_notes()}
-            extraData={Auth.selected_user.selected_notebook.ordered_notes()?.length}
+            data={selected_user.selected_notebook.ordered_notes()}
+            extraData={selected_user.selected_notebook.ordered_notes()?.length}
             keyExtractor={this._key_extractor}
             renderItem={this.render_note}
             contentContainerStyle={{
@@ -59,7 +61,7 @@ export default class NotesList extends React.Component {
             refreshControl={
               <RefreshControl
                 refreshing={false}
-                onRefresh={Auth.selected_user.selected_notebook.fetch_notes}
+                onRefresh={selected_user.selected_notebook.fetch_notes}
                 tintColor={App.theme_accent_color()}
               />
             }

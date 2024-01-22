@@ -28,6 +28,11 @@ export default User = types.model('User', {
 
     check_for_exisence_of_secret_token: flow(function*() {
       console.log("User:check_for_exisence_of_secret_token", !!self.secret_token())
+      // Let's check we can first use the feature
+      if (!self.can_use_notes()) {
+        // We already launch this sheet anyway, so we don't need to do it again.
+        return
+      }
       if (!self.secret_token()) {
         if (Platform.OS === "ios") {
           const cloud_key = yield MBNotesCloudModule.getNotesKey()
@@ -181,7 +186,11 @@ export default User = types.model('User', {
     },
 
     can_create_notebook() {
-      return true// self.is_premium || self.notebooks?.length == 0
+      return self.is_premium// self.is_premium || self.notebooks?.length == 0
+    },
+
+    can_use_notes() {
+      return self.is_premium// self.is_premium || self.notebooks?.length == 0
     }
 
   }))

@@ -22,11 +22,19 @@ export default App = types.model('App', {
       Auth.hydrate().then(async () => {
         App.set_is_hydrating(false)
         App.set_up_url_listener()
+        // Now we want to check if the user is premium
+        App.check_current_user_can_use_notes()
       })
     }),
 
     set_is_hydrating: flow(function*(is_hydrating) {
       self.is_hydrating = is_hydrating
+    }),
+
+    check_current_user_can_use_notes: flow(function*() {
+      if (Auth.selected_user && !Auth.selected_user.can_use_notes()) {
+        App.open_sheet("menu-sheet")
+      }
     }),
 
     set_current_initial_theme: flow(function*() {
@@ -207,7 +215,7 @@ export default App = types.model('App', {
       return self.theme === "dark" ? "#374151" : "#E5E7EB"
     },
     theme_danger_color() {
-      return self.theme === "dark" ? "red" : "red"
+      return self.theme === "dark" ? "#a94442" : "#a94442"
     },
     theme_confirm_color() {
       return "#6EE7B7"

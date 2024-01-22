@@ -16,10 +16,11 @@ export default class MenuSheet extends React.Component {
         //snapPoints={[40, 75, 100]}
         //initialSnapIndex={[1]}
         overdrawEnabled={true}
-        gestureEnabled={true}
+        gestureEnabled={Auth.selected_user?.can_use_notes()}
         containerStyle={{
           backgroundColor: App.theme_background_color_secondary()
         }}
+        closable={Auth.selected_user?.can_use_notes()}
       >
         <View
           style={{

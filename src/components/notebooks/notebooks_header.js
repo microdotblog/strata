@@ -23,7 +23,7 @@ export default class NotebooksHeader extends React.Component {
           width: "100%",
           marginBottom: 15
         }}>
-          <Text style={{ fontWeight: '800', color: App.theme_text_color() }}>Select or create a notebook</Text>
+          <Text style={{ fontWeight: '800', color: App.theme_text_color() }}>{Auth.selected_user?.can_create_notebook() ? "Select or create a notebook" : "Select a notebook"}</Text>
           <TouchableOpacity
             onPress={() => App.set_is_creating_notebook()}
             style={{
