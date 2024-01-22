@@ -2,7 +2,7 @@ import { types, flow, destroy } from 'mobx-state-tree';
 import Tokens from './../Tokens';
 import Notebook from './Notebook';
 import App from './../App';
-import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
+import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR, LOGIN_TOKEN_INVALID, LOGIN_ERROR } from '../../api/MicroBlogApi';
 import { Alert, NativeModules, Platform } from 'react-native';
 const { MBNotesCloudModule } = NativeModules;
 
@@ -23,6 +23,22 @@ export default User = types.model('User', {
       self.is_saving_new_notebook = false
       if (self.token()) {
         yield self.fetch_notebooks()
+        // Let's also check if their account premium status changed.
+        self.check_for_update_account_status()
+      }
+
+    }),
+
+    check_for_update_account_status: flow(function*() {
+      console.log("User:check_for_update_account_status", self.username)
+      const status = yield MicroBlogApi.login_with_token(self.token())
+      if (status !== LOGIN_ERROR && status !== LOGIN_TOKEN_INVALID) {
+        if (status.is_premium) {
+          self.is_premium = status.is_premium
+          if (!self.can_use_notes()) {
+            App.check_current_user_can_use_notes()
+          }
+        }
       }
     }),
 
