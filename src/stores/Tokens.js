@@ -65,9 +65,9 @@ export default Tokens = types.model('Tokens', {
       }
       else if (secret_token == null && self.temp_secret_token != null) {
         secret_token = self.temp_secret_token
-        // Let's also check if it doesn't include mkey
-        if (!secret_token.includes("mkey")) {
-          secret_token = "mkey" + self.temp_secret_token
+        // Let's also check if it includes mkey — we only use it as a sanity check
+        if (secret_token.includes("mkey")) {
+          secret_token = secret_token.replace("mkey", "")
         }
       }
       console.log("Tokens:add_new_secret_token", username)

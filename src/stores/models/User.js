@@ -15,12 +15,14 @@ export default User = types.model('User', {
   notebooks: types.optional(types.array(Notebook), []),
   selected_notebook: types.maybeNull(types.reference(Notebook)),
   is_saving_new_notebook: types.optional(types.boolean, false),
+  is_syncing_with_icloud: types.optional(types.boolean, false)
 })
   .actions(self => ({
 
     hydrate: flow(function*() {
       console.log("User:hydrate", self.username)
       self.is_saving_new_notebook = false
+      self.is_syncing_with_icloud = false
       if (self.token()) {
         yield self.fetch_notebooks()
         // Let's also check if their account premium status changed.
@@ -51,10 +53,17 @@ export default User = types.model('User', {
       }
       if (!self.secret_token()) {
         if (Platform.OS === "ios") {
+          self.is_syncing_with_icloud = true
           const cloud_key = yield MBNotesCloudModule.getNotesKey()
           if (!cloud_key) {
             App.open_sheet("secret-key-prompt-sheet")
           }
+          else {
+            Tokens.set_temp_secret_token(cloud_key).then(() => {
+              Tokens.add_new_secret_token(self.username)
+            })
+          }
+          self.is_syncing_with_icloud = false
         }
         else {
           App.open_sheet("secret-key-prompt-sheet")

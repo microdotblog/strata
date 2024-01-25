@@ -1,7 +1,7 @@
 import ActionSheet from "react-native-actions-sheet";
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { SafeAreaView, Text, TextInput, Button, Keyboard } from 'react-native';
+import { SafeAreaView, Text, TextInput, Button, Keyboard, ActivityIndicator, View } from 'react-native';
 import App from '../../stores/App'
 import Auth from '../../stores/Auth'
 import Tokens from "../../stores/Tokens";
@@ -28,39 +28,48 @@ export default class SecretKeyPromptSheet extends React.Component {
           <Text style={{ color: App.theme_text_color(), fontWeight: "600", paddingBottom: 15 }}>
             Enter your saved key:
           </Text>
-          <TextInput
-            multiline={true}
-            placeholderTextColor="lightgrey"
-            placeholder={"Enter your saved key"}
-            returnKeyType={'done'}
-            blurOnSubmit={true}
-            autoFocus={false}
-            autoCorrect={false}
-            autoCapitalize="none"
-            clearButtonMode={'while-editing'}
-            enablesReturnKeyAutomatically={true}
-            underlineColorAndroid={'transparent'}
-            style={{
-              backgroundColor: App.theme_input_contrast_background_color(),
-              fontSize: 17,
-              borderColor: App.theme_accent_color(),
-              borderWidth: 1,
-              minHeight: 70,
-              width: "100%",
-              borderRadius: 5,
-              marginVertical: 8,
-              padding: 8,
-              color: App.theme_text_color()
-            }}
-            onChangeText={(text) => Tokens.set_temp_secret_token(text)}
-            value={Tokens.temp_secret_token}
-          />
-          <Button
-            title="Continue"
-            color={App.theme_accent_color()}
-            onPress={() => { Tokens.add_new_secret_token(Auth.selected_user.username); Keyboard.dismiss() }}
-            disabled={Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 64}
-          />
+          <View style={{ width: "100%", position: "relative", justifyContent: "center", alignItems: "center" }}>
+            {
+              Auth.selected_user.is_syncing_with_icloud ?
+                <ActivityIndicator style={{ position: "absolute", zIndex: 10, top: 25 }} size={"large"} color={App.theme_accent_color()} />
+                : null
+            }
+            <TextInput
+              multiline={true}
+              placeholderTextColor="lightgrey"
+              placeholder={"Enter your saved key"}
+              returnKeyType={'done'}
+              blurOnSubmit={true}
+              autoFocus={false}
+              autoCorrect={false}
+              autoCapitalize="none"
+              clearButtonMode={'while-editing'}
+              enablesReturnKeyAutomatically={true}
+              underlineColorAndroid={'transparent'}
+              style={{
+                backgroundColor: App.theme_input_contrast_background_color(),
+                fontSize: 17,
+                borderColor: App.theme_accent_color(),
+                borderWidth: 1,
+                minHeight: 70,
+                width: "100%",
+                borderRadius: 5,
+                marginVertical: 8,
+                padding: 8,
+                color: App.theme_text_color(),
+                opacity: Auth.selected_user.is_syncing_with_icloud ? .4 : 1
+              }}
+              onChangeText={(text) => Tokens.set_temp_secret_token(text)}
+              value={Tokens.temp_secret_token}
+              editable={!Auth.selected_user.is_syncing_with_icloud}
+            />
+            <Button
+              title="Continue"
+              color={App.theme_accent_color()}
+              onPress={() => { Tokens.add_new_secret_token(Auth.selected_user.username); Keyboard.dismiss() }}
+              disabled={Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 64}
+            />
+          </View>
         </SafeAreaView>
       </ActionSheet>
     )

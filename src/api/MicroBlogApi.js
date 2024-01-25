@@ -128,7 +128,7 @@ class MicroBlogApi {
         },
         body: form
       })
-      const data = await response.text()
+      const data = await response.json()
       if (data.error) {
         return POST_ERROR
       }
