@@ -85,6 +85,9 @@ export default User = types.model('User', {
             if (existing_notebook.title !== notebook.title) {
               existing_notebook.update_title(notebook.title)
             }
+            if (notebook._microblog != null) {
+              existing_notebook.update_microblog_data(notebook._microblog)
+            }
           }
           else {
             self.notebooks.push({ username: self.username, ...notebook })

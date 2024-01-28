@@ -6,7 +6,7 @@ import { Alert } from 'react-native';
 import App from '../App';
 
 const Microblog = types.model('_microblog', {
-  color: types.model('colors', {
+  colors: types.model('colors', {
     light: types.maybeNull(types.string),
     dark: types.maybeNull(types.string)
   })
@@ -27,7 +27,7 @@ export default Notebook = types.model('Notebook', {
   .actions(self => ({
 
     hydrate: flow(function*() {
-      console.log("Notebook:hydrate", self.id)
+      console.log("Notebook:hydrate", self)
       self.temp_notebook_name = null
       self.is_renaming_notebook = false
       self.is_setting_notebook_name = false
@@ -43,6 +43,12 @@ export default Notebook = types.model('Notebook', {
     update_title: flow(function*(title = null) {
       if (title) {
         self.title = title
+      }
+    }),
+
+    update_microblog_data: flow(function*(_microblog = null) {
+      if (_microblog) {
+        self._microblog = _microblog
       }
     }),
 
@@ -118,6 +124,15 @@ export default Notebook = types.model('Notebook', {
 
     can_save_rename() {
       return self.temp_notebook_name != null && self.temp_notebook_name != "" && self.temp_notebook_name !== self.title
+    },
+
+    theme_note_background_color() {
+      if (self._microblog?.colors?.light != null && self._microblog?.colors?.dark != null) {
+        return App.theme === "dark" ? self._microblog.colors.dark : self._microblog.colors.light
+      }
+      else {
+        return App.theme_note_background_color()
+      }
     }
 
   }))

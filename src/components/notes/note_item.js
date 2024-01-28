@@ -148,7 +148,7 @@ export default class NoteItem extends React.Component {
             onPress={() => note.prep_and_open_posting()}
             style={{
               padding: 12,
-              backgroundColor: App.theme_note_background_color(),
+              backgroundColor: note.background_color(),
               borderRadius: 12,
               opacity: 1,
               ...note._microblog.is_shared ? {

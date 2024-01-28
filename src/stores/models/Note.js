@@ -167,4 +167,8 @@ export default Note = types.model('Note', {
       return !this.is_locked() && !self.is_updating
     },
 
+    background_color() {
+      return getParent(self, 2)?.theme_note_background_color()
+    }
+
   }))
