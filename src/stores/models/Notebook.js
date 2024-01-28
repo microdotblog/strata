@@ -3,6 +3,14 @@ import Note from './Note';
 import Tokens from './../Tokens';
 import MicroBlogApi, { API_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
 import { Alert } from 'react-native';
+import App from '../App';
+
+const Microblog = types.model('_microblog', {
+  color: types.model('colors', {
+    light: types.maybeNull(types.string),
+    dark: types.maybeNull(types.string)
+  })
+})
 
 export default Notebook = types.model('Notebook', {
   id: types.identifierNumber,
@@ -14,6 +22,7 @@ export default Notebook = types.model('Notebook', {
   temp_notebook_name: types.maybeNull(types.string),
   is_renaming_notebook: types.optional(types.boolean, false),
   is_setting_notebook_name: types.optional(types.boolean, false),
+  _microblog: types.maybeNull(Microblog),
 })
   .actions(self => ({
 
