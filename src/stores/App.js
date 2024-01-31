@@ -11,7 +11,8 @@ export default App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
   theme: types.optional(types.string, "light"),
   is_creating_notebook: types.optional(types.boolean, false),
-  temp_notebook_name: types.optional(types.string, "")
+  temp_notebook_name: types.optional(types.string, ""),
+  search_open: types.optional(types.boolean, false)
 })
   .actions(self => ({
 
@@ -150,6 +151,11 @@ export default App = types.model('App', {
     set_temp_notebook_name: flow(function*(text) {
       console.log("App:set_temp_notebook_name", text)
       self.temp_notebook_name = text
+    }),
+
+    toggle_search_is_open: flow(function*() {
+      console.log("App:toggle_search_is_open")
+      self.search_open = !self.search_open
     }),
 
   }))
