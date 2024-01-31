@@ -127,9 +127,9 @@ export default class NotesList extends React.Component {
                   minWidth: "89%",
                   color: App.theme_text_color()
                 }}
-              // onSubmitEditing={() => {Discover.trigger_search(); Keyboard.dismiss()}}
-              // onChangeText={(text) => Discover.set_search_query(text)}
-              // value={Discover.search_query}
+                onSubmitEditing={() => { Keyboard.dismiss() }}
+                onChangeText={(text) => App.set_search_query(text)}
+                value={App.search_query}
               />
             </View>
         }
@@ -156,8 +156,8 @@ export default class NotesList extends React.Component {
           <FlashList
             estimatedItemSize={150}
             initialNumToRender={15}
-            data={selected_user.selected_notebook.ordered_notes()}
-            extraData={selected_user.selected_notebook.ordered_notes()?.length}
+            data={selected_user.selected_notebook.ordered_notes_with_query()}
+            extraData={selected_user.selected_notebook.ordered_notes_with_query()?.length}
             keyExtractor={this._key_extractor}
             renderItem={this.render_note}
             contentContainerStyle={{

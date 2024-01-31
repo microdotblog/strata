@@ -133,6 +133,13 @@ export default Notebook = types.model('Notebook', {
       else {
         return App.theme_note_background_color()
       }
+    },
+
+    ordered_notes_with_query() {
+      if (App.search_query != "" && App.search_query?.length > 0) {
+        return this.ordered_notes().filter(note => note.decrypted_text()?.toLowerCase().includes(App.search_query?.toLowerCase()))
+      }
+      return this.ordered_notes()
     }
 
   }))

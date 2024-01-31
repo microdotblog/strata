@@ -12,7 +12,8 @@ export default App = types.model('App', {
   theme: types.optional(types.string, "light"),
   is_creating_notebook: types.optional(types.boolean, false),
   temp_notebook_name: types.optional(types.string, ""),
-  search_open: types.optional(types.boolean, false)
+  search_open: types.optional(types.boolean, false),
+  search_query: types.optional(types.string, "")
 })
   .actions(self => ({
 
@@ -156,6 +157,13 @@ export default App = types.model('App', {
     toggle_search_is_open: flow(function*() {
       console.log("App:toggle_search_is_open")
       self.search_open = !self.search_open
+      if (!self.search_open) {
+        self.search_query = ""
+      }
+    }),
+
+    set_search_query: flow(function*(value) {
+      self.search_query = value
     }),
 
   }))
