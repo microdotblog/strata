@@ -32,40 +32,44 @@ export default class NotesList extends React.Component {
                   {selected_notebook?.title}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderColor: App.theme_border_color(),
-                  borderWidth: 1,
-                  padding: 4,
-                  paddingHorizontal: 6,
-                  borderRadius: 5,
-                  marginLeft: 5,
-                  marginRight: 4
-                }}
-                onPress={App.toggle_search_is_open}
-              >
-                {
-                  Platform.OS === "ios" ?
-                    <SFSymbol
-                      name={"magnifyingglass"}
-                      color={App.theme_button_text_color()}
-                      style={{ height: 18, width: 18 }}
-                    />
-                    :
-                    <SvgXml
-                      style={{
-                        height: 18,
-                        width: 18
-                      }}
-                      color={App.theme_text_color()}
-                      xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                      </svg>'
-                    />
-                }
-              </TouchableOpacity>
+              {
+                Auth.selected_user.secret_token() ?
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderColor: App.theme_border_color(),
+                      borderWidth: 1,
+                      padding: 4,
+                      paddingHorizontal: 6,
+                      borderRadius: 5,
+                      marginLeft: 5,
+                      marginRight: 4
+                    }}
+                    onPress={App.toggle_search_is_open}
+                  >
+                    {
+                      Platform.OS === "ios" ?
+                        <SFSymbol
+                          name={"magnifyingglass"}
+                          color={App.theme_button_text_color()}
+                          style={{ height: 18, width: 18 }}
+                        />
+                        :
+                        <SvgXml
+                          style={{
+                            height: 18,
+                            width: 18
+                          }}
+                          color={App.theme_text_color()}
+                          xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>'
+                        />
+                    }
+                  </TouchableOpacity>
+                  : null
+              }
             </>
             :
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -174,7 +178,9 @@ export default class NotesList extends React.Component {
             }
             ListEmptyComponent={
               <View style={{ flex: 1, alignItems: "center", marginTop: 25 }}>
-                <Text style={{ color: App.theme_text_color() }}>You don't have any notes yet...</Text>
+                <Text style={{ color: App.theme_text_color() }}>
+                  {App.search_open ? "Couldn't find any notes with your search query..." : "You don't have any notes yet..."}
+                </Text>
               </View>
             }
           />
