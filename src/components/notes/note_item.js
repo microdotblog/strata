@@ -159,7 +159,7 @@ export default class NoteItem extends React.Component {
             {
               note.title && <Text style={{ color: App.theme_text_color(), marginBottom: 4, fontWeight: "600" }}>{note.title}</Text>
             }
-            <Text style={{ color: App.theme_text_color() }}>{note.truncated_text(App.search_open ? 300 : 100)}</Text>
+            <Text style={{ color: App.theme_text_color() }}>{note.truncated_text()}</Text>
             {
               note._microblog.is_shared ?
                 <View
