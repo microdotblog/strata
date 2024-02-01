@@ -24,12 +24,12 @@ export default class EditNoteModalScreen extends React.Component {
         <TextInput
           placeholderTextColor="lightgrey"
           style={{
-            fontSize: 18,
+            fontSize: 17,
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
-            marginTop: 3,
-            marginBottom: 38,
-            padding: 8,
+            marginTop: 5,
+            marginBottom: 90,
+            padding: 10,
             color: App.theme_text_color()
           }}
           multiline={true}

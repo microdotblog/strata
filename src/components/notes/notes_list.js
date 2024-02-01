@@ -19,16 +19,17 @@ export default class NotesList extends React.Component {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingHorizontal: 15,
+          paddingHorizontal: 12,
           paddingVertical: 10,
           width: '100%',
+          height: 50,
           backgroundColor: App.theme_input_contrast_background_color(),
         }}>
         {
           !App.search_open ?
             <>
-              <TouchableOpacity style={{ backgroundColor: App.theme_alt_border_color(), paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 }} onPress={() => App.open_sheet("notebooks-list")}>
-                <Text style={{ color: App.theme_text_color(), fontWeight: "500", fontSize: 15 }}>
+              <TouchableOpacity style={{ backgroundColor: App.theme_alt_border_color(), paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, borderColor: App.theme_border_color(), borderWidth: 1 }} onPress={() => App.open_sheet("notebooks-list")}>
+                <Text style={{ color: App.theme_text_color(), fontWeight: "500", fontSize: 15, padding: 2 }}>
                   {selected_notebook?.title}
                 </Text>
               </TouchableOpacity>
@@ -44,7 +45,8 @@ export default class NotesList extends React.Component {
                       paddingHorizontal: 6,
                       borderRadius: 5,
                       marginLeft: 5,
-                      marginRight: 4
+                      marginRight: 4,
+                      backgroundColor: App.theme_alt_border_color()        
                     }}
                     onPress={App.toggle_search_is_open}
                   >
@@ -84,7 +86,8 @@ export default class NotesList extends React.Component {
                   marginLeft: 2,
                   marginRight: 8,
                   width: 28,
-                  height: 28
+                  height: 28,
+                  backgroundColor: App.theme_alt_border_color()
                 }}
                 onPress={App.toggle_search_is_open}
               >
@@ -126,7 +129,7 @@ export default class NotesList extends React.Component {
                   borderColor: App.theme_border_color(),
                   borderWidth: 1,
                   borderRadius: 15,
-                  paddingHorizontal: 15,
+                  paddingHorizontal: 12,
                   paddingVertical: 3,
                   minWidth: "89%",
                   color: App.theme_text_color()
