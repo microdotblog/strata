@@ -115,25 +115,43 @@ export default class NoteItem extends React.Component {
             const event_id = nativeEvent.event
             note.trigger_action(event_id)
           }}
-          actions={[
-            note._microblog.is_shared ? {
-              ...{
-                title: "Unshare...",
+          actions={
+            note._microblog.is_shared ? [
+              {
+                title: "Open",
+                id: "open_in_browser",
+                image: Platform.select({
+                  ios: 'safari'
+                })
+              },
+              {
+                title: "Unshare",
                 id: "unshare_note",
                 image: Platform.select({
                   ios: 'xmark'
                 })
-              }
-            } :
-              {
-                title: "Share & publish...",
-                id: "share_note",
-                image: Platform.select({
-                  ios: 'square.and.arrow.up'
-                })
               },
+              {
+                title: "Delete",
+                id: "delete_note",
+                image: Platform.select({
+                  ios: 'trash'
+                }),
+                attributes: {
+                  destructive: true
+                }
+              }              
+            ]            
+            :
+            [{
+              title: "Share",
+              id: "share_note",
+              image: Platform.select({
+                ios: 'square.and.arrow.up'
+              })
+            },
             {
-              title: "Delete...",
+              title: "Delete",
               id: "delete_note",
               image: Platform.select({
                 ios: 'trash'
@@ -194,7 +212,7 @@ export default class NoteItem extends React.Component {
                         </svg>'
                       />
                   }
-                  <Text style={{ color: App.theme_text_color(), marginLeft: 5 }}>Shared</Text>
+                  <Text style={{ fontSize: 13, color: App.theme_text_color(), marginLeft: 5 }}>Shared</Text>
                 </View>
                 : null
             }

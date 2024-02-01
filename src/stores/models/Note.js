@@ -3,7 +3,8 @@ import App from '../App';
 import Posting from '../Posting';
 import CryptoUtils from '../../utils/crypto';
 import MicroBlogApi, { DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
-import { Alert } from 'react-native';
+import { Alert, Linking } from 'react-native';
+import { InAppBrowser } from 'react-native-inappbrowser-reborn'
 import Crypto from '../Crypto';
 
 const Microblog = types.model('_microblog', {
@@ -45,6 +46,9 @@ export default Note = types.model('Note', {
       }
       else if (action_name === "unshare_note") {
         self.unshare_note()
+      }
+      else if (action_name === "open_in_browser") {
+        self.open_in_browser()
       }
     }),
 
@@ -119,6 +123,12 @@ export default Note = types.model('Note', {
 
     }),
 
+    open_in_browser: flow(function*() {
+      InAppBrowser.open(self._microblog.shared_url, {
+        animated: true
+      });
+    })
+    
   }))
   .views(self => ({
 
