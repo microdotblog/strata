@@ -182,7 +182,6 @@ export default class NotesList extends React.Component {
             ListEmptyComponent={
               <View style={{ flex: 1, alignItems: "center", marginTop: 25 }}>
                 <Text style={{ color: App.theme_text_color() }}>
-                  {App.search_open ? "Couldn't find any notes with your search query..." : "You don't have any notes yet..."}
                 </Text>
               </View>
             }
