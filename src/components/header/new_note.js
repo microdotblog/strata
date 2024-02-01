@@ -28,9 +28,9 @@ export default class NewNoteButton extends React.Component {
           {
             Platform.OS === 'ios' ?
               <SFSymbol
-                name={has_secret_token ? 'plus' : 'lock'}
+                name={has_secret_token ? 'square.and.pencil' : 'lock'}
                 color={App.theme_text_color()}
-                style={{ height: 20, width: 20 }}
+                style={{ height: 22, width: 22 }}
                 multicolor={true}
               />
               :
