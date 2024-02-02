@@ -83,7 +83,7 @@ export default class MainApp extends React.Component {
                           options={{
                             title: "New Note",
                             headerLeft: () => <CloseModalButton />,
-                            headerRight: () => <NoteSaveEditButton title="Create" />
+                            headerRight: () => <NoteSaveEditButton title="Save" />
                           }}
                         />
                       </Stack.Group>
