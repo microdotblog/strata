@@ -12,6 +12,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */; };
+		4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1BECA72B6F235B0077F593 /* Security.framework */; };
+		4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */; };
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
 		7699B88040F8A987B510C191 /* libPods-Strata-StrataTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Strata-StrataTests.a */; };
@@ -41,6 +44,11 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Strata-StrataTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Strata-StrataTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-Strata.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.debug.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.debug.xcconfig"; sourceTree = "<group>"; };
 		4B08D7A62B48B1AF000B31E2 /* OpenSSL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = "Pods/OpenSSL-Universal/Frameworks/OpenSSL.xcframework"; sourceTree = "<group>"; };
+		4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Strata-Bridging-Header.h"; sourceTree = "<group>"; };
+		4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MBNoteCrypto.swift; path = Strata/MBNoteCrypto.swift; sourceTree = "<group>"; };
+		4B1BECA72B6F235B0077F593 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4B1BECA92B6F25420077F593 /* MBNotesCryptoModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCryptoModule.h; path = Strata/MBNotesCryptoModule.h; sourceTree = "<group>"; };
+		4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCryptoModule.m; path = Strata/MBNotesCryptoModule.m; sourceTree = "<group>"; };
 		4B9D28452B4EE866000D49AF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4B9D28472B4EF647000D49AF /* MBNotesCloudModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCloudModule.h; path = Strata/MBNotesCloudModule.h; sourceTree = "<group>"; };
 		4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCloudModule.m; path = Strata/MBNotesCloudModule.m; sourceTree = "<group>"; };
@@ -67,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-Strata.a in Frameworks */,
+				4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */,
 				4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,10 +108,14 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				4B9D28472B4EF647000D49AF /* MBNotesCloudModule.h */,
 				4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */,
+				4B1BECA92B6F25420077F593 /* MBNotesCryptoModule.h */,
+				4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */,
+				4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */,
 			);
 			name = Strata;
 			sourceTree = "<group>";
@@ -110,6 +123,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B1BECA72B6F235B0077F593 /* Security.framework */,
 				4B9D28452B4EE866000D49AF /* CloudKit.framework */,
 				4B08D7A62B48B1AF000B31E2 /* OpenSSL.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
@@ -219,7 +233,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1510;
 					};
 				};
 			};
@@ -405,9 +419,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */,
+				4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Strata-StrataTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -453,6 +470,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Strata-StrataTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = StrataTests/Info.plist;
@@ -497,6 +515,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blog.micro.strata;
 				PRODUCT_NAME = Strata;
+				SWIFT_OBJC_BRIDGING_HEADER = "Strata-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -526,6 +545,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = blog.micro.strata;
 				PRODUCT_NAME = Strata;
+				SWIFT_OBJC_BRIDGING_HEADER = "Strata-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
