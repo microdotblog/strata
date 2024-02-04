@@ -28,7 +28,7 @@ class CryptoUtils {
   }
 
   static async encryptWithKey(text, key) {
-    if (true) {
+    if (Platform.OS === "ios") {
       let result = await MBNotesCryptoModule.encryptText(text, key)
       return result;
     }
