@@ -91,6 +91,7 @@ export default Note = types.model('Note', {
       const data = yield MicroBlogApi.post_note(self.decrypted_text(), self.user_token(), null, self.id, true, null)
       if (data !== POST_ERROR && data._microblog?.shared_url != null) {
         self._microblog.shared_url = data._microblog.shared_url
+        self.content_text = self.decrypted_text()
         self._microblog.is_shared = true
         self.is_updating = false
       }
@@ -108,6 +109,7 @@ export default Note = types.model('Note', {
         const data = yield MicroBlogApi.post_note(encrypted_text, self.user_token(), null, self.id, null, true)
         if (data !== POST_ERROR) {
           self._microblog.shared_url = null
+          self.content_text = encrypted_text
           self._microblog.is_shared = false
           self.is_updating = false
         }
@@ -128,7 +130,7 @@ export default Note = types.model('Note', {
         animated: true
       });
     })
-    
+
   }))
   .views(self => ({
 
