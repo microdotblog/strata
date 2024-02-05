@@ -106,10 +106,6 @@ export default class NotebookItem extends React.Component {
         <View
           key={`notebook_${notebook.id}`}
           style={{
-            marginBottom: 8,
-            padding: 12,
-            borderRadius: 8,
-            backgroundColor: App.theme_input_contrast_background_color(),
             opacity: is_selected ? 1 : .6,
             flexDirection: "row",
             alignItems: "center",
@@ -127,7 +123,7 @@ export default class NotebookItem extends React.Component {
               borderWidth: 1,
               width: "70%",
               borderRadius: 5,
-              padding: 8,
+              padding: 10,
               color: App.theme_text_color()
             }}
             placeholder="Notebook name"

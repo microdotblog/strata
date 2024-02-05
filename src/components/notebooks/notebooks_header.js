@@ -72,7 +72,7 @@ export default class NotebooksHeader extends React.Component {
         {
           App.is_creating_notebook && Auth.selected_user?.can_create_notebook() ?
             <View>
-              <Text style={{ fontWeight: '500', color: App.theme_text_color() }}>New notebook:</Text>
+              <Text style={{ fontWeight: '500', paddingBottom: 5, color: App.theme_text_color() }}>New notebook:</Text>
               <TextInput
                 clearButtonMode={'while-editing'}
                 enablesReturnKeyAutomatically={true}

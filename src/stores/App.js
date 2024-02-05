@@ -232,7 +232,8 @@ export default App = types.model('App', {
       return self.theme === "dark" ? "#a94442" : "#a94442"
     },
     theme_confirm_color() {
-      return "#6EE7B7"
+      return self.theme_text_color()
+      // return "#6EE7B7"
     },
     now() {
       let now = new Date()
