@@ -3,7 +3,7 @@ import App from '../App';
 import Posting from '../Posting';
 import CryptoUtils from '../../utils/crypto';
 import MicroBlogApi, { DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
-import { Alert, Linking } from 'react-native';
+import { Alert } from 'react-native';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn'
 import Crypto from '../Crypto';
 
