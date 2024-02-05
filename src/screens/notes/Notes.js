@@ -9,8 +9,8 @@ export default class NotesScreen extends React.Component {
 
   componentDidMount = async () => {
     if (Auth.selected_user != null) {
-      await Auth.selected_user.check_for_exisence_of_secret_token()
       await Auth.selected_user.hydrate()
+      await Auth.selected_user.check_for_exisence_of_secret_token()
     }
   }
 
