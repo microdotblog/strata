@@ -9,6 +9,7 @@ import CryptoUtils from '../utils/crypto';
 export default Reply = types.model('Reply', {
   note_text: types.optional(types.string, ""),
   is_sending_note: types.optional(types.boolean, false),
+  is_shared: types.optional(types.boolean, false),
   note_id: types.maybeNull(types.number),
   text_selection: types.optional(
     types.model('Selection', {
@@ -20,12 +21,13 @@ export default Reply = types.model('Reply', {
 })
   .actions(self => ({
 
-    hydrate: flow(function*(note_text = "", note_id = null) {
+    hydrate: flow(function*(note_text = "", note_id = null, is_shared = false) {
       console.log("Posting:hydrate", note_id)
       self.note_request_id = new Date().getTime()
-      if (note_id !== self.note_id || self.note_text === "") {
+      if (note_id !== self.note_id || self.note_text === "" || self.is_shared != is_shared) {
         self.note_text = note_text
         self.note_id = note_id
+        self.is_shared = is_shared
       }
       self.is_sending_note = false
     }),
@@ -57,10 +59,13 @@ export default Reply = types.model('Reply', {
     send_note: flow(function*() {
       console.log("Posting:send_note", self.note_text)
       if (!self.is_sending_note && self.note_text !== " " && self.posting_enabled()) {
-        const encrypted_text = yield self.return_encrypted_note_text(self.note_text)
-        if (encrypted_text != null) {
+        var new_text = self.note_text;
+        if (!self.is_shared) {
+          new_text = yield self.return_encrypted_note_text(self.note_text)
+        }
+        if (new_text != null) {
           self.is_sending_note = true
-          const data = yield MicroBlogApi.post_note(encrypted_text, Auth.selected_user.token(), Auth.selected_user.selected_notebook?.id, self.note_id)
+          const data = yield MicroBlogApi.post_note(new_text, Auth.selected_user.token(), Auth.selected_user.selected_notebook?.id, self.note_id, !self.is_shared)
           console.log("Posting:send_note:data", data)
           if (data !== POST_ERROR) {
             Auth.selected_user.selected_notebook?.fetch_notes()

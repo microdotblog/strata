@@ -32,7 +32,7 @@ export default Note = types.model('Note', {
 
     prep_and_open_posting: flow(function*() {
       console.log("Note:prep_and_open_posting", self.id)
-      yield Posting.hydrate(self.decrypted_text(), self.id)
+      yield Posting.hydrate(self.decrypted_text(), self.id, self._microblog.is_shared)
       App.navigate_to_screen("EditNote")
     }),
 
@@ -88,11 +88,12 @@ export default Note = types.model('Note', {
     share_note: flow(function*() {
       console.log("Note:share_note", self.id)
       self.is_updating = true
-      const data = yield MicroBlogApi.post_note(self.decrypted_text(), self.user_token(), getParent(self, 2)?.id, self.id, true, null)
+      const data = yield MicroBlogApi.post_note(self.decrypted_text(), self.user_token(), getParent(self, 2)?.id, self.id, false, true, null)
       if (data !== POST_ERROR && data._microblog?.shared_url != null) {
-        self._microblog.shared_url = data._microblog.shared_url
         self.content_text = self.decrypted_text()
+        self._microblog.shared_url = data._microblog.shared_url
         self._microblog.is_shared = true
+        self._microblog.is_encrypted = false
         self.is_updating = false
       }
       else {
@@ -106,11 +107,12 @@ export default Note = types.model('Note', {
       self.is_updating = true
       const encrypted_text = yield Crypto.return_encrypted_text(self.decrypted_text(), self.secret_token())
       if (encrypted_text) {
-        const data = yield MicroBlogApi.post_note(encrypted_text, self.user_token(), getParent(self, 2)?.id, self.id, null, true)
+        const data = yield MicroBlogApi.post_note(encrypted_text, self.user_token(), getParent(self, 2)?.id, self.id, true, null, true)
         if (data !== POST_ERROR) {
-          self._microblog.shared_url = null
           self.content_text = encrypted_text
+          self._microblog.shared_url = null
           self._microblog.is_shared = false
+          self._microblog.is_encrypted = true
           self.is_updating = false
         }
         else {
@@ -142,7 +144,7 @@ export default Note = types.model('Note', {
       if (this.secret_token()) {
         try {
           var decryptedText;
-          if (self._microblog.is_shared) {
+          if (!self._microblog.is_encrypted) {
             decryptedText = self.content_text;
           }
           else {

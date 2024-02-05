@@ -110,7 +110,7 @@ class MicroBlogApi {
     }
   }
 
-  async post_note(text = null, user_token, notebook_id = null, id = null, is_sharing = null, is_unsharing = null) {
+  async post_note(text = null, user_token, notebook_id = null, id = null, is_encrypted = true, is_sharing = null, is_unsharing = null) {
     console.log('MicroBlogApi:post_note')
 
     let form = new FormData()
@@ -119,6 +119,7 @@ class MicroBlogApi {
     if (id !== null) form.append('id', id)
     if (is_sharing !== null) form.append('is_sharing', is_sharing)
     if (is_unsharing !== null) form.append('is_unsharing', is_unsharing)
+    form.append('is_encrypted', is_encrypted)
 
     try {
       const response = await fetch(`${BASE_ENDPOINT}/notes`, {
