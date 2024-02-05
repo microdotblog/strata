@@ -21,19 +21,21 @@ export default class SecretKeyPromptSheet extends React.Component {
         }}
         id={this.props.sheet_id}
       >
-        <SafeAreaView style={{ justifyContent: "center", alignItems: "center" }}>
+        <SafeAreaView style={{ marginLeft: 10, marginRight: 10 }}>
           <Text style={{ color: App.theme_text_color(), fontWeight: "400", paddingVertical: 15 }}>
-            Notes in Micro.blog are encrypted. To sync notes across devices, you will need to save a secret key so the notes can be decrypted later. If you lose your key, you will lose access to your notes too.
+            Notes in Micro.blog are encrypted. To sync notes across devices, you will need the secret key from Micro.blog on the web so the notes can be decrypted. If you lose your key, you will lose access to your notes too.
           </Text>
-          <Text style={{ color: App.theme_text_color(), fontWeight: "600", paddingBottom: 15 }}>
-            Enter your saved key:
-          </Text>
-          <View style={{ width: "100%", position: "relative", justifyContent: "center", alignItems: "center" }}>
+          <View style={{ flexDirection: "row", paddingTop: 5, paddingBottom: 15 }}>
+            <Text style={{ flex: 1, color: App.theme_text_color(), fontWeight: "600" }}>
+              Enter your saved key:
+            </Text>
             {
               Auth.selected_user.is_syncing_with_icloud ?
-                <ActivityIndicator style={{ position: "absolute", zIndex: 10, top: 25 }} size={"large"} color={App.theme_accent_color()} />
+                <ActivityIndicator style={{ flex: 1, alignItems: "flex-end" }} size={"small"} color={App.theme_accent_color()} />          
                 : null
-            }
+            } 
+          </View>
+          <View style={{ width: "100%", position: "relative", justifyContent: "center", alignItems: "center" }}>
             <TextInput
               multiline={true}
               placeholderTextColor="lightgrey"
