@@ -114,6 +114,12 @@ export default Reply = types.model('Reply', {
       else {
         self.note_text = self.note_text.InsertTextStyle(action, self.text_selection, is_link)
       }
+      
+      var new_pos = self.text_selection.end;
+      if (is_link) {
+        new_pos--;
+      }
+      self.text_selection = { start: new_pos, end: new_pos };
     }),
 
     set_text_selection: flow(function*(selection) {

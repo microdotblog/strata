@@ -43,6 +43,7 @@ export default class EditNoteModalScreen extends React.Component {
           underlineColorAndroid={'transparent'}
           inputAccessoryViewID={this.input_accessory_view_id}
           value={Posting.note_text}
+          selection={Posting.text_selection}
           onChangeText={(text) => !Posting.is_sending_note ? Posting.set_note_text(text) : null}
           onSelectionChange={({ nativeEvent: { selection } }) => {
             Posting.set_text_selection(selection)
