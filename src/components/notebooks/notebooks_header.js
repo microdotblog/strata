@@ -23,7 +23,7 @@ export default class NotebooksHeader extends React.Component {
           width: "100%",
           marginBottom: 15
         }}>
-          <Text style={{ fontWeight: '800', color: App.theme_text_color() }}>{Auth.selected_user?.can_create_notebook() ? "Select or create a notebook" : "Select a notebook"}</Text>
+          <Text style={{ fontWeight: '800', color: App.theme_text_color() }}>{Auth.selected_user?.can_create_notebook() ? "Select or create a new notebook" : "Select a notebook"}</Text>
           <TouchableOpacity
             onPress={() => App.set_is_creating_notebook()}
             style={{
@@ -36,22 +36,19 @@ export default class NotebooksHeader extends React.Component {
             {
               !App.is_creating_notebook ?
                 <>
-                  <Text style={{ color: App.theme_accent_color(), marginRight: 5, fontSize: 15 }}>
-                    Create
-                  </Text>
                   {
                     Platform.OS === 'ios' ?
                       <SFSymbol
                         name={'plus'}
                         color={App.theme_accent_color()}
-                        style={{ height: 20, width: 20 }}
+                        style={{ height: 14, width: 14 }}
                         multicolor={true}
                       />
                       :
                       <SvgXml
                         style={{
-                          height: 22,
-                          width: 22
+                          height: 16,
+                          width: 16
                         }}
                         color={App.theme_accent_color()}
                         xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -59,6 +56,9 @@ export default class NotebooksHeader extends React.Component {
                         </svg>'
                       />
                   }
+                  <Text style={{ color: App.theme_accent_color(), marginLeft: 5, marginRight: 5, fontSize: 15 }}>
+                    New
+                  </Text>
                 </>
                 :
                 <>
