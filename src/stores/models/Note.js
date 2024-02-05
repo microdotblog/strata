@@ -88,7 +88,7 @@ export default Note = types.model('Note', {
     share_note: flow(function*() {
       console.log("Note:share_note", self.id)
       self.is_updating = true
-      const data = yield MicroBlogApi.post_note(self.decrypted_text(), self.user_token(), null, self.id, true, null)
+      const data = yield MicroBlogApi.post_note(self.decrypted_text(), self.user_token(), getParent(self, 2)?.id, self.id, true, null)
       if (data !== POST_ERROR && data._microblog?.shared_url != null) {
         self._microblog.shared_url = data._microblog.shared_url
         self.content_text = self.decrypted_text()
@@ -106,7 +106,7 @@ export default Note = types.model('Note', {
       self.is_updating = true
       const encrypted_text = yield Crypto.return_encrypted_text(self.decrypted_text(), self.secret_token())
       if (encrypted_text) {
-        const data = yield MicroBlogApi.post_note(encrypted_text, self.user_token(), null, self.id, null, true)
+        const data = yield MicroBlogApi.post_note(encrypted_text, self.user_token(), getParent(self, 2)?.id, self.id, null, true)
         if (data !== POST_ERROR) {
           self._microblog.shared_url = null
           self.content_text = encrypted_text
