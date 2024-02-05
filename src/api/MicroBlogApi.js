@@ -219,6 +219,25 @@ class MicroBlogApi {
       return DELETE_ERROR
     }
   }
+  
+  async get_centralized_key(username) {
+    try {
+      const response = await fetch(`${BASE_ACCOUNT_ENDPOINT}/notes/centralkey?username=${username}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'
+        }
+      })
+    
+      const data = await response.text()
+      const info = JSON.parse(data);
+      return info.key;    
+    } catch (error) {
+      console.log(error)
+      return API_ERROR
+    }    
+  }
 
 }
 

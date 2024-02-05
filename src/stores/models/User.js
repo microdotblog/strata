@@ -56,7 +56,15 @@ export default User = types.model('User', {
           self.is_syncing_with_icloud = true
           const cloud_key = yield MBNotesCloudModule.getNotesKey()
           if (!cloud_key) {
-            App.open_sheet("secret-key-prompt-sheet")
+            App.open_sheet("secret-key-prompt-sheet");
+            if (self.is_appletest()) {
+              // special case for Apple, download centralized key
+              MicroBlogApi.get_centralized_key(self.username).then(apple_key => {
+                Tokens.set_temp_secret_token(apple_key).then(() => {
+                  Tokens.add_new_secret_token(self.username)
+                });
+              });
+            }
           }
           else {
             Tokens.set_temp_secret_token(cloud_key).then(() => {
@@ -219,6 +227,10 @@ export default User = types.model('User', {
 
     can_use_notes() {
       return self.is_premium// self.is_premium || self.notebooks?.length == 0
+    },
+    
+    is_appletest() {
+      return (self.username == "appletest")
     }
 
   }))
