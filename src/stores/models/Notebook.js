@@ -115,12 +115,11 @@ export default Notebook = types.model('Notebook', {
     },
 
     ordered_notes() {
-      return self.notes
-      // return [...self.notes].sort((a, b) => {
-      //   const dateA = new Date(a.date_published).getTime()
-      //   const dateB = new Date(b.date_published).getTime()
-      //   return dateB - dateA
-      // })
+      return [...self.notes].sort((a, b) => {
+        const dateA = new Date(a.date_published).getTime()
+        const dateB = new Date(b.date_published).getTime()
+        return dateB - dateA
+      })
     },
 
     can_save_rename() {
