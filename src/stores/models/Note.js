@@ -21,6 +21,7 @@ export default Note = types.model('Note', {
   content_html: types.maybeNull(types.string),
   url: types.maybeNull(types.string),
   date_published: types.maybeNull(types.string),
+  date_modified: types.maybeNull(types.string),
   _microblog: types.maybeNull(Microblog),
   is_updating: types.optional(types.boolean, false)
 })
