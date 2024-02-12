@@ -49,14 +49,18 @@ RCT_CUSTOM_VIEW_PROPERTY(value, NSString, MBHighlightingTextView)
 RCT_CUSTOM_VIEW_PROPERTY(selection, NSString, MBHighlightingTextView)
 {
   if (json) {
+    NSInteger start_pos = 0;
+    NSInteger end_pos = 0;
+
     NSString* s = [RCTConvert NSString:json];
     if (s.length > 0) {
       // start/end separated by a space, e.g. "0 5"
       NSArray* pieces = [s componentsSeparatedByString:@" "];
-      NSInteger start_pos = [[pieces firstObject] integerValue];
-      NSInteger end_pos = [[pieces lastObject] integerValue];
-      self.textView.selectedRange = NSMakeRange(start_pos, end_pos - start_pos);
+      start_pos = [[pieces firstObject] integerValue];
+      end_pos = [[pieces lastObject] integerValue];
     }
+
+    self.textView.selectedRange = NSMakeRange(start_pos, end_pos - start_pos);
   }
 }
 

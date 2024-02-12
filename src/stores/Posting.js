@@ -31,12 +31,14 @@ export default Reply = types.model('Reply', {
         self.is_shared = is_shared
       }
       self.is_sending_note = false
+      self.text_selection_flat = ""
     }),
 
     reset: flow(function*() {
       self.note_text = ""
       self.note_id = null
       self.is_sending_note = false
+      self.text_selection_flat = ""
     }),
 
     set_note_text: flow(function*(value) {
