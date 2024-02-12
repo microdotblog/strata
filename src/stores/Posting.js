@@ -42,6 +42,11 @@ export default Reply = types.model('Reply', {
       self.note_text = value
     }),
 
+    set_note_text_from_typing: flow(function* (value) {
+      self.post_text = value
+      // App.check_usernames(self.post_text)
+    }),
+    
     return_encrypted_note_text: flow(function*(text) {
       if (text && Auth.selected_user.secret_token()) {
         try {

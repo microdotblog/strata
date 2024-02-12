@@ -22,7 +22,37 @@ export default class EditNoteModalScreen extends React.Component {
   render() {
     if (Platform.OS === 'ios') {
       return (
-        <TextInput />
+        <HighlightingText
+          placeholderTextColor="lightgrey"
+          style={{
+            minHeight: 300,
+            fontSize: 17,
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            marginTop: 5,
+            flex: 1,
+            padding: 10,
+            color: App.theme_text_color()
+          }}
+          editable={!Posting.is_sending_post}
+          multiline={true}
+          scrollEnabled={true}
+          returnKeyType={'default'}
+          keyboardType={'default'}
+          autoFocus={true}
+          autoCorrect={true}
+          clearButtonMode={'while-editing'}
+          enablesReturnKeyAutomatically={true}
+          underlineColorAndroid={'transparent'}
+          value={Posting.note_text}
+          onChangeText={({ nativeEvent: { text } }) => {
+            !Posting.is_sending_note ? Posting.set_note_text_from_typing(text) : null
+          }}
+          onSelectionChange={({ nativeEvent: { selection } }) => {
+            Posting.set_text_selection(selection)
+          }}
+          inputAccessoryViewID={this.input_accessory_view_id}
+        />
       )
     }
     else {
