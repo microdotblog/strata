@@ -46,6 +46,7 @@ export default class EditNoteModalScreen extends React.Component {
           enablesReturnKeyAutomatically={true}
           underlineColorAndroid={'transparent'}
           value={Posting.note_text}
+          selection={Posting.text_selection_flat}
           onChangeText={({ nativeEvent: { text } }) => {
             !Posting.is_sending_note ? Posting.set_note_text_from_typing(text) : null
           }}

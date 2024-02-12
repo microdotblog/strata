@@ -17,7 +17,8 @@ export default Reply = types.model('Reply', {
       end: types.optional(types.number, 0),
     }), { start: 0, end: 0 }
   ),
-  note_request_id: types.optional(types.number, new Date().getTime())
+  note_request_id: types.optional(types.number, new Date().getTime()),
+  text_selection_flat: types.optional(types.string, "")
 })
   .actions(self => ({
 
@@ -130,6 +131,7 @@ export default Reply = types.model('Reply', {
         new_pos--;
       }
       self.text_selection = { start: new_pos, end: new_pos };
+      self.text_selection_flat = `${new_pos} ${new_pos}`;
     }),
 
     set_text_selection: flow(function*(selection) {
