@@ -15,6 +15,9 @@
 		4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */; };
 		4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1BECA72B6F235B0077F593 /* Security.framework */; };
 		4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */; };
+		4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */; };
+		4B6630E62B7AB35B00D961AA /* MBHighlightingTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E32B7AB35B00D961AA /* MBHighlightingTextManager.m */; };
+		4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */; };
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
 		7699B88040F8A987B510C191 /* libPods-Strata-StrataTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Strata-StrataTests.a */; };
@@ -49,6 +52,12 @@
 		4B1BECA72B6F235B0077F593 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4B1BECA92B6F25420077F593 /* MBNotesCryptoModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCryptoModule.h; path = Strata/MBNotesCryptoModule.h; sourceTree = "<group>"; };
 		4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCryptoModule.m; path = Strata/MBNotesCryptoModule.m; sourceTree = "<group>"; };
+		4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBHighlightingTextStorage.m; path = Strata/MBHighlightingTextStorage.m; sourceTree = "<group>"; };
+		4B6630E02B7AB35A00D961AA /* MBHighlightingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBHighlightingTextView.h; path = Strata/MBHighlightingTextView.h; sourceTree = "<group>"; };
+		4B6630E12B7AB35A00D961AA /* MBHighlightingTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBHighlightingTextManager.h; path = Strata/MBHighlightingTextManager.h; sourceTree = "<group>"; };
+		4B6630E22B7AB35A00D961AA /* MBHighlightingTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBHighlightingTextStorage.h; path = Strata/MBHighlightingTextStorage.h; sourceTree = "<group>"; };
+		4B6630E32B7AB35B00D961AA /* MBHighlightingTextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBHighlightingTextManager.m; path = Strata/MBHighlightingTextManager.m; sourceTree = "<group>"; };
+		4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBHighlightingTextView.m; path = Strata/MBHighlightingTextView.m; sourceTree = "<group>"; };
 		4B9D28452B4EE866000D49AF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4B9D28472B4EF647000D49AF /* MBNotesCloudModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCloudModule.h; path = Strata/MBNotesCloudModule.h; sourceTree = "<group>"; };
 		4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCloudModule.m; path = Strata/MBNotesCloudModule.m; sourceTree = "<group>"; };
@@ -111,6 +120,12 @@
 				4B1BECA92B6F25420077F593 /* MBNotesCryptoModule.h */,
 				4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */,
 				4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */,
+				4B6630E12B7AB35A00D961AA /* MBHighlightingTextManager.h */,
+				4B6630E32B7AB35B00D961AA /* MBHighlightingTextManager.m */,
+				4B6630E22B7AB35A00D961AA /* MBHighlightingTextStorage.h */,
+				4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */,
+				4B6630E02B7AB35A00D961AA /* MBHighlightingTextView.h */,
+				4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -419,9 +434,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */,
 				4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */,
+				4B6630E62B7AB35B00D961AA /* MBHighlightingTextManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */,
 				4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */,
 				4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */,
 			);
