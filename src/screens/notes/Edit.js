@@ -22,6 +22,7 @@ export default class EditNoteModalScreen extends React.Component {
   render() {
     if (Platform.OS === 'ios') {
       return (
+        <>
         <HighlightingText
           placeholderTextColor="lightgrey"
           style={{
@@ -53,6 +54,27 @@ export default class EditNoteModalScreen extends React.Component {
           }}
           inputAccessoryViewID={this.input_accessory_view_id}
         />
+        <InputAccessoryView nativeID={this.input_accessory_view_id}>
+          <PostingToolbar />
+        </InputAccessoryView>
+        {
+          Posting.is_sending_note ?
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                height: 200,
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 10
+              }}
+            >
+              <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
+            </View>
+            : null
+        }
+        </>
       )
     }
     else {
