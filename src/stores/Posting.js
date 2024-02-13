@@ -42,11 +42,11 @@ export default Reply = types.model('Reply', {
     }),
 
     set_note_text: flow(function*(value) {
-      self.note_text = value
+      self.note_text = value;
     }),
 
     set_note_text_from_typing: flow(function* (value) {
-      self.post_text = value
+      self.note_text = value;
       // App.check_usernames(self.post_text)
     }),
     
