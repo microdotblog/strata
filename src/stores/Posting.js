@@ -130,7 +130,10 @@ export default Reply = types.model('Reply', {
       
       var new_pos = self.text_selection.end;
       if (is_link) {
-        new_pos--;
+        new_pos += (action.length - 1);
+      }
+      else {
+        new_pos += (action.length * 2);
       }
       self.text_selection = { start: new_pos, end: new_pos };
       self.text_selection_flat = `${new_pos} ${new_pos}`;
