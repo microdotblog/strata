@@ -30,7 +30,7 @@ export default class EditNoteModalScreen extends React.Component {
             fontSize: 17,
             justifyContent: 'flex-start',
             alignItems: 'flex-start',
-            marginTop: 5,
+            marginTop: 0,
             flex: 1,
             padding: 10,
             color: App.theme_text_color()

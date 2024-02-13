@@ -127,7 +127,7 @@ RCT_CUSTOM_VIEW_PROPERTY(selection, NSString, MBHighlightingTextView)
   };
   NSAttributedString* attr_s = [[NSAttributedString alloc] initWithString:s attributes:attr_info];
   self.textView.attributedText = attr_s;
-  self.textView.textContainerInset = UIEdgeInsetsMake (8, 5, 8, 5);
+  self.textView.textContainerInset = UIEdgeInsetsMake (10, 5, 10, 5);
   self.textView.font = [UIFont systemFontOfSize:[[self class] preferredPostingFontSize]];
   [self.textStorage setAttributedString:attr_s];
 
