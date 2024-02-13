@@ -55,7 +55,7 @@
     CGFloat top_views_height = 0;
     CGFloat bottom_views_height = 0;
     
-    bottom_views_height += self.inputAccessoryView.bounds.size.height;
+//    bottom_views_height += self.inputAccessoryView.bounds.size.height;
 
     for (UIView* sibling_v in self.superview.subviews) {
       if ((sibling_v != self) && !sibling_v.hidden) {
