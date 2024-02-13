@@ -17,7 +17,8 @@ export default Reply = types.model('Reply', {
       end: types.optional(types.number, 0),
     }), { start: 0, end: 0 }
   ),
-  note_request_id: types.optional(types.number, new Date().getTime())
+  note_request_id: types.optional(types.number, new Date().getTime()),
+  text_selection_flat: types.optional(types.string, "")
 })
   .actions(self => ({
 
@@ -30,18 +31,25 @@ export default Reply = types.model('Reply', {
         self.is_shared = is_shared
       }
       self.is_sending_note = false
+      self.text_selection_flat = ""
     }),
 
     reset: flow(function*() {
       self.note_text = ""
       self.note_id = null
       self.is_sending_note = false
+      self.text_selection_flat = ""
     }),
 
     set_note_text: flow(function*(value) {
-      self.note_text = value
+      self.note_text = value;
     }),
 
+    set_note_text_from_typing: flow(function* (value) {
+      self.note_text = value;
+      // App.check_usernames(self.post_text)
+    }),
+    
     return_encrypted_note_text: flow(function*(text) {
       if (text && Auth.selected_user.secret_token()) {
         try {
@@ -122,9 +130,13 @@ export default Reply = types.model('Reply', {
       
       var new_pos = self.text_selection.end;
       if (is_link) {
-        new_pos--;
+        new_pos += (action.length - 1);
+      }
+      else {
+        new_pos += (action.length * 2);
       }
       self.text_selection = { start: new_pos, end: new_pos };
+      self.text_selection_flat = `${new_pos} ${new_pos}`;
     }),
 
     set_text_selection: flow(function*(selection) {
