@@ -112,7 +112,9 @@ export default class NotebookItem extends React.Component {
             opacity: is_selected ? 1 : .6,
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            marginBottom: 10,
+            marginRight: 10
           }}
         >
           <TextInput
