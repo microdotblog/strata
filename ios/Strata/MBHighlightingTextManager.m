@@ -64,6 +64,18 @@ RCT_CUSTOM_VIEW_PROPERTY(selection, NSString, MBHighlightingTextView)
   }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(autoFocus, BOOL, MBHighlightingTextView)
+{
+  if (json) {
+    BOOL needs_focus = [RCTConvert BOOL:json];
+    if (needs_focus) {
+      [self.textView becomeFirstResponder];
+    }
+  }
+}
+
+#pragma mark -
+
 + (CGFloat) preferredTimelineFontSize
 {
   UIFont* font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
