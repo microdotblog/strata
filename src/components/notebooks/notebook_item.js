@@ -20,7 +20,10 @@ export default class NotebookItem extends React.Component {
     if (!notebook.is_renaming_notebook) {
       return (
         <TouchableOpacity
-          onPress={() => Auth.selected_user.set_selected_notebook(notebook, true)}
+          onPress={() => {
+            Auth.selected_user.set_selected_notebook(notebook, true);
+            App.close_sheet("notebooks-list");
+          }}
           key={`notebook_${notebook.id}`}
           style={{
             marginBottom: 8,
