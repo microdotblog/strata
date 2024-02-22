@@ -331,7 +331,7 @@
 - (void) processHeaders
 {
   UIFont* header_font = [UIFont boldSystemFontOfSize:[MBHighlightingTextManager preferredTimelineFontSize]];
-	UIColor* header_c = [UIColor blueColor];
+  UIColor* header_c = [UIColor colorNamed:@"color_syntax_headers"];
 	NSRange current_r = NSMakeRange (0, 0);
 	BOOL is_header = NO;
 	
