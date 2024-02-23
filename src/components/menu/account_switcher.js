@@ -12,7 +12,7 @@ export default class AccountSwitcher extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show_secret_key: false
+      is_showing_key: false
     };
   }
 
@@ -57,15 +57,15 @@ export default class AccountSwitcher extends React.Component {
             <View style={{ flex: 1, alignItems: "flex-end" }}>
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({ show_secret_key: true });
+                  this.setState({ is_showing_key: !this.state.is_showing_key });
                 }}
               >
-                <Text style={{ color: App.theme_accent_color() }}>Show Secret Key</Text>
+                <Text style={{ color: App.theme_accent_color() }}>{ this.state.is_showing_key ? "Hide Secret Key" : "Show Secret Key" }</Text>
               </TouchableOpacity>
             </View>
           : null }
         </View>
-        { this.state.show_secret_key ? 
+        { this.state.is_showing_key ? 
           <View style={{ marginTop: 25, marginBottom: 15 }}>
             <Text selectable={true} style={{ color: App.theme_text_color() }}>mkey{ Auth.selected_user.secret_token() }</Text>
           </View>
