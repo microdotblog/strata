@@ -9,12 +9,19 @@ import { SvgXml } from 'react-native-svg';
 @observer
 export default class AccountSwitcher extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      show_secret_key: false
+    };
+  }
+
   _render_current_user = () => {
     return (
       <View
         //onPress={() => profileScreen(Auth.selected_user.username, App.current_screen_id)}
         style={{
-          flexDirection: 'row',
+          flexDirection: 'column',
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
@@ -46,7 +53,23 @@ export default class AccountSwitcher extends React.Component {
             {/* <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>{Auth.selected_user.full_name}</Text> */}
             <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>@{Auth.selected_user.username}</Text>
           </View>
+          { (Auth.selected_user.secret_token() != null) ?
+            <View style={{ flex: 1, alignItems: "flex-end" }}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({ show_secret_key: true });
+                }}
+              >
+                <Text style={{ color: App.theme_accent_color() }}>Show Secret Key</Text>
+              </TouchableOpacity>
+            </View>
+          : null }
         </View>
+        { this.state.show_secret_key ? 
+          <View style={{ marginTop: 25, marginBottom: 15 }}>
+            <Text selectable={true}>mkey{ Auth.selected_user.secret_token() }</Text>
+          </View>
+        : null }
       </View>
     )
   }
