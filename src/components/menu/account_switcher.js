@@ -67,7 +67,7 @@ export default class AccountSwitcher extends React.Component {
         </View>
         { this.state.show_secret_key ? 
           <View style={{ marginTop: 25, marginBottom: 15 }}>
-            <Text selectable={true}>mkey{ Auth.selected_user.secret_token() }</Text>
+            <Text selectable={true} style={{ color: App.theme_text_color() }}>mkey{ Auth.selected_user.secret_token() }</Text>
           </View>
         : null }
       </View>
