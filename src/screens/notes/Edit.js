@@ -13,6 +13,7 @@ export default class EditNoteModalScreen extends React.Component {
   constructor(props) {
     super(props)
     this.input_accessory_view_id = "input_toolbar";
+    App.set_unsaved_note(false);
   }
 
   componentWillUnmount() {
@@ -48,7 +49,10 @@ export default class EditNoteModalScreen extends React.Component {
           value={Posting.note_text}
           selection={Posting.text_selection_flat}
           onChangeText={({ nativeEvent: { text } }) => {
-            !Posting.is_sending_note ? Posting.set_note_text_from_typing(text) : null
+            if (!Posting.is_sending_note) {
+              Posting.set_note_text_from_typing(text);
+              App.set_unsaved_note(true);
+            }
           }}
           onSelectionChange={({ nativeEvent: { selection } }) => {
             Posting.set_text_selection(selection)

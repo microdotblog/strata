@@ -66,6 +66,7 @@ export default Reply = types.model('Reply', {
 
     send_note: flow(function*() {
       console.log("Posting:send_note", self.note_text)
+      App.set_unsaved_note(false);
       if (!self.is_sending_note && self.note_text !== " " && self.posting_enabled()) {
         var new_text = self.note_text;
         if (!self.is_shared) {

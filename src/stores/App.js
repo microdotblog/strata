@@ -4,6 +4,7 @@ import { Appearance, AppState, Linking, Alert } from 'react-native'
 import { SheetManager } from "react-native-actions-sheet";
 import Login from './Login';
 import Tokens from './Tokens';
+import Posting from './Posting';
 
 let NAVIGATION = null;
 
@@ -13,7 +14,8 @@ export default App = types.model('App', {
   is_creating_notebook: types.optional(types.boolean, false),
   temp_notebook_name: types.optional(types.string, ""),
   search_open: types.optional(types.boolean, false),
-  search_query: types.optional(types.string, "")
+  search_query: types.optional(types.string, ""),
+  has_unsaved_note: types.optional(types.boolean, false),
 })
   .actions(self => ({
 
@@ -137,7 +139,22 @@ export default App = types.model('App', {
     go_back: flow(function*() {
       console.log("App:go_back")
       if (NAVIGATION != null) {
-        NAVIGATION.goBack()
+        if (self.has_unsaved_note) {
+          let buttons = [
+            {
+              text: "Don't Save",
+              onPress: () => NAVIGATION.goBack()
+            },
+            {
+              text: "Save",
+              onPress: () => Posting.send_note()
+            }
+          ];
+          Alert.alert("Unsaved Note", "Do you want to save before leaving this note?", buttons);
+        }
+        else {
+          NAVIGATION.goBack()
+        }
       }
     }),
 
@@ -165,6 +182,10 @@ export default App = types.model('App', {
     set_search_query: flow(function*(value) {
       self.search_query = value
     }),
+
+    set_unsaved_note: flow(function*(value) {
+      self.has_unsaved_note = value
+    })
 
   }))
   .views(self => ({
