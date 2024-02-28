@@ -200,6 +200,9 @@ export default App = types.model('App', {
         console.log("App:prepare_and_open_new_note_from_action:note_object", note_object)
         Posting.hydrate(note_object.text).then(() => {
           App.navigate_to_screen("NewNote")
+          if (note_object.notebook) {
+            Auth.selected_user.find_and_select_notebook(note_object.notebook)
+          }
         })
       }
     })
