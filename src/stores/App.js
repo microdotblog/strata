@@ -198,6 +198,9 @@ export default App = types.model('App', {
       const note_object = self.note_object_from_url(value)
       if (note_object && note_object?.text) {
         console.log("App:prepare_and_open_new_note_from_action:note_object", note_object)
+        Posting.hydrate(note_object.text).then(() => {
+          App.navigate_to_screen("NewNote")
+        })
       }
     })
 
