@@ -6,7 +6,7 @@ import App from './App';
 import Clipboard from '@react-native-clipboard/clipboard'
 import CryptoUtils from '../utils/crypto';
 
-export default Reply = types.model('Reply', {
+export default Posting = types.model('Posting', {
   note_text: types.optional(types.string, ""),
   is_sending_note: types.optional(types.boolean, false),
   is_shared: types.optional(types.boolean, false),
@@ -45,11 +45,10 @@ export default Reply = types.model('Reply', {
       self.note_text = value;
     }),
 
-    set_note_text_from_typing: flow(function* (value) {
+    set_note_text_from_typing: flow(function*(value) {
       self.note_text = value;
-      // App.check_usernames(self.post_text)
     }),
-    
+
     return_encrypted_note_text: flow(function*(text) {
       if (text && Auth.selected_user.secret_token()) {
         try {
@@ -128,7 +127,7 @@ export default Reply = types.model('Reply', {
       else {
         self.note_text = self.note_text.InsertTextStyle(action, self.text_selection, is_link)
       }
-      
+
       var new_pos = self.text_selection.end;
       if (is_link) {
         new_pos += (action.length - 1);
