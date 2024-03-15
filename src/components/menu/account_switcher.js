@@ -72,8 +72,14 @@ export default class AccountSwitcher extends React.Component {
             </Text>
             <TouchableOpacity
               onPress={() => { Auth.selected_user.prompt_delete_secret_key() }}
-              style={{ alignItems: 'center', marginTop: 30 }}
+              style={{ flexDirection: "row", marginTop: 20 }}
             >
+              <SFSymbol
+                name={'trash'}
+                color={App.theme_text_color()}
+                style={{ height: 18, width: 18, marginRight: 6 }}
+                multicolor={true}
+              />            
               <Text style={{ color: App.theme_text_color() }}>Delete Secret Key</Text>
             </TouchableOpacity>
           </View>
