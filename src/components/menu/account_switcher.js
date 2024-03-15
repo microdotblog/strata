@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TouchableOpacity, Image, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Platform, Alert } from 'react-native';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 import { SFSymbol } from 'react-native-sfsymbols';
@@ -68,8 +68,14 @@ export default class AccountSwitcher extends React.Component {
         { this.state.is_showing_key ? 
           <View style={{ marginTop: 25, marginBottom: 15 }}>
             <Text selectable={true} style={{ color: App.theme_text_color() }}>
-              { Auth.selected_user.secret_token().includes("mkey") ? Auth.selected_user.secret_token() : `mkey${Auth.selected_user.secret_token()}` }
+              mkey{ Auth.selected_user.secret_token() }
             </Text>
+            <TouchableOpacity
+              onPress={() => { Auth.selected_user.prompt_delete_secret_key() }}
+              style={{ alignItems: 'center', marginTop: 30 }}
+            >
+              <Text style={{ color: App.theme_text_color() }}>Delete Secret Key</Text>
+            </TouchableOpacity>
           </View>
         : null }
       </View>

@@ -4,6 +4,7 @@ import Notebook from './Notebook';
 import App from './../App';
 import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR, LOGIN_TOKEN_INVALID, LOGIN_ERROR } from '../../api/MicroBlogApi';
 import { Alert, NativeModules, Platform } from 'react-native';
+import { SheetManager } from 'react-native-actions-sheet';
 const { MBNotesCloudModule } = NativeModules;
 
 export default User = types.model('User', {
@@ -209,6 +210,29 @@ export default User = types.model('User', {
         found_notebook.set_is_renaming_notebook(false)
       }
     }),
+
+    prompt_delete_secret_key: flow(function*() {
+      Alert.alert(
+        "Delete this key?",
+        "Make sure you have downloaded a copy of the key if you need to access these notes again.",
+        [
+          {
+            text: "Cancel",
+            style: 'cancel',
+          },
+          {
+            text: "Delete",
+            onPress: () => {
+              SheetManager.hide("menu-sheet");
+              Tokens.destroy_secret_token(self.username);
+              self.check_for_exisence_of_secret_token();
+            },
+            style: 'destructive'
+          },
+        ],
+        { cancelable: false },
+      );    
+    })
 
   }))
   .views(self => ({
