@@ -102,6 +102,9 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    packagingOptions {
+        pickFirst '**/libcrypto.so'
+    }
 }
 
 dependencies {
