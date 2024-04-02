@@ -231,8 +231,16 @@ export default User = types.model('User', {
           },
         ],
         { cancelable: false },
-      );    
-    })
+      );
+    }),
+
+    find_and_select_notebook: flow(function*(notebook_name) {
+      console.log("User:find_and_select_notebook", notebook_name)
+      const found_notebook = self.notebooks.find(n => n.title.toLowerCase() === notebook_name.toLowerCase())
+      if (found_notebook) {
+        self.set_selected_notebook(found_notebook)
+      }
+    }),
 
   }))
   .views(self => ({
@@ -252,7 +260,7 @@ export default User = types.model('User', {
     can_use_notes() {
       return self.is_premium// self.is_premium || self.notebooks?.length == 0
     },
-    
+
     is_appletest() {
       return (self.username == "appletest")
     }
