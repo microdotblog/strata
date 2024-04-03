@@ -52,7 +52,7 @@ export default Posting = types.model('Posting', {
     return_encrypted_note_text: flow(function*(text) {
       if (text && Auth.selected_user.secret_token()) {
         try {
-          const encryptedText = CryptoUtils.encrypt(text, Auth.selected_user.secret_token())
+          const encryptedText = yield CryptoUtils.encrypt(text, Auth.selected_user.secret_token())
           return encryptedText
         } catch (error) {
           console.error("Encryption failed:", error)
