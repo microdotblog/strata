@@ -85,8 +85,8 @@ export default class AccountSwitcher extends React.Component {
                   :
                   <SvgXml
                     style={{
-                      height: 18,
-                      width: 18,
+                      height: 20,
+                      width: 20,
                       marginRight: 6
                     }}
                     color={App.theme_text_color()}
