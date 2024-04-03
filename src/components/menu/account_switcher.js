@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TouchableOpacity, Image, Platform, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 import { SFSymbol } from 'react-native-sfsymbols';
@@ -53,37 +53,52 @@ export default class AccountSwitcher extends React.Component {
             {/* <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>{Auth.selected_user.full_name}</Text> */}
             <Text style={{ fontWeight: '600', color: App.theme_button_text_color() }}>@{Auth.selected_user.username}</Text>
           </View>
-          { (Auth.selected_user.secret_token() != null) ?
+          {(Auth.selected_user.secret_token() != null) ?
             <View style={{ flex: 1, alignItems: "flex-end" }}>
               <TouchableOpacity
                 onPress={() => {
                   this.setState({ is_showing_key: !this.state.is_showing_key });
                 }}
               >
-                <Text style={{ color: App.theme_accent_color() }}>{ this.state.is_showing_key ? "Hide Secret Key" : "Show Secret Key" }</Text>
+                <Text style={{ color: App.theme_accent_color() }}>{this.state.is_showing_key ? "Hide Secret Key" : "Show Secret Key"}</Text>
               </TouchableOpacity>
             </View>
-          : null }
+            : null}
         </View>
-        { this.state.is_showing_key ? 
+        {this.state.is_showing_key ?
           <View style={{ marginTop: 25, marginBottom: 15 }}>
             <Text selectable={true} style={{ color: App.theme_text_color() }}>
-              mkey{ Auth.selected_user.secret_token() }
+              mkey{Auth.selected_user.secret_token()}
             </Text>
             <TouchableOpacity
               onPress={() => { Auth.selected_user.prompt_delete_secret_key() }}
               style={{ flexDirection: "row", marginTop: 20 }}
             >
-              <SFSymbol
-                name={'trash'}
-                color={App.theme_text_color()}
-                style={{ height: 18, width: 18, marginRight: 6 }}
-                multicolor={true}
-              />            
+              {
+                Platform.OS === "ios" ?
+                  <SFSymbol
+                    name={'trash'}
+                    color={App.theme_text_color()}
+                    style={{ height: 18, width: 18, marginRight: 6 }}
+                    multicolor={true}
+                  />
+                  :
+                  <SvgXml
+                    style={{
+                      height: 18,
+                      width: 18,
+                      marginRight: 6
+                    }}
+                    color={App.theme_text_color()}
+                    xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg>'
+                  />
+              }
               <Text style={{ color: App.theme_text_color() }}>Delete Secret Key</Text>
             </TouchableOpacity>
           </View>
-        : null }
+          : null}
       </View>
     )
   }
