@@ -28,13 +28,7 @@ class CryptoUtils {
   }
 
   static async encryptWithKey(text, key) {
-    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv)
-    let encrypted = cipher.update(text, 'utf8')
-    encrypted = Buffer.concat([encrypted, cipher.final()])
-    // const authTag = cipher.getAuthTag() // AUTH TAG doesn't seem to be available...
-    // return Buffer.concat([iv, encrypted, authTag]).toString('base64')
-    // TODO: crypto.randomBytes(16) is a temporary measure
-    return Buffer.concat([iv, encrypted, crypto.randomBytes(16)]).toString('base64')
+    return null;
   }
 
   static async encrypt(text, secretToken) {
@@ -49,7 +43,7 @@ class CryptoUtils {
       return result;
     }
     else if (Platform.OS === "android") {
-      return null
+      return this.encryptWithKey(text, keyHex)
     }
     return null
   }
