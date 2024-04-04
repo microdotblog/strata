@@ -40,10 +40,11 @@ class CryptoUtils {
 
     if (Platform.OS === "ios") {
       let result = await MBNotesCryptoModule.encryptText(text, keyHex)
-      return result;
+      return result
     }
     else if (Platform.OS === "android") {
-      return this.encryptWithKey(text, keyHex)
+      let result = await MBNotesCryptoModule.encryptText(text, keyHex)
+      return result
     }
     return null
   }
