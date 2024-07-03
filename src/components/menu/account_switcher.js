@@ -246,7 +246,7 @@ export default class AccountSwitcher extends React.Component {
             paddingHorizontal: 16
           }}
         >
-          <Text style={{ fontWeight: "700", color: App.theme_text_color(), marginBottom: 10 }}>Notes requires a Micro.blog Premium subscription.</Text>
+          <Text style={{ fontWeight: "700", color: App.theme_text_color(), marginBottom: 10 }}>Notes requires a paid Micro.blog subscription.</Text>
           <Text style={{ color: App.theme_text_color() }}>With notes you can jot down ideas for blog posts, share notes with unique, hidden URLs on your blog, and sync notes across platforms with end-to-end encryption.</Text>
         </View>
       )

@@ -37,7 +37,9 @@ export default App = types.model('App', {
 
     check_current_user_can_use_notes: flow(function*() {
       if (Auth.selected_user && !Auth.selected_user.can_use_notes()) {
-        App.open_sheet("menu-sheet")
+        setTimeout(() => {
+          App.open_sheet("menu-sheet")
+        }, 800)
       }
     }),
 

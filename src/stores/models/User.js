@@ -16,7 +16,8 @@ export default User = types.model('User', {
   notebooks: types.optional(types.array(Notebook), []),
   selected_notebook: types.maybeNull(types.reference(Notebook)),
   is_saving_new_notebook: types.optional(types.boolean, false),
-  is_syncing_with_icloud: types.optional(types.boolean, false)
+  is_syncing_with_icloud: types.optional(types.boolean, false),
+  plan: types.maybeNull(types.string)
 })
   .actions(self => ({
 
@@ -36,11 +37,10 @@ export default User = types.model('User', {
       console.log("User:check_for_update_account_status", self.username)
       const status = yield MicroBlogApi.login_with_token(self.token())
       if (status !== LOGIN_ERROR && status !== LOGIN_TOKEN_INVALID) {
-        if (status.is_premium) {
-          self.is_premium = status.is_premium
-          if (!self.can_use_notes()) {
-            App.check_current_user_can_use_notes()
-          }
+        self.is_premium = status.is_premium
+        self.plan = status.plan
+        if (!self.can_use_notes()) {
+          App.check_current_user_can_use_notes()
         }
       }
     }),
@@ -254,11 +254,11 @@ export default User = types.model('User', {
     },
 
     can_create_notebook() {
-      return self.is_premium// self.is_premium || self.notebooks?.length == 0
+      return self.is_premium
     },
 
     can_use_notes() {
-      return self.is_premium// self.is_premium || self.notebooks?.length == 0
+      return self.plan !== "free"
     },
 
     is_appletest() {
