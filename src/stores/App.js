@@ -37,7 +37,9 @@ export default App = types.model('App', {
 
     check_current_user_can_use_notes: flow(function*() {
       if (Auth.selected_user && !Auth.selected_user.can_use_notes()) {
-        App.open_sheet("menu-sheet")
+        setTimeout(() => {
+          App.open_sheet("menu-sheet")
+        }, 800)
       }
     }),
 
@@ -87,6 +89,9 @@ export default App = types.model('App', {
             App.open_sheet("secret-key-prompt-sheet")
           }
         }
+        else if (event?.url && event?.url.indexOf('/note?text=') > -1 && Auth.is_logged_in()) {
+          App.prepare_and_open_new_note_from_url_action(event.url)
+        }
       })
       Linking.getInitialURL().then((value) => {
         console.log("App:set_up_url_listener:getInitialURL", value)
@@ -101,6 +106,9 @@ export default App = types.model('App', {
             Tokens.set_temp_secret_token_from_url(value)
             App.open_sheet("secret-key-prompt-sheet")
           }
+        }
+        else if (value?.includes('/note?text=') && Auth.is_logged_in()) {
+          App.prepare_and_open_new_note_from_url_action(value)
         }
       })
     }),
@@ -185,6 +193,20 @@ export default App = types.model('App', {
 
     set_unsaved_note: flow(function*(value) {
       self.has_unsaved_note = value
+    }),
+
+    prepare_and_open_new_note_from_url_action: flow(function*(value) {
+      console.log("App:prepare_and_open_new_note_from_action", value)
+      const note_object = self.note_object_from_url(value)
+      if (note_object && note_object?.text) {
+        console.log("App:prepare_and_open_new_note_from_action:note_object", note_object)
+        Posting.hydrate(note_object.text).then(() => {
+          App.navigate_to_screen("NewNote")
+          if (note_object.notebook) {
+            Auth.selected_user.find_and_select_notebook(note_object.notebook)
+          }
+        })
+      }
     })
 
   }))
@@ -260,6 +282,22 @@ export default App = types.model('App', {
       let now = new Date()
       now.setHours(0, 0, 0, 0)
       return now.getTime()
+    },
+    note_object_from_url(url) {
+      const decoded_url = decodeURI(url)
+      const params_string = decoded_url.replace("strata://note?", "")
+
+      // Split the parameters into key-value pairs
+      const params = params_string.split("&").reduce((acc, current) => {
+        const [key, value] = current.split("=")
+        acc[key] = value
+        return acc
+      }, {})
+
+      return {
+        text: params.text ? params.text.replace(/%3A/g, ":") : '',
+        notebook: params.notebook || null
+      }
     }
   }))
   .create();

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { RefreshControl, View, TouchableOpacity, Text, TextInput, Keyboard } from 'react-native';
+import { RefreshControl, View, TouchableOpacity, Text, TextInput, Keyboard, Platform } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 import Auth from './../../stores/Auth';
 import App from '../../stores/App';
@@ -28,7 +28,18 @@ export default class NotesList extends React.Component {
         {
           !App.search_open ?
             <>
-              <TouchableOpacity style={{ backgroundColor: App.theme_alt_border_color(), paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, borderColor: App.theme_border_color(), borderWidth: 1 }} onPress={() => App.open_sheet("notebooks-list")}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: App.theme_alt_border_color(),
+                  paddingHorizontal: 8,
+                  paddingTop: Platform.OS === "ios" ? 3 : 1,
+                  paddingBottom: Platform.OS === "ios" ? 3 : 3,
+                  borderRadius: 8,
+                  borderColor: App.theme_border_color(),
+                  borderWidth: 1
+                }}
+                onPress={() => App.open_sheet("notebooks-list")}
+              >
                 <Text style={{ color: App.theme_text_color(), fontWeight: "500", fontSize: 15, padding: 2 }}>
                   {selected_notebook?.title}
                 </Text>
@@ -46,7 +57,7 @@ export default class NotesList extends React.Component {
                       borderRadius: 5,
                       marginLeft: 5,
                       marginRight: 4,
-                      backgroundColor: App.theme_alt_border_color()        
+                      backgroundColor: App.theme_alt_border_color()
                     }}
                     onPress={App.toggle_search_is_open}
                   >
