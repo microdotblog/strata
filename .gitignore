@@ -65,3 +65,4 @@ yarn-error.log
 # testing
 /coverage
 .nova
+android/app/release/app-release.aab

@@ -5,7 +5,6 @@ import Posting from '../../stores/Posting'
 import PostingToolbar from '../../components/keyboard/posting_toolbar';
 import App from '../../stores/App'
 import HighlightingText from '../../components/text/highlighting_text';
-// import Auth from '../../stores/Auth'
 
 @observer
 export default class NewNoteModalScreen extends React.Component {
@@ -40,7 +39,7 @@ export default class NewNoteModalScreen extends React.Component {
             scrollEnabled={true}
             returnKeyType={'default'}
             keyboardType={'default'}
-            autoFocus={true}
+            autoFocus={Posting.note_text == ""}
             autoCorrect={true}
             clearButtonMode={'while-editing'}
             enablesReturnKeyAutomatically={true}
@@ -57,24 +56,24 @@ export default class NewNoteModalScreen extends React.Component {
           />
           <InputAccessoryView nativeID={this.input_accessory_view_id}>
             <PostingToolbar />
-          </InputAccessoryView>        
-        {
-          Posting.is_sending_note ?
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                height: 200,
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: 10
-              }}
-            >
-              <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
-            </View>
-            : null
-        }
+          </InputAccessoryView>
+          {
+            Posting.is_sending_note ?
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  height: 200,
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: 10
+                }}
+              >
+                <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
+              </View>
+              : null
+          }
         </>
       )
     }

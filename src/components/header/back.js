@@ -23,12 +23,14 @@ export default class BackButton extends React.Component {
             :
             <SvgXml
               style={{
-                height: 22,
-                width: 22
+                height: 24,
+                width: 24,
+                marginRight: 7,
+                marginTop: 2
               }}
               color={App.theme_text_color()}
               xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
               </svg>'
             />
         }

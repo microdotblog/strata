@@ -23,8 +23,10 @@ export default class CloseModalButton extends React.Component {
             :
             <SvgXml
               style={{
-                height: 22,
-                width: 22
+                height: 24,
+                width: 24,
+                marginRight: 7,
+                marginTop: 2
               }}
               color={App.theme_text_color()}
               xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">

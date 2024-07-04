@@ -36,7 +36,11 @@ export default class NotebookItem extends React.Component {
             justifyContent: "space-between"
           }}
         >
-          <View>
+          <View
+            style={{
+              paddingBottom: Platform.OS === "ios" ? 0 : 3
+            }}
+          >
             <Text style={{ fontSize: 18, fontWeight: "600", color: App.theme_text_color() }}>{notebook.title}</Text>
           </View>
           <View
