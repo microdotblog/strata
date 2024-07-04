@@ -254,11 +254,11 @@ export default User = types.model('User', {
     },
 
     can_create_notebook() {
-      return self.is_premium
+      return self.is_premium || self.plan !== "free"
     },
 
     can_use_notes() {
-      return self.plan !== "free"
+      return self.is_premium || self.plan !== "free"
     },
 
     is_appletest() {
