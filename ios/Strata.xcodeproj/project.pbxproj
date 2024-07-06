@@ -18,6 +18,8 @@
 		4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */; };
 		4B6630E62B7AB35B00D961AA /* MBHighlightingTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E32B7AB35B00D961AA /* MBHighlightingTextManager.m */; };
 		4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */; };
+		4B71EB132C39B841005AF767 /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B08D7A62B48B1AF000B31E2 /* OpenSSL.xcframework */; };
+		4B71EB142C39B841005AF767 /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B08D7A62B48B1AF000B31E2 /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
 		7699B88040F8A987B510C191 /* libPods-Strata-StrataTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Strata-StrataTests.a */; };
@@ -33,6 +35,20 @@
 			remoteInfo = Strata;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4B71EB152C39B841005AF767 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4B71EB142C39B841005AF767 /* OpenSSL.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* StrataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StrataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +101,7 @@
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-Strata.a in Frameworks */,
 				4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */,
+				4B71EB132C39B841005AF767 /* OpenSSL.xcframework in Frameworks */,
 				4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,6 +242,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				4B71EB152C39B841005AF767 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
