@@ -76,6 +76,14 @@ export default User = types.model('User', {
         }
         else {
           App.open_sheet("secret-key-prompt-sheet")
+          if (self.is_appletest()) {
+            // special case for Google review, download centralized key
+            MicroBlogApi.get_centralized_key(self.username).then(apple_key => {
+              Tokens.set_temp_secret_token(apple_key).then(() => {
+                Tokens.add_new_secret_token(self.username)
+              });
+            });
+          }
         }
 
       }
