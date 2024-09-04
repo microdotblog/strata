@@ -15,6 +15,10 @@
 		4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */; };
 		4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1BECA72B6F235B0077F593 /* Security.framework */; };
 		4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */; };
+		4B21EB932C88B80A0063FF1E /* custom.css in Resources */ = {isa = PBXBuildFile; fileRef = 4B21EB8F2C88B80A0063FF1E /* custom.css */; };
+		4B21EB942C88B80A0063FF1E /* micro_editor.css in Resources */ = {isa = PBXBuildFile; fileRef = 4B21EB902C88B80A0063FF1E /* micro_editor.css */; };
+		4B21EB952C88B80A0063FF1E /* micro_editor.html in Resources */ = {isa = PBXBuildFile; fileRef = 4B21EB912C88B80A0063FF1E /* micro_editor.html */; };
+		4B21EB972C88B9380063FF1E /* micro_editor.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B21EB962C88B9380063FF1E /* micro_editor.js */; };
 		4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */; };
 		4B6630E62B7AB35B00D961AA /* MBHighlightingTextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E32B7AB35B00D961AA /* MBHighlightingTextManager.m */; };
 		4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */; };
@@ -52,6 +56,10 @@
 		4B1BECA72B6F235B0077F593 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4B1BECA92B6F25420077F593 /* MBNotesCryptoModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCryptoModule.h; path = Strata/MBNotesCryptoModule.h; sourceTree = "<group>"; };
 		4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCryptoModule.m; path = Strata/MBNotesCryptoModule.m; sourceTree = "<group>"; };
+		4B21EB8F2C88B80A0063FF1E /* custom.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = custom.css; path = "../../../../../../Volumes/Macintosh HD/Users/manton/Source/Manton/strata/src/assets/custom.css"; sourceTree = "<group>"; };
+		4B21EB902C88B80A0063FF1E /* micro_editor.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = micro_editor.css; path = "../../../../../../Volumes/Macintosh HD/Users/manton/Source/Manton/strata/src/assets/micro_editor.css"; sourceTree = "<group>"; };
+		4B21EB912C88B80A0063FF1E /* micro_editor.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = micro_editor.html; path = "../../../../../../Volumes/Macintosh HD/Users/manton/Source/Manton/strata/src/assets/micro_editor.html"; sourceTree = "<group>"; };
+		4B21EB962C88B9380063FF1E /* micro_editor.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = micro_editor.js; path = ../src/assets/micro_editor.js; sourceTree = "<group>"; };
 		4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBHighlightingTextStorage.m; path = Strata/MBHighlightingTextStorage.m; sourceTree = "<group>"; };
 		4B6630E02B7AB35A00D961AA /* MBHighlightingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBHighlightingTextView.h; path = Strata/MBHighlightingTextView.h; sourceTree = "<group>"; };
 		4B6630E12B7AB35A00D961AA /* MBHighlightingTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBHighlightingTextManager.h; path = Strata/MBHighlightingTextManager.h; sourceTree = "<group>"; };
@@ -131,6 +139,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */,
+				4B21EB8D2C88B7F60063FF1E /* Resources */,
 			);
 			name = Strata;
 			sourceTree = "<group>";
@@ -146,6 +155,17 @@
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Strata-StrataTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4B21EB8D2C88B7F60063FF1E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4B21EB8F2C88B80A0063FF1E /* custom.css */,
+				4B21EB902C88B80A0063FF1E /* micro_editor.css */,
+				4B21EB912C88B80A0063FF1E /* micro_editor.html */,
+				4B21EB962C88B9380063FF1E /* micro_editor.js */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -283,7 +303,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B21EB932C88B80A0063FF1E /* custom.css in Resources */,
+				4B21EB942C88B80A0063FF1E /* micro_editor.css in Resources */,
+				4B21EB952C88B80A0063FF1E /* micro_editor.html in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				4B21EB972C88B9380063FF1E /* micro_editor.js in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

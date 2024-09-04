@@ -1,0 +1,14 @@
+<div contenteditable="true" class="editor" id="editor"></div>
+<div class="editor_preview" id="editor_preview"></div>	
+<div class="editor_toolbar" id="editor_toolbar"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	let config = {
+		textbox_id: "editor",
+		preview_id: "editor_preview",
+		toolbar_id: "editor_toolbar"
+	};
+	let editor = MicroEditor.init(config);
+});
+</script>

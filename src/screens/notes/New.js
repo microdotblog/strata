@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { TextInput, KeyboardAvoidingView, InputAccessoryView, ActivityIndicator, View } from 'react-native';
+import { WebView } from 'react-native-webview';
+import RNFS from 'react-native-fs';
 import Posting from '../../stores/Posting'
 import PostingToolbar from '../../components/keyboard/posting_toolbar';
 import App from '../../stores/App'
@@ -12,127 +14,66 @@ export default class NewNoteModalScreen extends React.Component {
   constructor(props) {
     super(props)
     this.input_accessory_view_id = "input_toolbar";
+    this.state = {
+      htmlContent: ""
+    };
   }
 
   componentDidMount() {
     Posting.hydrate()
+    this.loadEditorFiles().then(html => {
+      this.setState({ htmlContent: html });
+    });
   }
 
-  render() {
-    if (Platform.OS === 'ios') {
-      return (
-        <>
-          <HighlightingText
-            placeholderTextColor="lightgrey"
-            style={{
-              minHeight: 300,
-              fontSize: 17,
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              marginTop: 0,
-              flex: 1,
-              padding: 10,
-              color: App.theme_text_color()
-            }}
-            editable={!Posting.is_sending_post}
-            multiline={true}
-            scrollEnabled={true}
-            returnKeyType={'default'}
-            keyboardType={'default'}
-            autoFocus={Posting.note_text == ""}
-            autoCorrect={true}
-            clearButtonMode={'while-editing'}
-            enablesReturnKeyAutomatically={true}
-            underlineColorAndroid={'transparent'}
-            value={Posting.note_text}
-            selection={Posting.text_selection_flat}
-            onChangeText={({ nativeEvent: { text } }) => {
-              !Posting.is_sending_note ? Posting.set_note_text_from_typing(text) : null
-            }}
-            onSelectionChange={({ nativeEvent: { selection } }) => {
-              Posting.set_text_selection(selection)
-            }}
-            inputAccessoryViewID={this.input_accessory_view_id}
-          />
-          <InputAccessoryView nativeID={this.input_accessory_view_id}>
+  loadEditorFiles = async () => {
+    // these paths are iOS only, need tweaks for Android
+    const html_path = `${RNFS.MainBundlePath}/micro_editor.html`;
+    const js_path = `${RNFS.MainBundlePath}/micro_editor.js`;
+    const css_path = `${RNFS.MainBundlePath}/micro_editor.css`;
+    const custom_path = `${RNFS.MainBundlePath}/custom.css`;
+
+    const html_s = await RNFS.readFile(html_path, 'utf8');
+    const js_s = await RNFS.readFile(js_path, 'utf8');
+    const css_s = await RNFS.readFile(css_path, 'utf8');
+    const custom_s = await RNFS.readFile(custom_path, 'utf8');
+
+    const combined_s = `<script>${js_s}</script> \n <style>${css_s} \n ${custom_s}</style> \n ${html_s}`;
+
+    return combined_s;
+  };
+
+  render() {    
+    return (
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: App.theme_background_color() }}>
+        <WebView
+          originWhitelist={['*']}
+          source={{ html: this.state.htmlContent }}
+          style={{ flex: 1 }}
+        />
+        {
+          <>
             <PostingToolbar />
-          </InputAccessoryView>
-          {
-            Posting.is_sending_note ?
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  height: 200,
-                  width: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  zIndex: 10
-                }}
-              >
-                <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
-              </View>
-              : null
-          }
-        </>
-      )
-    }
-    else {
-      return (
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: App.theme_background_color() }}>
-          <TextInput
-            placeholderTextColor="lightgrey"
-            style={{
-              fontSize: 17,
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              marginTop: 5,
-              marginBottom: 90,
-              padding: 10,
-              color: App.theme_text_color()
-            }}
-            multiline={true}
-            scrollEnabled={true}
-            returnKeyType={'default'}
-            keyboardType={'default'}
-            autoFocus={true}
-            autoCorrect={true}
-            clearButtonMode={'while-editing'}
-            enablesReturnKeyAutomatically={true}
-            underlineColorAndroid={'transparent'}
-            inputAccessoryViewID={this.input_accessory_view_id}
-            value={Posting.note_text}
-            onChangeText={(text) => !Posting.is_sending_note ? Posting.set_note_text(text) : null}
-            onSelectionChange={({ nativeEvent: { selection } }) => {
-              Posting.set_text_selection(selection)
-            }}
-            editable={!Posting.is_sending_note}
-          />
-          {
-            <>
-              <PostingToolbar />
-            </>
-          }
-          {
-            Posting.is_sending_note ?
-              <View
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  height: 200,
-                  width: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  zIndex: 10
-                }}
-              >
-                <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
-              </View>
-              : null
-          }
-        </KeyboardAvoidingView>
-      )
-    }
-  }
-
+          </>
+        }
+        {
+          Posting.is_sending_note ?
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                height: 200,
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 10
+              }}
+            >
+              <ActivityIndicator color={App.theme_accent_color()} size={'large'} />
+            </View>
+            : null
+        }
+      </KeyboardAvoidingView>
+    )
+  }  
 }
