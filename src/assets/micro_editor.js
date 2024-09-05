@@ -75,6 +75,9 @@ var MicroEditor = (function() {
 	
 	function setupToolbar() {
 		const toolbar = document.getElementById(toolbarID);
+		if (!toolbar) {
+			return;
+		}
 		
 		// sometimes this can be called twice? abort if we already have buttons
 		let bold_button = document.getElementById(`${textBoxID}_bold_button`);
