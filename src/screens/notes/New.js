@@ -48,14 +48,11 @@ export default class NewNoteModalScreen extends React.Component {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: App.theme_background_color() }}>
         <WebView
           originWhitelist={['*']}
+          hideKeyboardAccessoryView={true}
           source={{ html: this.state.htmlContent }}
           style={{ flex: 1 }}
         />
-        {
-          <>
-            <PostingToolbar />
-          </>
-        }
+        <PostingToolbar />
         {
           Posting.is_sending_note ?
             <View
