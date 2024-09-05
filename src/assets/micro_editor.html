@@ -2,20 +2,20 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			let config = {
+				textbox_id: "editor",
+				preview_id: "editor_preview"
+			};
+			let editor = MicroEditor.init(config);
+		});
+	</script>
 </head>
 
 <body>
-	
-	<script>
-	document.addEventListener("DOMContentLoaded", function() {
-		let config = {
-			textbox_id: "editor",
-			preview_id: "editor_preview"
-		};
-		let editor = MicroEditor.init(config);
-	});
-	</script>
-	
+		
 	<div contenteditable="true" class="editor" id="editor"></div>
 	<div class="editor_preview" id="editor_preview"></div>	
 
