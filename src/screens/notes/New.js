@@ -13,7 +13,6 @@ export default class NewNoteModalScreen extends React.Component {
 
   constructor(props) {
     super(props)
-    this.input_accessory_view_id = "input_toolbar";
     this.state = {
       htmlContent: ""
     };
