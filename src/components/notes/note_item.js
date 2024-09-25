@@ -16,6 +16,20 @@ export default class NoteItem extends React.Component {
     super(props)
     this._swipeable = React.createRef()
   }
+  
+  componentDidMount(){
+    this.triggerNoteUnlock()
+  }
+  
+  componentDidUpdate(){
+    this.triggerNoteUnlock()
+  }
+  
+  triggerNoteUnlock(){
+    if(!this.props.note.is_locked()){
+      this.props.note.unlock()
+    }
+  }
 
   _right_actions = (progress) => (
     <View style={{ flexDirection: "row" }}>
@@ -94,6 +108,9 @@ export default class NoteItem extends React.Component {
     const { note } = this.props
     if (note.is_locked()) {
       return <LockedNoteItem />
+    }
+    else if(!note.is_locked() && !note.unlocked){
+      return null
     }
     return (
       <Swipeable
