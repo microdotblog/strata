@@ -12,7 +12,6 @@ class CryptoUtils {
 
     try {
       const result = await MBNotesCryptoModule.decryptText(text, keyHex)
-      console.log("decrypted result", result)
       return result
     }
     catch (error) {
