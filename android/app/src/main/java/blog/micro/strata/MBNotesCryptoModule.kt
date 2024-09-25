@@ -24,6 +24,16 @@ class MBNotesCryptoModule(reactContext: ReactApplicationContext) : ReactContextB
         }
     }
 
+    @ReactMethod
+    fun decryptText(text: String, key: String, promise: Promise) {
+        try {
+            val decryptedText = MBNoteCrypto.decryptText(text, key)
+            promise.resolve(decryptedText)
+        } catch (e: Exception) {
+            promise.reject("Decrypt Error:", e)
+        }
+    }
+
     private object MBNoteCrypto {
 
         fun encryptText(text: String, keyHex: String): String {
@@ -45,6 +55,22 @@ class MBNotesCryptoModule(reactContext: ReactApplicationContext) : ReactContextB
             System.arraycopy(encryptedData, 0, combined, iv.size, encryptedData.size)
 
             return Base64.encodeToString(combined, Base64.DEFAULT)
+        }
+
+        fun decryptText(encryptedText: String, keyHex: String): String {
+            val keyBytes = hexStringToByteArray(keyHex)
+            val secretKey: SecretKey = SecretKeySpec(keyBytes, "AES")
+
+            val encryptedBytes = Base64.decode(encryptedText, Base64.DEFAULT)
+            val iv = encryptedBytes.copyOfRange(0, 12)
+            val ciphertext = encryptedBytes.copyOfRange(12, encryptedBytes.size)
+
+            val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+            val gcmParameterSpec = GCMParameterSpec(128, iv) // 128 bit auth tag length
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmParameterSpec)
+
+            val decryptedBytes = cipher.doFinal(ciphertext)
+            return String(decryptedBytes, Charsets.UTF_8)
         }
 
         private fun hexStringToByteArray(s: String): ByteArray {
