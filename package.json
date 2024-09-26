@@ -32,7 +32,8 @@
     "react-native-sensitive-info": "^5.5.8",
     "react-native-sfsymbols": "^1.2.1",
     "react-native-simple-toast": "^3.1.0",
-    "react-native-svg": "^14.1.0"
+    "react-native-svg": "^14.1.0",
+    "react-native-vision-camera": "^4.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
