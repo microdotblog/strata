@@ -54,7 +54,7 @@ class MBNotesCryptoModule(reactContext: ReactApplicationContext) : ReactContextB
             System.arraycopy(iv, 0, combined, 0, iv.size)
             System.arraycopy(encryptedData, 0, combined, iv.size, encryptedData.size)
 
-            return Base64.encodeToString(combined, Base64.DEFAULT)
+            return Base64.encodeToString(combined, Base64.NO_WRAP)
         }
 
         fun decryptText(encryptedText: String, keyHex: String): String {
