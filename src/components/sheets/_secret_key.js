@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { SafeAreaView, Text, TextInput, Button, Keyboard, ActivityIndicator, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, TextInput, Button, Keyboard, ActivityIndicator, View, TouchableOpacity, Platform } from 'react-native';
 import App from '../../stores/App'
 import Auth from '../../stores/Auth'
 import Tokens from "../../stores/Tokens";
@@ -13,12 +13,12 @@ export default class SecretKeyInput extends React.Component {
   
   state = {
     isScanning: false,
-    canScan: true || Camera.getAvailableCameraDevices()?.length > 0
+    canScan: __DEV__ || Camera.getAvailableCameraDevices()?.length > 0
   }
   
   componentDidMount(){
     const cameraPermission = Camera.getCameraPermissionStatus()
-    if(cameraPermission == "denied" || cameraPermission == "restricted"){
+    if((cameraPermission == "denied" || cameraPermission == "restricted") && Platform.OS == "ios"){
       this.setState({ canScan: false })
     }
   }
