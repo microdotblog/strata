@@ -76,7 +76,7 @@ export default Posting = types.model('Posting', {
           const data = yield MicroBlogApi.post_note(new_text, Auth.selected_user.token(), Auth.selected_user.selected_notebook?.id, self.note_id, !self.is_shared)
           console.log("Posting:send_note:data", data)
           if (data !== POST_ERROR) {
-            Auth.selected_user.selected_notebook?.fetch_notes()
+            Auth.selected_user.selected_notebook?.fetch_notes(self.note_id)
             self.note_text = ""
             self.note_id = null
             self.is_sending_note = false

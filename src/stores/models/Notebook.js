@@ -52,7 +52,7 @@ export default Notebook = types.model('Notebook', {
       }
     }),
 
-    fetch_notes: flow(function*() {
+    fetch_notes: flow(function*(note_id_to_update = false) {
       console.log("Notebook:fetch_notes", self.id)
       const data = yield MicroBlogApi.fetch_notes(self.id, self.token())
       console.log("Notebook:fetch_notes", data?.items?.length)
@@ -61,6 +61,9 @@ export default Notebook = types.model('Notebook', {
           username: self.username,
           ...note
         }))
+      }
+      if(note_id_to_update){
+        self.update_note_by_id(note_id_to_update)
       }
     }),
 
@@ -106,6 +109,14 @@ export default Notebook = types.model('Notebook', {
       destroy(note)
       self.fetch_notes()
     }),
+    
+    update_note_by_id: flow(function*(id){
+      console.log("update_note_by_id", id)
+      const note = self.get_note_by_id(id)
+      if(note){
+        note.unlock()
+      }
+    })
 
   }))
   .views(self => ({
@@ -137,9 +148,13 @@ export default Notebook = types.model('Notebook', {
 
     ordered_notes_with_query() {
       if (App.search_query != "" && App.search_query?.length > 0) {
-        return this.ordered_notes().filter(note => note.decrypted_text()?.toLowerCase().includes(App.search_query?.toLowerCase()))
+        return this.ordered_notes().filter(note => note.decrypted_text?.toLowerCase().includes(App.search_query?.toLowerCase()))
       }
       return this.ordered_notes()
+    },
+    
+    get_note_by_id(id){
+      return this.notes.find(note => note.id === id)
     }
 
   }))

@@ -65,5 +65,7 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+  <string>$(PRODUCT_NAME) needs access to your Camera in order to scan your QR code.</string>
 </dict>
 </plist>

@@ -1,6 +1,5 @@
 import { types, flow } from 'mobx-state-tree'
 import CryptoUtils from '../utils/crypto';
-// import crypto from 'react-native-quick-crypto'
 
 export default Crypto = types.model('Crypto', {})
   .actions(self => ({

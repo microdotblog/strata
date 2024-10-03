@@ -25,19 +25,26 @@ export default Note = types.model('Note', {
   _microblog: types.maybeNull(Microblog),
   is_updating: types.optional(types.boolean, false)
 })
+  .volatile(self => ({
+    decrypted_text: "",
+    unlocked: false
+  }))
   .actions(self => ({
 
     afterCreate() {
       self.is_updating = false
     },
 
-    prep_and_open_posting: flow(function*() {
+    prep_and_open_posting: flow(function* () {
       console.log("Note:prep_and_open_posting", self.id)
-      yield Posting.hydrate(self.decrypted_text(), self.id, self._microblog.is_shared)
+      if(!self.unlocked){
+        return
+      }
+      yield Posting.hydrate(self.decrypted_text, self.id, self._microblog.is_shared)
       App.navigate_to_screen("EditNote")
     }),
 
-    trigger_action: flow(function*(action_name) {
+    trigger_action: flow(function* (action_name) {
       console.log("Note:trigger_action", action_name)
       if (action_name === "delete_note") {
         self.prompt_and_trigger_delete()
@@ -53,7 +60,7 @@ export default Note = types.model('Note', {
       }
     }),
 
-    prompt_and_trigger_delete: flow(function*() {
+    prompt_and_trigger_delete: flow(function* () {
       console.log("Note:prompt_and_trigger_delete", self.id)
       Alert.alert(
         "Delete note?",
@@ -73,7 +80,7 @@ export default Note = types.model('Note', {
       )
     }),
 
-    delete_note: flow(function*() {
+    delete_note: flow(function* () {
       console.log("Note:delete_note", self.id)
       self.is_updating = true
       const data = yield MicroBlogApi.delete_note(self.id)
@@ -86,12 +93,12 @@ export default Note = types.model('Note', {
       }
     }),
 
-    share_note: flow(function*() {
+    share_note: flow(function* () {
       console.log("Note:share_note", self.id)
       self.is_updating = true
-      const data = yield MicroBlogApi.post_note(self.decrypted_text(), self.user_token(), getParent(self, 2)?.id, self.id, false, true, null)
+      const data = yield MicroBlogApi.post_note(self.decrypted_text, self.user_token(), getParent(self, 2)?.id, self.id, false, true, null)
       if (data !== POST_ERROR && data._microblog?.shared_url != null) {
-        self.content_text = self.decrypted_text()
+        self.content_text = self.decrypted_text
         self._microblog.shared_url = data._microblog.shared_url
         self._microblog.is_shared = true
         self._microblog.is_encrypted = false
@@ -103,10 +110,10 @@ export default Note = types.model('Note', {
       }
     }),
 
-    unshare_note: flow(function*() {
+    unshare_note: flow(function* () {
       console.log("Note:unshare_note", self.id)
       self.is_updating = true
-      const encrypted_text = yield Crypto.return_encrypted_text(self.decrypted_text(), self.secret_token())
+      const encrypted_text = yield Crypto.return_encrypted_text(self.decrypted_text, self.secret_token())
       if (encrypted_text) {
         const data = yield MicroBlogApi.post_note(encrypted_text, self.user_token(), getParent(self, 2)?.id, self.id, true, null, true)
         if (data !== POST_ERROR) {
@@ -125,13 +132,38 @@ export default Note = types.model('Note', {
         Alert.alert("Couldn't unshare your note...", "Please try again.")
         self.is_updating = true
       }
-
+      
     }),
 
-    open_in_browser: flow(function*() {
+    open_in_browser: flow(function* () {
       InAppBrowser.open(self._microblog.shared_url, {
         animated: true
       });
+    }),
+    
+    unlock: flow(function* () {
+      var decryptedText = false
+      if (self.secret_token()) {
+        try {
+          
+          if (!self._microblog.is_encrypted) {
+            decryptedText = self.content_text;
+          }
+          else {
+            decryptedText = yield CryptoUtils.decrypt(self.content_text, self.secret_token());
+          }
+        }
+        catch (error) {
+          // Let's not show anything here and silenty "not" handle this.
+          console.log("Decryption failed:", error);
+        }
+      }
+      
+      if (decryptedText) {
+        self.decrypted_text = decryptedText
+        self.unlocked = true
+      }
+      
     })
 
   }))
@@ -141,33 +173,16 @@ export default Note = types.model('Note', {
       return !this.secret_token()
     },
 
-    decrypted_text() {
-      if (this.secret_token()) {
-        try {
-          var decryptedText;
-          if (!self._microblog.is_encrypted) {
-            decryptedText = self.content_text;
-          }
-          else {
-            decryptedText = CryptoUtils.decrypt(self.content_text, this.secret_token());
-          }
-          return decryptedText;
-        } catch (error) {
-          console.log("Decryption failed:", error);
-          return self.content_text;
-        }
-      } else {
-        return self.content_text;
-      }
-    },
-
     truncated_text(num_chars = 100) {
-      var s = self.decrypted_text();
-      if (s.length > num_chars) {
-        s = s.substring(0, num_chars - 1);
-        s = s + "...";
+      if(self.unlocked){
+        var s = self.decrypted_text;
+        if (s.length > num_chars) {
+          s = s.substring(0, num_chars - 1);
+          s = s + "...";
+        }
+        return s
       }
-      return s;
+      return false
     },
 
     secret_token() {
