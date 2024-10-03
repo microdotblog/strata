@@ -54,6 +54,8 @@ export default class SecretKeyInput extends React.Component {
 
   render() {
     
+    const continueIsDisabled = Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 64
+    
     if (this.state.isScanning && this.state.canScan) {
       return(
         <SafeAreaView style={{ marginLeft: 10, marginRight: 10, minHeight: 480 }}>
@@ -156,12 +158,21 @@ export default class SecretKeyInput extends React.Component {
               </TouchableOpacity>
               : null
             }
-            <Button
-              title="Continue"
-              color={App.theme_accent_color()}
+            <TouchableOpacity
               onPress={() => { Tokens.add_new_secret_token(Auth.selected_user.username); Keyboard.dismiss() }}
-              disabled={Tokens.temp_secret_token == null || Tokens.temp_secret_token?.length < 64}
-            />
+              disabled={continueIsDisabled}
+              style={{
+                borderRadius: 8
+              }}
+            >
+              <Text
+                style={{ 
+                  color: !continueIsDisabled ? App.theme_accent_color() : App.theme_placeholder_text_color(),
+                  fontSize: 17
+                }}>
+                Continue
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </SafeAreaView>
