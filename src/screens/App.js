@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 import { observer } from 'mobx-react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -20,6 +21,13 @@ import "./../components/sheets/sheets";
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
+
+const { MBNotesScriptingModule } = NativeModules;
+const eventEmitter = new NativeEventEmitter(MBNotesScriptingModule);
+
+const subscription = eventEmitter.addListener("CreateNote", (event) => {
+  console.log("CreateNote event", event);
+});
 
 @observer
 export default class MainApp extends React.Component {

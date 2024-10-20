@@ -1,7 +1,10 @@
 #import "AppDelegate.h"
 
+#import "MBNotesScriptingModule.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
+#import <React/RCTBridge.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
 
@@ -20,6 +23,16 @@
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
   return [RCTLinkingManager application:application openURL:url options:options];
+}
+
+- (BOOL) application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>>* restorableObjects))restorationHandler
+{
+  if ([userActivity.activityType isEqualToString:@"CreateNoteIntent"]) {
+    MBNotesScriptingModule* scripting_module = [self.bridge moduleForClass:[MBNotesScriptingModule class]];
+    [scripting_module emitEventToJS];
+  }
+
+  return YES;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
