@@ -1,0 +1,10 @@
+/* 
+  AppShortcuts.strings
+  Strata
+
+  Created by Manton Reece on 10/21/24.
+*/
+
+"Create note in ${applicationName}" = "Create note in ${applicationName}";
+"New note in ${applicationName}" = "New note in ${applicationName}";
+"Record note in ${applicationName}" = "Record note in ${applicationName}";

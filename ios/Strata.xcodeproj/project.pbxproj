@@ -20,10 +20,10 @@
 		4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */; };
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
-		4BA634C92CC5A3B000611E71 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4BA634C82CC5A3B000611E71 /* Intents.intentdefinition */; };
 		4BA634CC2CC5AF0C00611E71 /* MBNotesScriptingModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA634CB2CC5AF0C00611E71 /* MBNotesScriptingModule.m */; };
 		4BA634CE2CC6AE1E00611E71 /* CreateNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA634CD2CC6AE1E00611E71 /* CreateNoteIntent.swift */; };
 		4BA634D02CC6AF4B00611E71 /* StrataShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA634CF2CC6AF4B00611E71 /* StrataShortcuts.swift */; };
+		4BA634D72CC70BCC00611E71 /* AppShortcuts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4BA634D52CC70BCC00611E71 /* AppShortcuts.strings */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -64,11 +64,11 @@
 		4B9D28452B4EE866000D49AF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4B9D28472B4EF647000D49AF /* MBNotesCloudModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCloudModule.h; path = Strata/MBNotesCloudModule.h; sourceTree = "<group>"; };
 		4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCloudModule.m; path = Strata/MBNotesCloudModule.m; sourceTree = "<group>"; };
-		4BA634C82CC5A3B000611E71 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = Strata/Intents.intentdefinition; sourceTree = "<group>"; };
 		4BA634CA2CC5AF0C00611E71 /* MBNotesScriptingModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesScriptingModule.h; path = Strata/MBNotesScriptingModule.h; sourceTree = "<group>"; };
 		4BA634CB2CC5AF0C00611E71 /* MBNotesScriptingModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesScriptingModule.m; path = Strata/MBNotesScriptingModule.m; sourceTree = "<group>"; };
 		4BA634CD2CC6AE1E00611E71 /* CreateNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateNoteIntent.swift; path = Strata/CreateNoteIntent.swift; sourceTree = "<group>"; };
 		4BA634CF2CC6AF4B00611E71 /* StrataShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StrataShortcuts.swift; path = Strata/StrataShortcuts.swift; sourceTree = "<group>"; };
+		4BA634D62CC70BCC00611E71 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Strata/en.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		4BB026AF2B4C9E0B009CE37C /* Strata.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Strata.entitlements; path = Strata/Strata.entitlements; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Strata.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.release.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Strata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Strata.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,7 +141,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */,
 				3E2ECE45115A6ECD65E76DF8 /* PrivacyInfo.xcprivacy */,
-				4BA634C82CC5A3B000611E71 /* Intents.intentdefinition */,
+				4BA634D52CC70BCC00611E71 /* AppShortcuts.strings */,
 			);
 			name = Strata;
 			sourceTree = "<group>";
@@ -290,6 +290,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				4BA634D72CC70BCC00611E71 /* AppShortcuts.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,7 +388,6 @@
 				4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */,
 				4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */,
 				4B6630E62B7AB35B00D961AA /* MBHighlightingTextManager.m in Sources */,
-				4BA634C92CC5A3B000611E71 /* Intents.intentdefinition in Sources */,
 				4BA634D02CC6AF4B00611E71 /* StrataShortcuts.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -407,6 +407,17 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4BA634D52CC70BCC00611E71 /* AppShortcuts.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4BA634D62CC70BCC00611E71 /* en */,
+			);
+			name = AppShortcuts.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
@@ -600,6 +611,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -668,6 +680,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
