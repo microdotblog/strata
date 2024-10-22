@@ -16,9 +16,9 @@ struct CreateNoteIntent: AppIntent {
   @Parameter(title: "Contents") var contents: String?
   
   func perform() async throws -> some IntentResult {
-    print("-- got note intent");
+    print("Intent: Got note");
     if let contents = contents {
-      print("-- contents: \(contents)");
+      print("Intent: Contents: \(contents)");
     }
 
     DispatchQueue.main.async {

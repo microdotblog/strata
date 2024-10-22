@@ -15,7 +15,7 @@ import NewNoteButton from '../components/header/new_note';
 import NoteSaveEditButton from '../components/header/note_save_edit';
 import CloseModalButton from '../components/header/close';
 import BackButton from '../components/header/back';
-import { SheetProvider } from "react-native-actions-sheet";
+import { SheetProvider, SheetManager } from "react-native-actions-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import "./../components/sheets/sheets";
 
@@ -26,7 +26,7 @@ const { MBNotesScriptingModule } = NativeModules;
 const eventEmitter = new NativeEventEmitter(MBNotesScriptingModule);
 
 const subscription = eventEmitter.addListener("CreateNote", (event) => {
-  
+  SheetManager.show("dictation-sheet");
 });
 
 @observer
