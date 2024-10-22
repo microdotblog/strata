@@ -45,9 +45,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) needs access to your Camera in order to scan your QR code.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) needs access to your camera in order to scan your QR code.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs access to your microphone so it can transcribe notes. Audio will be stored temporarily and processed with cloud-based AI.</string>
 	<key>NSUserActivityTypes</key>
 	<array/>
 	<key>UILaunchStoryboardName</key>
