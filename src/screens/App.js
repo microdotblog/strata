@@ -26,7 +26,7 @@ const { MBNotesScriptingModule } = NativeModules;
 const eventEmitter = new NativeEventEmitter(MBNotesScriptingModule);
 
 const subscription = eventEmitter.addListener("CreateNote", (event) => {
-  console.log("CreateNote event", event);
+  
 });
 
 @observer

@@ -20,6 +20,13 @@ struct CreateNoteIntent: AppIntent {
     if let contents = contents {
       print("-- contents: \(contents)");
     }
+
+    DispatchQueue.main.async {
+      if let delegate = UIApplication.shared.delegate as? AppDelegate {
+        delegate.handleNewNote()
+      }
+    }
+    
     return .result()
   }
   

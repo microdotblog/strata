@@ -27,11 +27,6 @@
 
 - (BOOL) application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>>* restorableObjects))restorationHandler
 {
-  if ([userActivity.activityType isEqualToString:@"CreateNoteIntent"]) {
-    MBNotesScriptingModule* scripting_module = [self.bridge moduleForClass:[MBNotesScriptingModule class]];
-    [scripting_module emitEventToJS];
-  }
-
   return YES;
 }
 
@@ -47,6 +42,12 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (void) handleNewNote
+{
+  MBNotesScriptingModule* scripting_module = [self.bridge moduleForClass:[MBNotesScriptingModule class]];
+  [scripting_module emitEventToJS];
 }
 
 @end
