@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Text, Button } from 'react-native';
-import ActionSheet from 'react-native-actions-sheet';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import ActionSheet, { SheetManager } from 'react-native-actions-sheet';
 import AudioRecorderPlayer, { AudioEncoderAndroidType, AudioSourceAndroidType, AVModeIOSOption, AVEncoderAudioQualityIOSType, AVEncodingOption } from 'react-native-audio-recorder-player';
 import RNFS from 'react-native-fs';
 import { observer } from 'mobx-react';
@@ -27,11 +27,12 @@ export default class DictationSheet extends React.Component {
 	}
 
 	componentDidMount = async () => {
+		this.startRecording();
 	}
 	
 	componentWillUnmount = async () => {
 		if (this.state.is_recording) {
-			this.stopRecording();
+			this.cancelRecording();
 		}
 	}
 
@@ -86,16 +87,29 @@ export default class DictationSheet extends React.Component {
 		
 			const file_stats = await RNFS.stat(this.audioPath);
 			console.log("Stats:", file_stats);
-			
-			// await this.audioRecorderPlayer.startPlayer();
-			await this.uploadAudio();
 		}
 		catch (error) {
 			console.error("Failed to stop recording:", error);
 		}
 	};
 	
-	uploadAudio = async () => {		
+	cancelRecording = async () => {
+		this.stopRecording().then(() => {
+			this.removeAudioFile(this.audioPath);
+			SheetManager.hide("dictation-sheet");
+		});
+	};
+	
+	finishRecording = async () => {
+		this.stopRecording().then(() => {
+			this.uploadAudio();
+		});
+	};
+	
+	uploadAudio = async () => {
+		this.setState({ is_uploading: true });
+		
+		// ...
 	};
 	
 	checkAudioLevel = (decibels) => {
@@ -116,12 +130,12 @@ export default class DictationSheet extends React.Component {
 		
 		if (silence_duration >= maxSilenceDuration) {
 			console.log("Detected seconds of silence, stopping");
-			this.stopRecording();
+			this.finishRecording();
 		}
 	};
 
 	render() {
-		const { is_recording } = this.state;
+		const { is_recording, is_uploading } = this.state;
 
 		return (
 			<ActionSheet
@@ -134,11 +148,31 @@ export default class DictationSheet extends React.Component {
 				useBottomSafeAreaPadding={true}
 				id={this.props.sheet_id}
 			>
-				<Text>Hi</Text>
-				<Button
-					title={is_recording ? "Stop Recording" : "Start Recording"}
-					onPress={is_recording ? this.stopRecording : this.startRecording}
-				/>
+				<View style={{ padding: 15 }}>
+					{ is_recording &&
+						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+							<Text style={{ flex: 1, fontSize: 16, marginRight: 15, color: App.theme_text_color() }}>Recording your note... It will be transcribed in the cloud and then added as a note. The audio will be deleted.</Text>
+							<TouchableOpacity
+								onPress={this.cancelRecording}
+								style={{
+									padding: 8,
+									paddingHorizontal: 10,
+									borderRadius: 8,
+									backgroundColor: App.theme_border_color()
+								}}
+							>
+								<Text style={{ color: App.theme_text_color() }}>Cancel</Text>
+							</TouchableOpacity>
+						</View>
+					}
+					
+					{ is_uploading &&
+						<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+							<Text style={{ flex: 1, fontSize: 16, marginRight: 15, color: App.theme_text_color() }}>Uploading audio for transcription...</Text>
+							<ActivityIndicator color={App.theme_accent_color()} size={'large'} />
+						</View>
+					}
+				</View>
 			</ActionSheet>
 		)
 	}
