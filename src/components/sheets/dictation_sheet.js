@@ -5,6 +5,7 @@ import AudioRecorderPlayer, { AudioEncoderAndroidType, AudioSourceAndroidType, A
 import RNFS from 'react-native-fs';
 import { observer } from 'mobx-react';
 import App from '../../stores/App';
+import Auth from '../../stores/Auth';
 
 const silenceThreshold = -50; // dB threshold for silence
 const maxSilenceDuration = 4; // in seconds
@@ -109,6 +110,68 @@ export default class DictationSheet extends React.Component {
 	uploadAudio = async () => {
 		this.setState({ is_uploading: true });
 		
+		try {
+			let file_data = await RNFS.readFile(this.audioPath, 'base64');
+			file_data = "data:;base64," + file_data;
+			const file_id = Math.floor(Math.random() * 1000000);
+			
+			const upload_form_data = new FormData();
+			upload_form_data.append('file_data', file_data);
+			upload_form_data.append('file_id', file_id);
+			
+			console.log(`File ID: ${file_id}`);
+			
+			await fetch('https://micro.blog/account/upload_part', {
+				method: 'POST',
+				headers: {
+				  'Authorization': `Bearer ${Auth.selected_user?.token()}`
+				},
+				body: upload_form_data
+			});
+			
+			const finished_form_data = new FormData();
+			finished_form_data.append('file_id', file_id);
+			finished_form_data.append('file_defer', '1');
+			finished_form_data.append('file_destination', 'transcribe');
+			
+			await fetch('https://micro.blog/account/upload_finished', {
+				method: 'POST',
+				headers: {
+				  'Authorization': `Bearer ${Auth.selected_user?.token()}`
+				},
+				body: finished_form_data
+			});
+		
+			this.transcriptionTimer = setInterval(async () => {
+				try {
+					const response = await fetch(`https://micro.blog/account/upload_transcript?file_id=${file_id}`, {
+						headers: {
+							'Authorization': `Bearer ${Auth.selected_user?.token()}`
+						}						
+					});
+					const response_data = await response.json();
+		
+					if (response_data.text && response_data.text.trim() != '') {
+						console.log('Transcription text:', response_data.text);
+						clearInterval(this.transcriptionTimer);
+						await this.saveNote(response_data.text);
+					}
+				}
+				catch (error) {
+					console.error('Failed to get transcription:', error);
+					clearInterval(this.transcriptionTimer);
+				}
+			}, 2000);
+		}
+		catch (error) {
+			console.error('Failed to upload audio:', error);
+		}
+		finally {
+			this.setState({ is_uploading: false });
+		}
+	};
+	
+	saveNote = async (note_text) => {
 		// ...
 	};
 	
@@ -117,7 +180,7 @@ export default class DictationSheet extends React.Component {
 			
 		if (decibels < silenceThreshold) {
 			// add time we've waited
-			this.setState({ silence_duration: silence_duration + .5 });
+			this.setState({ silence_duration: silence_duration + 0.5 });
 		}
 		else {
 			// reset duration if sound is detected
