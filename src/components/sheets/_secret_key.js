@@ -129,7 +129,7 @@ export default class SecretKeyInput extends React.Component {
             }}
           >
             {
-              this.state.canScan ?
+              this.state.canScan && Platform.OS === 'ios' ?
               <TouchableOpacity
                 onPress={this.toggleScanner}
                 style={{
