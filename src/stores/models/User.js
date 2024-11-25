@@ -57,7 +57,10 @@ export default User = types.model('User', {
           self.is_syncing_with_icloud = true
           const cloud_key = yield MBNotesCloudModule.getNotesKey()
           if (!cloud_key) {
-            App.open_sheet("secret-key-prompt-sheet");
+            setTimeout(() => {
+              App.open_sheet("secret-key-prompt-sheet");
+            }, 500)
+            
             if (self.is_appletest()) {
               // special case for Apple, download centralized key
               MicroBlogApi.get_centralized_key(self.username).then(apple_key => {

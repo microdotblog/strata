@@ -26,17 +26,17 @@ import CryptoKit
     }
   }
   
-  @objc func decrypt(encryptedData: Data, iv: Data, tag: Data, key: Data) -> String? {
+  @objc func decrypt(encryptedData: Data, key: Data) -> String? {
     let symmetric_key = SymmetricKey(data: key)
     
     do {
-      let nonce = try AES.GCM.Nonce(data: iv)
-      let box = try AES.GCM.SealedBox(nonce: nonce, ciphertext: encryptedData, tag: tag)
+      let box = try AES.GCM.SealedBox(combined: encryptedData)
       let decrypted_data = try AES.GCM.open(box, using: symmetric_key)
       
       // convert decrypted data back to a string
       return String(data: decrypted_data, encoding: .utf8)
-    } catch {
+    }
+    catch {
       print("Decryption error: \(error)")
       return nil
     }

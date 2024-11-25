@@ -25,6 +25,22 @@ RCT_EXPORT_METHOD(encryptText:(NSString *)text withKey:(NSString *)key resolver:
   resolve(s);
 }
 
+RCT_EXPORT_METHOD(decryptText:(NSString *)text withKey:(NSString *)key resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  NSData* keyData = [[self class] dataFromHexString:key];
+  NSData* encryptedData = [[NSData alloc] initWithBase64EncodedString:text options:0];
+  
+  MBNoteCrypto* crypto = [[MBNoteCrypto alloc] init];
+  NSString* decryptedText = [crypto decryptWithEncryptedData:encryptedData key:keyData];
+  
+  if (decryptedText) {
+    resolve(decryptedText);
+  }
+  else {
+    reject(@"DECRYPT_ERROR", @"Failed to decrypt the text", nil);
+  }
+}
+
 + (NSData *) dataFromHexString:(NSString *)hexString
 {
   NSMutableData* result = [[NSMutableData alloc] init];
