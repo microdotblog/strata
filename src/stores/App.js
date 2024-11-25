@@ -17,6 +17,12 @@ export default App = types.model('App', {
   search_query: types.optional(types.string, ""),
   has_unsaved_note: types.optional(types.boolean, false),
 })
+  .volatile(self => ({
+    navigation_ref: null,
+    current_tab_key: null,
+    current_raw_tab_key: null,
+    current_tab_index: null
+  }))
   .actions(self => ({
 
     hydrate: flow(function*() {
@@ -29,6 +35,41 @@ export default App = types.model('App', {
         // Now we want to check if the user is premium
         App.check_current_user_can_use_notes()
       })
+    }),
+    
+    set_navigation: flow(function* (navigation = null) {
+      if (navigation) {
+        self.navigation_ref = navigation
+      }
+    }),
+    
+    set_current_tab_key: flow(function* (tab_key) {
+      console.log("App:set_current_tab_key", tab_key)
+      self.current_raw_tab_key = tab_key
+      if (tab_key.includes("Notes")) {
+        self.current_tab_key = "Notes"
+      }
+      else if (tab_key.includes("Bookmarks")) {
+        self.current_tab_key = "Bookmarks"
+        // if(Auth.is_logged_in() && Auth.selected_user != null){
+        //   Auth.selected_user.fetch_highlights()
+        //   Auth.selected_user.fetch_tags()
+        //   Auth.selected_user.fetch_recent_tags()
+        // }
+      }
+      else if (tab_key.includes("Highlights")) {
+        self.current_tab_key = "Highlights"
+      }
+      else {
+        self.current_tab_key = tab_key
+      }
+    }),
+    
+    set_current_tab_index: flow(function* (tab_index) {
+      console.log("App:set_current_tab_index", tab_index)
+      if(tab_index === self.current_tab_index){return}
+      self.current_tab_index = tab_index
+      // AsyncStorage.setItem("App:tab_index", JSON.stringify(self.current_tab_index))
     }),
 
     set_is_hydrating: flow(function*(is_hydrating) {
@@ -277,6 +318,9 @@ export default App = types.model('App', {
     theme_confirm_color() {
       return self.theme_text_color()
       // return "#6EE7B7"
+    },
+    theme_tabbar_divider_color() {
+      return self.theme === "dark" ? "#383f4a" : "#AAA"
     },
     now() {
       let now = new Date()
