@@ -12,6 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2D5C60B7354A37276398C55F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */; };
 		4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */; };
 		4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1BECA72B6F235B0077F593 /* Security.framework */; };
 		4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */; };
@@ -64,6 +65,7 @@
 		5709B34CF0A7D63546082F79 /* Pods-Strata.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.release.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Strata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Strata.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Strata/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Strata/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */,
 				3E2ECE45115A6ECD65E76DF8 /* PrivacyInfo.xcprivacy */,
+				AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */,
 			);
 			name = Strata;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				2D5C60B7354A37276398C55F /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
