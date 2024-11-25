@@ -239,6 +239,42 @@ class MicroBlogApi {
       return API_ERROR
     }    
   }
+  
+  async get_bookmarks() {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    } catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+  
+  async get_bookmark_tags(recent = false, count = 10) {
+    const path = recent ? `tags?recent=1&count=${count}` : 'tags'
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/${path}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'    
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    }
+    catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
 
 }
 
