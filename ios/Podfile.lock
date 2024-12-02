@@ -888,6 +888,8 @@ PODS:
     - React-debug
   - react-native-menu (0.9.1):
     - React
+  - react-native-render-html (6.3.4):
+    - React-Core
   - react-native-safe-area-context (4.14.0):
     - React-Core
   - react-native-sensitive-info (5.5.8):
@@ -1127,6 +1129,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - "react-native-menu (from `../node_modules/@react-native-menu/menu`)"
+  - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
   - react-native-sfsymbols (from `../node_modules/react-native-sfsymbols`)
@@ -1226,6 +1229,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-menu:
     :path: "../node_modules/@react-native-menu/menu"
+  react-native-render-html:
+    :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-sensitive-info:
@@ -1324,6 +1329,7 @@ SPEC CHECKSUMS:
   React-logger: ef76a6d8e04672f19be9b3a49f6ecc4c7141399b
   React-Mapbuffer: 3dd48fdc197c566c90774761e4799e86b1937572
   react-native-menu: 3b18731451e753982eb131cbd08a88c4e5af73f9
+  react-native-render-html: 5afc4751f1a98621b3009432ef84c47019dcb2bd
   react-native-safe-area-context: b13be9714d9771fbde0120bc519c963484de3a71
   react-native-sensitive-info: 31674faa5e17977b394fb67986c35ef94f8ffe81
   react-native-sfsymbols: 3309f24c98d32705568c84b714268f3ec62017c7
