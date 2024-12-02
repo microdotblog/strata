@@ -16,6 +16,8 @@ export default App = types.model('App', {
   search_open: types.optional(types.boolean, false),
   search_query: types.optional(types.string, ""),
   has_unsaved_note: types.optional(types.boolean, false),
+  is_loading_bookmarks: types.optional(types.boolean, false),
+  is_loading_highlights: types.optional(types.boolean, false)
 })
   .volatile(self => ({
     navigation_ref: null,
@@ -248,7 +250,17 @@ export default App = types.model('App', {
           }
         })
       }
-    })
+    }),
+    
+    set_is_loading_highlights: flow(function* (loading) {
+      console.log("App:set_is_loading_highlights", loading)
+      self.is_loading_highlights = loading
+    }),
+    
+    set_is_loading_bookmarks: flow(function* (loading) {
+      console.log("App:set_is_loading_bookmarks", loading)
+      self.is_loading_bookmarks = loading
+    }),
 
   }))
   .views(self => ({

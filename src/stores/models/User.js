@@ -5,6 +5,8 @@ import App from './../App';
 import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR, LOGIN_TOKEN_INVALID, LOGIN_ERROR } from '../../api/MicroBlogApi';
 import { Alert, NativeModules, Platform } from 'react-native';
 import { SheetManager } from 'react-native-actions-sheet';
+import { Bookmark } from './Bookmark';
+import Highlight from './Highlight';
 const { MBNotesCloudModule } = NativeModules;
 
 export default User = types.model('User', {
@@ -17,7 +19,9 @@ export default User = types.model('User', {
   selected_notebook: types.maybeNull(types.reference(Notebook)),
   is_saving_new_notebook: types.optional(types.boolean, false),
   is_syncing_with_icloud: types.optional(types.boolean, false),
-  plan: types.maybeNull(types.string)
+  plan: types.maybeNull(types.string),
+  bookmarks: types.optional(types.array(Bookmark), []),
+  highlights: types.optional(types.array(Highlight), [])
 })
   .actions(self => ({
 
@@ -29,6 +33,8 @@ export default User = types.model('User', {
         yield self.fetch_notebooks()
         // Let's also check if their account premium status changed.
         self.check_for_update_account_status()
+        self.fetch_highlights()
+        self.fetch_bookmarks()
       }
 
     }),
@@ -252,6 +258,28 @@ export default User = types.model('User', {
         self.set_selected_notebook(found_notebook)
       }
     }),
+    
+    fetch_bookmarks: flow(function* () {
+      console.log("User:fetch_bookmarks")
+      App.set_is_loading_bookmarks(true)
+      const bookmarks = yield MicroBlogApi.get_bookmarks()
+      if(bookmarks !== API_ERROR && bookmarks.items){
+        self.bookmarks = bookmarks.items
+      }
+      App.set_is_loading_bookmarks(false)
+      console.log("User:fetch_bookmarks:count", self.bookmarks.length)
+    }),
+    
+    fetch_highlights: flow(function* () {
+      console.log("User:fetch_highlights")
+      App.set_is_loading_highlights(true)
+      const highlights = yield MicroBlogApi.get_highlights()
+      if(highlights !== API_ERROR && highlights.items){
+        self.highlights = highlights.items
+      }
+      App.set_is_loading_highlights(false)
+      console.log("User:fetch_highlights:count", self.highlights.length)
+    }),
 
   }))
   .views(self => ({
@@ -263,13 +291,17 @@ export default User = types.model('User', {
     secret_token() {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
     },
-
-    can_create_notebook() {
+    
+    is_premium_user() {
       return self.is_premium || self.plan !== "free"
     },
 
+    can_create_notebook() {
+      return this.is_premium_user()
+    },
+
     can_use_notes() {
-      return self.is_premium || self.plan !== "free"
+      return this.is_premium_user()
     },
 
     is_appletest() {

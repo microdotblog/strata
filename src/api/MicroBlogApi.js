@@ -275,6 +275,23 @@ class MicroBlogApi {
       return API_ERROR
     }
   }
+  
+  async get_highlights() {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/highlights`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    } catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
 
 }
 
