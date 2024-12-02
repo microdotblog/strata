@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import App from '../../stores/App';
 import NotesStack from './NotesStack';
+import BookmarksStack from './BookmarksStack';
 import TabIcon from '../../components/tabs/tab';
 
 const Tab = createBottomTabNavigator();
@@ -52,6 +53,14 @@ export default class TabNavigator extends React.Component{
           options={{
             tabBarLabel: "Notes",
             headerTitle: "Notes"
+          }}
+        />
+        <Tab.Screen
+          name="BookmarksStack"
+          component={BookmarksStack}
+          options={{
+            tabBarLabel: "Bookmarks",
+            headerTitle: "Bookmarks"
           }}
         />
       </Tab.Navigator>

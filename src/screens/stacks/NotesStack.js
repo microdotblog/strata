@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NotesScreen from '../notes/Notes';
 import ProfileImage from './../../components/header/profile_image';
 import NewNoteButton from '../../components/header/new_note';
-// import { getSharedScreens } from './SharedStack'
 
 const NotesStack = createNativeStackNavigator();
 
@@ -12,7 +11,6 @@ const NotesStack = createNativeStackNavigator();
 export default class Notes extends React.Component{
 
   render() {
-    //const sharedScreens = getSharedScreens(NotesStack, "Notes")
     return(
       <NotesStack.Navigator>
         <NotesStack.Screen
