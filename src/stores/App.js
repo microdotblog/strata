@@ -337,6 +337,15 @@ export default App = types.model('App', {
     theme_tabbar_divider_color() {
       return self.theme === "dark" ? "#383f4a" : "#AAA"
     },
+    theme_highlight_background_color(){
+      return self.theme === "dark" ? "#1F2937" : "rgb(254,249,195)"
+    },
+    theme_highlight_border_color(){
+      return self.theme === "dark" ? "#f2dede" : "rgb(254,240,138)"
+    },
+    theme_highlight_meta_text_color() {
+      return "gray"
+    },
     now() {
       let now = new Date()
       now.setHours(0, 0, 0, 0)
