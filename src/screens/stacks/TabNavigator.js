@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import App from '../../stores/App';
 import NotesStack from './NotesStack';
 import BookmarksStack from './BookmarksStack';
+import HighlightsStack from './HighlightsStack';
 import TabIcon from '../../components/tabs/tab';
 
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,14 @@ export default class TabNavigator extends React.Component{
           options={{
             tabBarLabel: "Bookmarks",
             headerTitle: "Bookmarks"
+          }}
+        />
+        <Tab.Screen
+          name="HighlightsStack"
+          component={HighlightsStack}
+          options={{
+            tabBarLabel: "Highlights",
+            headerTitle: "Highlights"
           }}
         />
       </Tab.Navigator>

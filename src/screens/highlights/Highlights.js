@@ -4,12 +4,12 @@ import { Text, View } from 'react-native';
 import App from '../../stores/App'
 
 @observer
-export default class BookmarksScreen extends React.Component {
+export default class HighlightsScreen extends React.Component {
 
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: App.theme_text_color() }}>Bookmarks</Text>
+        <Text style={{ color: App.theme_text_color() }}>Highlights</Text>
       </View>
     )
   }

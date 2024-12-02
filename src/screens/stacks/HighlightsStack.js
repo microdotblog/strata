@@ -1,27 +1,27 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BookmarksScreen from '../bookmarks/Bookmarks';
+import HighlightsScreen from '../highlights/Highlights';
 import ProfileImage from './../../components/header/profile_image';
 
-const BookmarksStack = createNativeStackNavigator();
+const HighlightsStack = createNativeStackNavigator();
 
 @observer
-export default class Bookmarks extends React.Component{
+export default class Highlights extends React.Component{
 
   render() {
     return(
-      <BookmarksStack.Navigator>
-        <BookmarksStack.Screen
-          name="Bookmarks"
-          component={BookmarksScreen}
+      <HighlightsStack.Navigator>
+        <HighlightsStack.Screen
+          name="Highlights"
+          component={HighlightsScreen}
           options={{
             headerLeft: () => <ProfileImage />,
             // headerRight: () => <NewNoteButton />,
             headerTintColor: App.theme_text_color()
           }}
         />
-      </BookmarksStack.Navigator>
+      </HighlightsStack.Navigator>
     )
   }
 

@@ -17,7 +17,7 @@ export default class Tab extends React.Component {
       case "BookmarksStack":
         return isIOS ? "star" : null;
       case "HighlightsStack":
-        return isIOS ? "tag" : null;
+        return isIOS ? "highlighter" : null;
       default:
         return null
     }
