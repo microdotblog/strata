@@ -1,6 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 import Auth from './Auth'
 import { Appearance, AppState, Linking, Alert } from 'react-native'
+import { InAppBrowser } from 'react-native-inappbrowser-reborn'
 import { SheetManager } from "react-native-actions-sheet";
 import Login from './Login';
 import Tokens from './Tokens';
@@ -263,6 +264,34 @@ export default App = types.model('App', {
     set_is_loading_bookmarks: flow(function* (loading) {
       console.log("App:set_is_loading_bookmarks", loading)
       self.is_loading_bookmarks = loading
+    }),
+    
+    open_url: flow(function* (url) {    
+      Linking.canOpenURL(url).then(async (supported) => {
+        if (supported) {
+          const is_inapp_browser_avail = await InAppBrowser.isAvailable()
+          if (is_inapp_browser_avail) {
+            return InAppBrowser.open(url, {
+              dismissButtonStyle: 'close',
+              preferredControlTintColor: App.theme_accent_color(),
+              animated: true,
+              modalEnabled: false
+            })
+          }
+          else {
+            Linking.openURL(url);
+          }
+        }
+        else {
+          try {
+            Linking.openURL(url)
+          }
+          catch (error) {
+            console.log("App:open_url:error", error)
+            alert("Something went wrong with that link...")
+          }
+        }
+      })
     }),
 
   }))

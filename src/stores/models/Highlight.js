@@ -16,10 +16,7 @@ export default Highlight = types.model('Highlight', {
   hostname(){
     return new URL(self.url).host
   },
-  markdown(){
-    return `[${self.title}](${self.url})
-
-> ${self.content_text}
-`
+  url_with_text_fragment(){
+    return `${self.url}#:~:text=${self.content_text}`
   }
 }))

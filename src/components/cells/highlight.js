@@ -97,8 +97,10 @@ export default class Highlight extends React.Component{
           <Text style={{color: App.theme_text_color(), fontSize: App.theme_default_font_size()}}>{highlight.content_text}</Text>
         }
         {
-          highlight.title &&
-          <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: App.theme_default_font_size(), marginTop: 15}}>{highlight.hostname()}: {highlight.title}</Text>
+          highlight.title && (
+          <TouchableOpacity onPress={() => App.open_url(highlight.url_with_text_fragment())}>
+            <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: App.theme_default_font_size(), marginTop: 15}}>{highlight.hostname()}: {highlight.title}</Text>
+          </TouchableOpacity>)
         }
         <View
           style={{
@@ -107,7 +109,7 @@ export default class Highlight extends React.Component{
             marginTop: 20
           }}
         >
-          <TouchableOpacity onPress={() => null}>
+          <TouchableOpacity onPress={() => App.open_url(highlight.url)}>
             <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: 12}}>
             {highlight.nice_local_published_date()}
             </Text>
