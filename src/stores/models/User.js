@@ -280,6 +280,11 @@ export default User = types.model('User', {
       App.set_is_loading_highlights(false)
       console.log("User:fetch_highlights:count", self.highlights.length)
     }),
+    
+    destroy_highlight: flow(function* (highlight) {
+      console.log("User:destroy_highlight", highlight)
+      destroy(highlight)
+    })
 
   }))
   .views(self => ({

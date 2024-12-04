@@ -292,6 +292,23 @@ class MicroBlogApi {
       return API_ERROR
     }
   }
+  
+  async delete_highlight(id) {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/highlights/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      return await response.json()
+    }
+    catch(error) {
+      console.log(error)
+      return DELETE_ERROR
+    }
+  }
 
 }
 

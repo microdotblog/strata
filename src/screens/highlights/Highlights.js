@@ -1,26 +1,25 @@
 import * as React from 'react';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 import Highlight from '../../components/cells/highlight';
-import { FlashList } from "@shopify/flash-list";
 
 @observer
 export default class HighlightsScreen extends React.Component{
   
   _key_extractor = (item) => item.id;
   
-  render_highlight_item = ({ item }) => {
+  render_highlight_item = ({ item, index}) => {
     return(
-      <Highlight key={item.id} highlight={item} />
+      <Highlight key={`${item.id}-${index}`} highlight={item} />
     )
   }
   
   _return_highlights_list = () => {
     const { highlights } = Auth.selected_user
     return(
-      <FlashList
+      <FlatList
         estimatedItemSize={150}
         initialNumToRender={15}
         data={highlights}
@@ -34,7 +33,7 @@ export default class HighlightsScreen extends React.Component{
         }}
         refreshControl={
           <RefreshControl
-            refreshing={false}
+            refreshing={App.is_loading_highlights}
             onRefresh={() => Auth.selected_user.fetch_highlights()}
           />
         }

@@ -33,7 +33,7 @@ export default class Highlight extends React.Component{
   )
   
   _trigger_delete = () => {
-    //Auth.selected_user?.delete_highlight(this.props.highlight?.id)
+    this.props.highlight?.delete()
   }
   
   _return_action = (text, color, x, progress, icon, item, stroke = "#fff") => {

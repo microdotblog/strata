@@ -1,5 +1,6 @@
-import { types } from 'mobx-state-tree';
+import { types, getParent, flow } from 'mobx-state-tree';
 import { URL } from 'react-native-url-polyfill';
+import MicroBlogApi, { DELETE_ERROR } from '../../api/MicroBlogApi';
 
 export default Highlight = types.model('Highlight', {
   id: types.identifierNumber,
@@ -8,6 +9,22 @@ export default Highlight = types.model('Highlight', {
   url: types.maybe(types.string),
   date_published: types.maybe(types.string),
 })
+.actions(self => ({
+  
+  delete: flow(function*() {
+    console.log("DELETE HIGHLIGHT", self.id)
+    const data = yield MicroBlogApi.delete_highlight(self.id)
+    if(data !== DELETE_ERROR){
+      const parentNode = getParent(self, 2)
+      parentNode?.destroy_highlight(self)
+      parentNode?.fetch_highlights()
+    }
+    else{
+      alert("Something went wrong. Please try again.")
+    }
+  })
+  
+}))
 .views(self => ({
   nice_local_published_date(){
     const date = new Date(self.date_published);
