@@ -33,6 +33,7 @@ export default class HighlightsScreen extends React.Component{
         }}
         refreshControl={
           <RefreshControl
+            tintColor={App.theme_accent_color()}
             refreshing={App.is_loading_highlights}
             onRefresh={() => Auth.selected_user.fetch_highlights()}
           />
