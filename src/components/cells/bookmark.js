@@ -32,8 +32,8 @@ export default class Highlight extends React.Component{
     </View>
   )
   
-  _trigger_delete = () => {
-    this.props.highlight?.delete()
+  _trigger_remove = () => {
+    //this.props.bookmark?.remove()
   }
   
   _return_action = (text, color, x, progress, icon, item, stroke = "#fff") => {
@@ -45,7 +45,7 @@ export default class Highlight extends React.Component{
     
     const press_handler = () => {
       if (text === "Delete") {
-        this._trigger_delete()
+        this._trigger_remove()
         this._swipeable?.current?.close()
       }
     }
@@ -75,48 +75,20 @@ export default class Highlight extends React.Component{
     }
   
   render() {
-    const { highlight } = this.props
+    const { bookmark } = this.props
     return(
       <Swipeable
         ref={this._swipeable}
         friction={1}
         overshootFriction={8}
         enableTrackpadTwoFingerGesture={true}
-        renderRightActions={(progress) => this._right_actions(progress, highlight)}
+        renderRightActions={(progress) => this._right_actions(progress, bookmark)}
         containerStyle={{
           marginTop: 15,
           position: "relative"
         }}
       >
-        {
-          highlight.content_text && 
-          <Text style={{color: App.theme_text_color(), fontSize: App.theme_default_font_size()}}>{highlight.content_text}</Text>
-        }
-        {
-          highlight.title && (
-          <TouchableOpacity onPress={() => App.open_url(highlight.url_with_text_fragment())}>
-            <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: App.theme_default_font_size(), marginTop: 15}}>{highlight.hostname()}: {highlight.title}</Text>
-          </TouchableOpacity>)
-        }
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 20
-          }}
-        >
-          <TouchableOpacity onPress={() => App.open_url(highlight.url)}>
-            <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: 12}}>
-            {highlight.nice_local_published_date()}
-            </Text>
-          </TouchableOpacity>
-          {
-            Platform.OS === "android" &&
-            <TouchableOpacity onPress={this._trigger_delete} style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: "rgb(239,68,68)", fontSize: 15}}>Delete...</Text>
-            </TouchableOpacity>
-          }
-        </View>
+        <Text>{bookmark.id}</Text>
       </Swipeable>
     )
   }

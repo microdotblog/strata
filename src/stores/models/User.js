@@ -21,6 +21,7 @@ export default User = types.model('User', {
   is_syncing_with_icloud: types.optional(types.boolean, false),
   plan: types.maybeNull(types.string),
   bookmarks: types.optional(types.array(Bookmark), []),
+  last_bookmark_fetch: types.optional(types.Date, new Date),
   highlights: types.optional(types.array(Highlight), [])
 })
   .actions(self => ({
@@ -265,9 +266,30 @@ export default User = types.model('User', {
       const bookmarks = yield MicroBlogApi.get_bookmarks()
       if(bookmarks !== API_ERROR && bookmarks.items){
         self.bookmarks = bookmarks.items
+        self.last_bookmark_fetch = new Date
       }
       App.set_is_loading_bookmarks(false)
       console.log("User:fetch_bookmarks:count", self.bookmarks.length)
+    }),
+    
+    fetch_more_bookmarks: flow(function* () {
+      console.log("User:fetch_more_bookmarks", self.bookmarks.length > 0)
+      
+      if(self.bookmarks.length > 0){
+        console.log("User:fetch_more_bookmarks:before_id", self.bookmarks[self.bookmarks.length - 1]?.id)
+        const bookmarks = yield MicroBlogApi.get_bookmarks(self.bookmarks[self.bookmarks.length - 1].id)
+        console.log("User:fetch_more_bookmarks:count", bookmarks?.items?.length)
+        if(bookmarks !== API_ERROR && bookmarks.items){
+          bookmarks.items.map(bookmark => {
+            const existing_bookmark = self.bookmarks.find(b => b.id === bookmark.id)
+            if(existing_bookmark != null) return
+            self.bookmarks.push(bookmark)
+          })
+          self.last_bookmark_fetch = new Date
+          console.log("User:fetch_more_bookmarks:total_count", self.bookmarks.length)
+        }
+      }
+      
     }),
     
     fetch_highlights: flow(function* () {

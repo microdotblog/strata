@@ -12,7 +12,6 @@ export default Highlight = types.model('Highlight', {
 .actions(self => ({
   
   delete: flow(function*() {
-    console.log("DELETE HIGHLIGHT", self.id)
     const data = yield MicroBlogApi.delete_highlight(self.id)
     if(data !== DELETE_ERROR){
       const parentNode = getParent(self, 2)

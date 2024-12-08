@@ -240,9 +240,13 @@ class MicroBlogApi {
     }    
   }
   
-  async get_bookmarks() {
-    try{
-      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks`, {
+  async get_bookmarks(before_id = null) {
+    try {
+      let request_path = 'posts/bookmarks'
+      if (before_id){
+        request_path += `?before_id=${before_id}`
+      }
+      const response = await fetch(`${BASE_ENDPOINT}/${request_path}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${Auth.selected_user?.token()}`,
