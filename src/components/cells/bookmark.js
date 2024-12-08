@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TouchableOpacity, Animated, Platform } from 'react-native';
+import { View, Text, Animated, Dimensions } from 'react-native';
 import App from '../../stores/App'
-import Auth from '../../stores/Auth';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
+import RenderHtml, { HTMLContentModel, defaultHTMLElementModels } from 'react-native-render-html';
 
 @observer
-export default class Highlight extends React.Component{
+export default class Bookmark extends React.Component{
   
   constructor(props){
     super(props)
@@ -72,7 +72,41 @@ export default class Highlight extends React.Component{
           </RectButton>
         </Animated.View>
       )
+  }
+  
+  on_link_press = (event, href) => {
+    console.log("Pressed link:", href)
+  }
+  
+  render_html = () => {
+    const { bookmark } = this.props
+    const customHTMLElementModels = {
+      img: defaultHTMLElementModels.img.extend({
+        contentModel: HTMLContentModel.mixed
+      })
     }
+    const renderersProps = {
+      a: {
+        onPress: this.on_link_press
+      }
+    }
+    return(
+      <RenderHtml
+        contentWidth={Dimensions.get('window').width}
+        source={{
+          html: bookmark.content_html
+        }}
+        tagsStyles={{
+          body: {
+            color: App.theme_text_color(),
+            fontSize: App.theme_default_font_size()
+          }
+        }}
+        customHTMLElementModels={customHTMLElementModels}
+        renderersProps={renderersProps}
+      />
+    )
+  }
   
   render() {
     const { bookmark } = this.props
@@ -85,10 +119,13 @@ export default class Highlight extends React.Component{
         renderRightActions={(progress) => this._right_actions(progress, bookmark)}
         containerStyle={{
           marginTop: 15,
-          position: "relative"
+          position: "relative",
+          paddingBottom: 15,
+          borderColor: App.theme_border_color(),
+          borderBottomWidth: 0.5
         }}
       >
-        <Text>{bookmark.id}</Text>
+        {this.render_html()}
       </Swipeable>
     )
   }
