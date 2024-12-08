@@ -94,12 +94,25 @@ export default class Bookmark extends React.Component{
       <RenderHtml
         contentWidth={Dimensions.get('window').width}
         source={{
-          html: bookmark.content_html
+          html: `<div class='post_text'>${bookmark.content_html}</div>`
         }}
         tagsStyles={{
           body: {
             color: App.theme_text_color(),
             fontSize: App.theme_default_font_size()
+          }
+        }}
+        classesStyles={{
+          post_archived_links: {
+            borderRadius: 7,
+            paddingHorizontal: 12,
+            paddingVertical: 8,
+            marginTop: 20,
+            backgroundColor: App.theme === "dark" ? "#1e252f" : "#f4f6f9",
+            alignSelf: 'flex-start',
+            color: App.theme === "dark" ? "#f4f6f9" : "#1e252f",
+            borderColor: App.theme === "dark" ? "#3a414f" : "#EFEFEF",
+            borderWidth: 1
           }
         }}
         customHTMLElementModels={customHTMLElementModels}
