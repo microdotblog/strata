@@ -100,6 +100,12 @@ export default class Bookmark extends React.Component{
           body: {
             color: App.theme_text_color(),
             fontSize: App.theme_default_font_size()
+          },
+          blockquote: {
+            borderLeftColor: '#eee',
+            borderLeftWidth: 5,
+            paddingLeft: 15,
+            marginLeft: 0
           }
         }}
         classesStyles={{

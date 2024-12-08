@@ -85,7 +85,10 @@ export default class Highlight extends React.Component{
         renderRightActions={(progress) => this._right_actions(progress, highlight)}
         containerStyle={{
           marginTop: 15,
-          position: "relative"
+          position: "relative",
+          paddingBottom: 15,
+          borderColor: App.theme_border_color(),
+          borderBottomWidth: 0.5
         }}
       >
         {

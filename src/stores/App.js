@@ -321,7 +321,7 @@ export default App = types.model('App', {
       return self.theme === "dark" ? "#171c24" : "#f2f2f2"
     },
     theme_text_color() {
-      return self.theme === "dark" ? "#fff" : "#000"
+      return self.theme === "dark" ? "#E5E7EB" : "#000"
     },
     theme_placeholder_text_color() {
       return self.theme === "dark" ? "#374151" : "lightgray"
