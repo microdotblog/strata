@@ -181,6 +181,7 @@ export default class NoteItem extends React.Component {
         >
           <TouchableOpacity
             onPress={() => note.prep_and_open_posting()}
+            onLongPress={() => {}}
             style={{
               padding: 12,
               backgroundColor: note.background_color(),
