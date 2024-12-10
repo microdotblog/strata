@@ -126,26 +126,58 @@ export default class NoteItem extends React.Component {
         }}
         enabled={note.can_do_action()}
       >
-        <MenuView
-          shouldOpenOnLongPress={true}
-          onPressAction={({ nativeEvent }) => {
-            const event_id = nativeEvent.event
-            note.trigger_action(event_id)
+        <TouchableOpacity
+          onPress={() => note.prep_and_open_posting()}
+          onLongPress={() => {}}
+          style={{
+            padding: 12,
+            backgroundColor: note.background_color(),
+            borderRadius: 12,
+            opacity: 1,
+            ...note._microblog.is_shared ? {
+              paddingBottom: 8
+            } : null
           }}
-          actions={
-            note._microblog.is_shared ? [
-              {
-                title: "Open",
-                id: "open_in_browser",
+        >
+          <MenuView
+            shouldOpenOnLongPress={true}
+            onPressAction={({ nativeEvent }) => {
+              const event_id = nativeEvent.event
+              note.trigger_action(event_id)
+            }}
+            actions={
+              note._microblog.is_shared ? [
+                {
+                  title: "Open",
+                  id: "open_in_browser",
+                  image: Platform.select({
+                    ios: 'safari'
+                  })
+                },
+                {
+                  title: "Unshare",
+                  id: "unshare_note",
+                  image: Platform.select({
+                    ios: 'xmark'
+                  })
+                },
+                {
+                  title: "Delete",
+                  id: "delete_note",
+                  image: Platform.select({
+                    ios: 'trash'
+                  }),
+                  attributes: {
+                    destructive: true
+                  }
+                }              
+              ]            
+              :
+              [{
+                title: "Share",
+                id: "share_note",
                 image: Platform.select({
-                  ios: 'safari'
-                })
-              },
-              {
-                title: "Unshare",
-                id: "unshare_note",
-                image: Platform.select({
-                  ios: 'xmark'
+                  ios: 'square.and.arrow.up'
                 })
               },
               {
@@ -157,97 +189,65 @@ export default class NoteItem extends React.Component {
                 attributes: {
                   destructive: true
                 }
-              }              
-            ]            
-            :
-            [{
-              title: "Share",
-              id: "share_note",
-              image: Platform.select({
-                ios: 'square.and.arrow.up'
-              })
-            },
-            {
-              title: "Delete",
-              id: "delete_note",
-              image: Platform.select({
-                ios: 'trash'
-              }),
-              attributes: {
-                destructive: true
               }
-            }
-          ]}
-        >
-          <TouchableOpacity
-            onPress={() => note.prep_and_open_posting()}
-            onLongPress={() => {}}
-            style={{
-              padding: 12,
-              backgroundColor: note.background_color(),
-              borderRadius: 12,
-              opacity: 1,
-              ...note._microblog.is_shared ? {
-                paddingBottom: 8
-              } : null
-            }}
+            ]}
           >
-            {
-              note.title && <Text style={{ color: App.theme_text_color(), marginBottom: 4, fontWeight: "600" }}>{note.title}</Text>
-            }
-            <Text style={{ color: App.theme_text_color() }}>{note.truncated_text()}</Text>
-            {
-              note._microblog.is_shared ?
-                <View
-                  style={{
-                    backgroundColor: App.theme_background_color(),
-                    alignSelf: "flex-start",
-                    padding: 1,
-                    paddingHorizontal: 8,
-                    borderRadius: 8,
-                    marginTop: 8,
-                    flexDirection: "row",
-                    alignItems: "center"
-                  }}
-                >
-                  {
-                    Platform.OS === 'ios' ?
-                      <SFSymbol
-                        name={'link'}
-                        color={App.theme_text_color()}
-                        style={{ height: 12, width: 12 }}
-                        multicolor={true}
-                      />
-                      :
-                      <SvgXml
-                        style={{
-                          height: 12,
-                          width: 12
-                        }}
-                        color={App.theme_text_color()}
-                        xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-                        </svg>'
-                      />
-                  }
-                  <Text style={{ fontSize: 13, color: App.theme_text_color(), marginLeft: 5 }}>Shared</Text>
-                </View>
-                : null
-            }
-          </TouchableOpacity>
-          {
-            !note.can_do_action() ?
-              <ActivityIndicator
-                color={App.theme_accent_color()}
-                style={{
-                  position: "absolute",
-                  alignSelf: "center",
-                  top: "30%"
-                }}
-              />
-              : null
-          }
-        </MenuView>
+              {
+                note.title && <Text style={{ color: App.theme_text_color(), marginBottom: 4, fontWeight: "600" }}>{note.title}</Text>
+              }
+              <Text style={{ color: App.theme_text_color() }}>{note.truncated_text()}</Text>
+              {
+                note._microblog.is_shared ?
+                  <View
+                    style={{
+                      backgroundColor: App.theme_background_color(),
+                      alignSelf: "flex-start",
+                      padding: 1,
+                      paddingHorizontal: 8,
+                      borderRadius: 8,
+                      marginTop: 8,
+                      flexDirection: "row",
+                      alignItems: "center"
+                    }}
+                  >
+                    {
+                      Platform.OS === 'ios' ?
+                        <SFSymbol
+                          name={'link'}
+                          color={App.theme_text_color()}
+                          style={{ height: 12, width: 12 }}
+                          multicolor={true}
+                        />
+                        :
+                        <SvgXml
+                          style={{
+                            height: 12,
+                            width: 12
+                          }}
+                          color={App.theme_text_color()}
+                          xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                          </svg>'
+                        />
+                    }
+                    <Text style={{ fontSize: 13, color: App.theme_text_color(), marginLeft: 5 }}>Shared</Text>
+                  </View>
+                  : null
+              }
+          </MenuView>
+        </TouchableOpacity>
+        {
+        !note.can_do_action() ?
+            <ActivityIndicator
+              color={App.theme_accent_color()}
+              style={{
+                position: "absolute",
+                alignSelf: "center",
+                top: "30%"
+              }}
+            />
+            : null
+        }
       </Swipeable >
     )
   }
