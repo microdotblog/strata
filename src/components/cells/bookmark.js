@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, Animated, Dimensions } from 'react-native';
+import { View, Text, Animated, Dimensions, TouchableOpacity, Image } from 'react-native';
 import App from '../../stores/App'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
@@ -92,9 +92,9 @@ export default class Bookmark extends React.Component{
     }
     return(
       <RenderHtml
-        contentWidth={Dimensions.get('window').width}
+        contentWidth={Dimensions.get('window').width - 40}
         source={{
-          html: `<div class='post_text'>${bookmark.content_html}</div>`
+          html: bookmark.content_html
         }}
         tagsStyles={{
           body: {
@@ -121,6 +121,7 @@ export default class Bookmark extends React.Component{
             borderWidth: 1
           }
         }}
+        enableExperimentalMarginCollapsing={true}
         customHTMLElementModels={customHTMLElementModels}
         renderersProps={renderersProps}
       />
@@ -144,7 +145,36 @@ export default class Bookmark extends React.Component{
           borderBottomWidth: 0.5
         }}
       >
-        {this.render_html()}
+        <TouchableOpacity
+          activeOpacity={.75}
+          style={{
+            flexDirection: "row",
+            gap: 12
+          }}
+        >
+          {
+            bookmark.author.avatar != null && bookmark.author.avatar !== "" ?
+              <Image
+                source={{
+                  uri: `${bookmark.author.avatar}?v=${App.now()}`,
+                  cache: "default"
+                }}
+                resizeMode={"contain"}
+                style={{ width: 28, height: 28, borderRadius: 50 }}
+              />
+            :
+            <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
+          }
+          <View style={{ flex: 1, gap: 12 }}>
+            <Text style={{ color: App.theme_text_color(), fontSize: App.theme_default_font_size(18), fontWeight: '700', marginTop: 2 }}>
+              { bookmark.author._microblog.username }
+            </Text>
+            {this.render_html()}
+            <Text style={{ color: App.theme_text_color(), fontSize: 14, opacity: .6 }}>
+              { bookmark.relativeDate }
+            </Text>
+          </View>
+        </TouchableOpacity>
       </Swipeable>
     )
   }
