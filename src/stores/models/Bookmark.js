@@ -1,4 +1,6 @@
 import { types } from 'mobx-state-tree';
+import App from '../App';
+import Auth from '../Auth';
 
 const MicroblogLink = types.model('MicroblogLink', {
   id: types.number,
@@ -39,9 +41,20 @@ export const Bookmark = types.model('Bookmark', {
   _microblog: MicroblogMeta
 })
 .actions(self => ({
+  
   setFavorite(status) {
     self._microblog.is_favorite = status;
+  },
+  
+  open(id = null){
+    if(id == null){
+      App.open_url(self.url)
+    }
+    else if(id){
+      App.open_url(`https://micro.blog/hybrid/signin?token=${Auth.selected_user.token()}&redirect_to=https://micro.blog/hybrid/bookmarks/${id}`)
+    }
   }
+  
 }))
 .views(self => ({
   get isFavorite() {

@@ -74,8 +74,11 @@ export default class Bookmark extends React.Component{
       )
   }
   
-  on_link_press = (event, href) => {
-    console.log("Pressed link:", href)
+  on_link_press = (_event, href) => {
+    if(href.includes("/bookmarks/")){
+      const id = href.replace("https://micro.blog/bookmarks/", "")
+      this.props.bookmark.open(id)
+    }
   }
   
   render_html = () => {
@@ -146,6 +149,7 @@ export default class Bookmark extends React.Component{
         }}
       >
         <TouchableOpacity
+          onPress={() => bookmark.open()}
           activeOpacity={.75}
           style={{
             flexDirection: "row",
