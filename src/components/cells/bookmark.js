@@ -151,14 +151,13 @@ export default class Bookmark extends React.Component{
           borderBottomWidth: 0.5
         }}
       >
-        <TouchableOpacity
-          onPress={() => bookmark.open()}
-          activeOpacity={.75}
+        <View
           style={{
             flexDirection: "row",
             gap: 12
           }}
         >
+          <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
           {
             bookmark.author.avatar != null && bookmark.author.avatar !== "" ?
               <Image
@@ -172,16 +171,21 @@ export default class Bookmark extends React.Component{
             :
             <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
           }
+          </TouchableOpacity>
           <View style={{ flex: 1, gap: 12 }}>
-            <Text style={{ color: App.theme_text_color(), fontSize: App.theme_default_font_size(18), fontWeight: '700', marginTop: 2 }}>
-              { bookmark.author._microblog.username }
-            </Text>
+            <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
+              <Text style={{ color: App.theme_text_color(), fontSize: App.theme_default_font_size(18), fontWeight: '700', marginTop: 2 }}>
+                { bookmark.author._microblog.username }
+              </Text>
+            </TouchableOpacity>
             {this.render_html()}
-            <Text style={{ color: App.theme_text_color(), fontSize: 14, opacity: .6 }}>
-              { bookmark.relativeDate }
-            </Text>
+            <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
+              <Text style={{ color: App.theme_text_color(), fontSize: 14, opacity: .6 }}>
+                { bookmark.relativeDate }
+              </Text>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+        </View>
       </Swipeable>
     )
   }
