@@ -27,7 +27,12 @@ export default Highlight = types.model('Highlight', {
 .views(self => ({
   nice_local_published_date(){
     const date = new Date(self.date_published);
-    return date.toLocaleString();
+    return date.toLocaleDateString('en-CA') + ' ' + 
+               date.toLocaleTimeString('en-US', { 
+                 hour: 'numeric', 
+                 minute: '2-digit', 
+                 hour12: true 
+               }).toLowerCase();
   },
   hostname(){
     return new URL(self.url).host

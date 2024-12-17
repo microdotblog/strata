@@ -109,8 +109,8 @@ export default class Highlight extends React.Component{
           }}
         >
           <TouchableOpacity onPress={() => App.open_url(highlight.url)}>
-            <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: 12}}>
-            {highlight.nice_local_published_date()}
+            <Text style={{ color: App.theme_highlight_meta_text_color(), fontSize: 14 }}>
+              { highlight.nice_local_published_date() }
             </Text>
           </TouchableOpacity>
           {

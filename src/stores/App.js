@@ -19,7 +19,8 @@ export default App = types.model('App', {
   has_unsaved_note: types.optional(types.boolean, false),
   is_loading_bookmarks: types.optional(types.boolean, false),
   is_loading_highlights: types.optional(types.boolean, false),
-  is_loading_tags: types.optional(types.boolean, false)
+  is_loading_tags: types.optional(types.boolean, false),
+  tag_filter_query: types.optional(types.string, "")
 })
   .volatile(self => ({
     navigation_ref: null,
@@ -376,6 +377,12 @@ export default App = types.model('App', {
     },
     theme_highlight_meta_text_color() {
       return "gray"
+    },
+    theme_tag_button_background_color() {
+      return self.theme === "dark" ? "#F9FAFB" : "#374151"
+    },
+    theme_tag_button_text_color() {
+      return self.theme === "dark" ? "#374151" : "#F9FAFB"
     },
     now() {
       let now = new Date()

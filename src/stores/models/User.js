@@ -354,7 +354,7 @@ export default User = types.model('User', {
     },
     
     filtered_tags(){
-      return self.tag_filter_query != null && self.tag_filter_query != "" && self.tags.length > 0 ? self.tags.filter(tag => tag.includes(self.bookmark_tag_filter_query)) : self.tags
+      return App.tag_filter_query != null && App.tag_filter_query != "" && self.tags.length > 0 ? self.tags.filter(tag => tag.includes(self.bookmark_tag_filter_query)) : self.tags
     }
 
   }))
