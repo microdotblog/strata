@@ -79,6 +79,9 @@ export default class Bookmark extends React.Component{
       const id = href.replace("https://micro.blog/bookmarks/", "")
       this.props.bookmark.open(id)
     }
+    else{
+      App.open_url(href)
+    }
   }
   
   render_html = () => {
