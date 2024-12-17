@@ -22,7 +22,9 @@ export default User = types.model('User', {
   plan: types.maybeNull(types.string),
   bookmarks: types.optional(types.array(Bookmark), []),
   last_bookmark_fetch: types.optional(types.Date, new Date),
-  highlights: types.optional(types.array(Highlight), [])
+  highlights: types.optional(types.array(Highlight), []),
+  tags: types.optional(types.array(types.string), []),
+  recent_tags: types.optional(types.array(types.string), []),
 })
   .actions(self => ({
 
@@ -36,6 +38,7 @@ export default User = types.model('User', {
         self.check_for_update_account_status()
         self.fetch_highlights()
         self.fetch_bookmarks()
+        self.fetch_tags()
       }
 
     }),
@@ -306,7 +309,22 @@ export default User = types.model('User', {
     destroy_highlight: flow(function* (highlight) {
       console.log("User:destroy_highlight", highlight)
       destroy(highlight)
-    })
+    }),
+    
+    fetch_tags: flow(function* () {
+      console.log("User:fetch_tags")
+      App.set_is_loading_highlights(true)
+      const tags = yield MicroBlogApi.get_tags()
+      if(tags !== API_ERROR && tags){
+        self.tags = tags
+      }
+      const recent_tags = yield MicroBlogApi.get_tags(true)
+      if(recent_tags !== API_ERROR & recent_tags){
+        self.recent_tags = recent_tags
+      }
+      App.set_is_loading_highlights(false)
+      console.log("User:fetch_tags:count", self.tags.length)
+    }),
 
   }))
   .views(self => ({
@@ -333,6 +351,10 @@ export default User = types.model('User', {
 
     is_appletest() {
       return (self.username == "appletest")
+    },
+    
+    filtered_tags(){
+      return self.tag_filter_query != null && self.tag_filter_query != "" && self.tags.length > 0 ? self.tags.filter(tag => tag.includes(self.bookmark_tag_filter_query)) : self.tags
     }
 
   }))

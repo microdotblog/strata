@@ -18,7 +18,8 @@ export default App = types.model('App', {
   search_query: types.optional(types.string, ""),
   has_unsaved_note: types.optional(types.boolean, false),
   is_loading_bookmarks: types.optional(types.boolean, false),
-  is_loading_highlights: types.optional(types.boolean, false)
+  is_loading_highlights: types.optional(types.boolean, false),
+  is_loading_tags: types.optional(types.boolean, false)
 })
   .volatile(self => ({
     navigation_ref: null,
@@ -56,8 +57,7 @@ export default App = types.model('App', {
         self.current_tab_key = "Bookmarks"
         if(Auth.is_logged_in() && Auth.selected_user != null){
           Auth.selected_user.fetch_bookmarks()
-          // Auth.selected_user.fetch_tags()
-          // Auth.selected_user.fetch_recent_tags()
+          Auth.selected_user.fetch_tags()
         }
       }
       else if (tab_key.includes("Highlights")) {
@@ -261,6 +261,11 @@ export default App = types.model('App', {
     set_is_loading_bookmarks: flow(function* (loading) {
       console.log("App:set_is_loading_bookmarks", loading)
       self.is_loading_bookmarks = loading
+    }),
+    
+    set_is_loading_tags: flow(function* (loading) {
+      console.log("App:set_is_loading_tags", loading)
+      self.is_loading_tags = loading
     }),
     
     open_url: flow(function* (url) {    

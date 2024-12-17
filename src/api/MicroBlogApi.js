@@ -313,6 +313,27 @@ class MicroBlogApi {
       return DELETE_ERROR
     }
   }
+  
+  async get_tags(recent = null, count = 10) {
+    let params = ""
+    if(recent){
+      params = `?recent=1&count=${count}`
+    }
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/tags${params}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    } catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
 
 }
 
