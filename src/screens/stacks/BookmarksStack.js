@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BookmarksScreen from '../bookmarks/Bookmarks';
 import ProfileImage from './../../components/header/profile_image';
+import AddBookmarkButton from '../../components/header/add_bookmark';
 
 const BookmarksStack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ export default class Bookmarks extends React.Component{
           component={BookmarksScreen}
           options={{
             headerLeft: () => <ProfileImage />,
-            // headerRight: () => <NewNoteButton />,
+            headerRight: () => <AddBookmarkButton />,
             headerTintColor: App.theme_text_color()
           }}
         />

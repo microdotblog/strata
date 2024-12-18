@@ -9,6 +9,7 @@ import LoadingScreen from './loading/Loading';
 import LoginScreen from './login/Login';
 import NewNoteModalScreen from './notes/New';
 import EditNoteModalScreen from './notes/Edit';
+import AddBookmarkScreen from './bookmarks/AddBookmark';
 import NoteSaveEditButton from '../components/header/note_save_edit';
 import CloseModalButton from '../components/header/close';
 import BackButton from '../components/header/back';
@@ -79,6 +80,16 @@ export default class MainApp extends React.Component {
                         title: "New Note",
                         headerLeft: () => <CloseModalButton />,
                         headerRight: () => <NoteSaveEditButton title="Save" />,
+                        headerShown: true
+                      }}
+                    />
+                    <Stack.Screen
+                      name="AddBookmark"
+                      component={AddBookmarkScreen}
+                      options={{
+                        title: "Add Bookmark",
+                        headerLeft: () => <CloseModalButton />,
+                        //headerRight: () => <NoteSaveEditButton title="Save" />,
                         headerShown: true
                       }}
                     />
