@@ -210,7 +210,7 @@ export default Posting = types.model('Posting', {
     const post_success = yield MicroPubApi.send_entry(self.selected_service.service_object(), url, "bookmark-of")
     self.is_adding_bookmark = false
     if (post_success !== POST_ERROR) {
-      // App.handle_web_view_message("bookmark_added_from_app")
+      App.show_toast_message("bookmark_added")
       return true
     }
     return false

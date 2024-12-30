@@ -28,7 +28,6 @@ export default class AddBookmarkScreen extends React.Component{
 			this._input_ref.current.clear()
 			this._dismiss()
 		}
-		this._dismiss()
 	}
   
 	render() {

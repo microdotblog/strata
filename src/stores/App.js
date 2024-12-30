@@ -6,6 +6,7 @@ import { SheetManager } from "react-native-actions-sheet";
 import Login from './Login';
 import Tokens from './Tokens';
 import Posting from './Posting';
+import Toast from 'react-native-simple-toast';
 
 let NAVIGATION = null;
 
@@ -296,6 +297,16 @@ export default App = types.model('App', {
           }
         }
       })
+    }),
+    
+    show_toast_message: flow(function* (message) {
+      console.log("App:handle_view_message", message)
+      if (message === "bookmark_added") {
+        Toast.showWithGravity("Bookmark added!", Toast.SHORT, Toast.CENTER)
+      }
+      else if (message === "bookmark_removed") {
+        Toast.showWithGravity("Bookmark removed!", Toast.SHORT, Toast.CENTER)
+      }
     }),
 
   }))
