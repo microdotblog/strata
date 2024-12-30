@@ -184,10 +184,20 @@ export default App = types.model('App', {
       }
     }),
 
-    navigate_to_screen: flow(function*(screen_name = null) {
+    navigate_to_screen: flow(function*(screen_name = null, action_data = null) {
       console.log("App:navigate_to_screen", screen_name)
       if (screen_name != null && NAVIGATION != null) {
-        NAVIGATION.navigate(screen_name)
+        switch (screen_name) {
+          case "Posting":
+          if (action_data != null) {
+            // Action data is usually markdown text from a highlight
+            Auth.selected_user?.posting.hydrate_post_with_markdown(action_data)
+            NAVIGATION.navigate(screen_name)
+          }
+          default:
+            NAVIGATION.navigate(screen_name)
+        }
+        
       }
     }),
 
@@ -395,6 +405,9 @@ export default App = types.model('App', {
     },
     theme_tag_button_text_color() {
       return self.theme === "dark" ? "#374151" : "#F9FAFB"
+    },
+    theme_selected_button_color() {
+      return self.theme === "dark" ? "#1c2028" : "#F9FAFB"
     },
     now() {
       let now = new Date()

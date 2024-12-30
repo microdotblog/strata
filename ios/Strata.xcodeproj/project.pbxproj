@@ -22,6 +22,7 @@
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +66,9 @@
 		5709B34CF0A7D63546082F79 /* Pods-Strata.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.release.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Strata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Strata.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Strata/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Strata/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Strata/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		BF25BD2D2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTInputAccessoryShadowView.h; path = Strata/RCTInputAccessoryShadowView.h; sourceTree = "<group>"; };
+		BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTInputAccessoryShadowView.m; path = Strata/RCTInputAccessoryShadowView.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -124,6 +127,8 @@
 				4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */,
 				4B6630E02B7AB35A00D961AA /* MBHighlightingTextView.h */,
 				4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */,
+				BF25BD2D2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.h */,
+				BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -381,6 +386,7 @@
 				4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */,
 				4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */,
 				4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */,
+				BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

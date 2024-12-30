@@ -39,5 +39,8 @@ export default Highlight = types.model('Highlight', {
   },
   url_with_text_fragment(){
     return `${self.url}#:~:text=${self.content_text}`
+  },
+  markdown(){
+    return `[${self.title}](${self.url})\n> ${self.content_text}`
   }
 }))

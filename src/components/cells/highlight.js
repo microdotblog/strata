@@ -91,10 +91,14 @@ export default class Highlight extends React.Component{
           borderBottomWidth: 0.5
         }}
       >
-        {
-          highlight.content_text && 
-          <Text style={{color: App.theme_text_color(), fontSize: App.theme_default_font_size()}}>{highlight.content_text}</Text>
-        }
+        <TouchableOpacity
+          onPress={() => App.navigate_to_screen("Posting", highlight.markdown())}
+        >
+          {
+            highlight.content_text && 
+            <Text style={{color: App.theme_text_color(), fontSize: App.theme_default_font_size()}}>{highlight.content_text}</Text>
+          }
+        </TouchableOpacity>
         {
           highlight.title && (
           <TouchableOpacity onPress={() => App.open_url(highlight.url_with_text_fragment())}>

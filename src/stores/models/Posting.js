@@ -1,11 +1,10 @@
-import { types, flow, destroy } from 'mobx-state-tree';
+import { types, flow } from 'mobx-state-tree';
 import Service from './posting/Service';
 import { blog_services } from './../enums/blog_services';
 import { Alert, Platform, Linking } from 'react-native';
 import MicroPubApi, { POST_ERROR } from '../../api/MicroPubApi';
 import App from '../App'
 import Clipboard from '@react-native-clipboard/clipboard';
-import Tokens from '../Tokens';
 import md from 'markdown-it';
 const parser = md({ html: true });
 
@@ -13,23 +12,28 @@ export default Posting = types.model('Posting', {
   username: types.identifier,
   services: types.optional(types.array(Service), []),
   selected_service: types.maybeNull(types.reference(Service)),
-  post_text: types.optional(types.string, ""),
-  post_title: types.maybeNull(types.string),
-  is_sending_post: types.optional(types.boolean, false),
   post_categories: types.optional(types.array(types.string), []),
   post_syndicates: types.optional(types.array(types.string), []),
-  post_status: types.optional(types.string, "published"),
+})
+.volatile(self => ({
+  is_editing_post: types.optional(types.boolean, false),
   is_adding_bookmark: types.optional(types.boolean, false),
+  is_sending_post: types.optional(types.boolean, false),
+  text_selection_flat: types.optional(types.string, ""),
+  post_url: types.maybeNull(types.string),
+  show_title: types.optional(types.boolean, false),
+  post_text: types.optional(types.string, ""),
+  post_title: types.maybeNull(types.string),
+  post_status: types.optional(types.string, "published"),
   text_selection: types.optional(
     types.model('Selection', {
       start: types.optional(types.number, 0),
       end: types.optional(types.number, 0),
     }), {start: 0, end: 0}
   ),
-  text_selection_flat: types.optional(types.string, ""),
-  post_url: types.maybeNull(types.string),
-  show_title: types.optional(types.boolean, false)
-})
+  show_title: types.optional(types.boolean, false),
+  toolbar_select_destination_open: types.optional(types.boolean, false)
+}))
 .actions(self => ({
 
   hydrate: flow(function* () {
@@ -60,12 +64,9 @@ export default Posting = types.model('Posting', {
     self.is_sending_post = false
     self.is_adding_bookmark = false
     self.text_selection_flat = ""
+    self.toolbar_select_destination_open = false
     
     self.reset_post_syndicates()
-
-    if (App.is_share_extension) {
-      self.post_text = ""
-    }
 
   }),
   
@@ -84,7 +85,6 @@ export default Posting = types.model('Posting', {
 
   set_post_text_from_typing: flow(function* (value) {
     self.post_text = value
-    App.check_usernames(self.post_text)
   }),
   
   set_post_text_from_action: flow(function* (value) {
@@ -230,63 +230,6 @@ export default Posting = types.model('Posting', {
     self.reset_post_syndicates()
   }),
   
-  create_new_service: flow(function* (blog_service, name, endpoint, username, blog_id = null) {
-    console.log("Posting:create_new_service", blog_service, endpoint, username)
-    const service_id = `endpoint_${blog_service.name}-${username}-${name}`
-    const existing_service = self.services.find(s => s.id === service_id)
-    if(existing_service != null){
-      destroy(existing_service)
-    }
-    const new_service = Service.create({
-      id: service_id,
-      name: name,
-      url: endpoint,
-      username: username,
-      type: blog_service.type,
-      is_microblog: false,
-      blog_id: blog_id
-    })
-    if(new_service){
-      self.services.push(new_service)
-      return new_service
-    }
-    return false
-  }),
-  
-  activate_new_service: flow(function* (service = null) {
-    if(service === null){return false}
-    self.selected_service = service
-    console.log("Posting:activate_new_service", service)
-    return true
-  }),
-  
-  set_default_service: flow(function* () {
-    if(self.services.length > 0){
-      self.selected_service = self.services[0]
-      return self.selected_service
-    }
-    return false
-  }),
-  
-  set_custom_service: flow(function* () {
-    if(self.services.length > 0 && self.first_custom_service() != null){
-      self.selected_service = self.first_custom_service()
-      return self.selected_service
-    }
-    return false
-  }),
-  
-  remove_custom_services: flow(function* () {
-    console.log("Posting:remove_custom_services")
-    const services = self.services.filter(s => !s.is_microblog)
-    if(services){
-      services.forEach((service) => {
-        Tokens.destroy_token_for_service_id(service.id)
-        destroy(service)
-      })
-    }
-  }),
-  
   handle_post_syndicates_select: flow(function* (uid) {
     console.log("Posting:handle_post_syndicates_select")
     if (self.post_syndicates.includes(uid)) {
@@ -315,6 +258,11 @@ export default Posting = types.model('Posting', {
   
   add_to_post_text: flow(function* (text) {
     self.post_text += text
+  }),
+  
+  toggle_select_destination: flow(function* () {
+    console.log("Posting:toggle_select_destination")
+    self.toolbar_select_destination_open = !self.toolbar_select_destination_open
   }),
   
 }))

@@ -16,6 +16,7 @@ import BackButton from '../components/header/back';
 import { SheetProvider } from "react-native-actions-sheet";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import "./../components/sheets/sheets";
+import PostingStack from './stacks/PostingStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,15 @@ export default class MainApp extends React.Component {
                         headerLeft: () => <CloseModalButton />,
                         //headerRight: () => <NoteSaveEditButton title="Save" />,
                         headerShown: true
+                      }}
+                    />
+                    <Stack.Screen
+                      name="Posting"
+                      component={PostingStack}
+                      options={{
+                        headerTitle: "New Post",
+                        gestureEnabled: false,
+                        headerShown: false
                       }}
                     />
                   </Stack.Group>
