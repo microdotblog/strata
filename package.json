@@ -20,6 +20,8 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@shopify/flash-list": "^1.7.2",
+    "@xmldom/xmldom": "^0.9.6",
+    "markdown-it": "^14.1.0",
     "mobx": "^6.13.5",
     "mobx-react": "^9.2.0",
     "mobx-state-tree": "^6.0.1",

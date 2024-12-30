@@ -7,6 +7,7 @@ import { Alert, NativeModules, Platform } from 'react-native';
 import { SheetManager } from 'react-native-actions-sheet';
 import { Bookmark } from './Bookmark';
 import Highlight from './Highlight';
+import Posting from './Posting';
 const { MBNotesCloudModule } = NativeModules;
 
 export default User = types.model('User', {
@@ -25,6 +26,7 @@ export default User = types.model('User', {
   highlights: types.optional(types.array(Highlight), []),
   tags: types.optional(types.array(types.string), []),
   recent_tags: types.optional(types.array(types.string), []),
+  posting: types.maybeNull(Posting),
 })
   .actions(self => ({
 
@@ -39,6 +41,13 @@ export default User = types.model('User', {
         self.fetch_highlights()
         self.fetch_bookmarks()
         self.fetch_tags()
+        
+        if(self.posting == null){
+          self.posting = Posting.create({username: self.username})
+        }
+        else {
+          self.posting.hydrate()
+        }
       }
 
     }),

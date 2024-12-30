@@ -99,6 +99,10 @@ export default Tokens = types.model('Tokens', {
 
     secret_token_for_username(username, type = "secret") {
       return self.tokens.find(t => t.username === username && t.type === type)
+    },
+    
+    token_for_service_id(service_id){
+      return self.tokens.find(t => t.service_id === service_id)
     }
 
   }))

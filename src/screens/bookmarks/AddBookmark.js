@@ -21,18 +21,18 @@ export default class AddBookmarkScreen extends React.Component{
 	}
 
 	_add_bookmark = async () => {
-		// const bookmark = await Auth.selected_user.posting.add_bookmark(this.state.url)
-		// console.log("AddBookmarkScreen:_add_bookmark", bookmark)
-		// if (bookmark) {
-		// 	this.setState({ url: "" })
-		// 	this._input_ref.current.clear()
-		// 	this._dismiss()
-		// }
+		const bookmark = await Auth.selected_user.posting.add_bookmark(this.state.url)
+		console.log("AddBookmarkScreen:_add_bookmark", bookmark)
+		if (bookmark) {
+			this.setState({ url: "" })
+			this._input_ref.current.clear()
+			this._dismiss()
+		}
 		this._dismiss()
 	}
   
 	render() {
-		//const { posting } = Auth.selected_user
+		const { posting } = Auth.selected_user
     return(
       <KeyboardAvoidingView behavior={ Platform.OS === "ios" ? "padding" : "height" } style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 15, backgroundColor: App.theme_background_color() }}>
         <View style={{ width: "100%" }}>
@@ -66,16 +66,16 @@ export default class AddBookmarkScreen extends React.Component{
               paddingHorizontal: 15,
               color: App.theme_text_color()
 					  }}
-            //onChangeText={(text) => !posting.is_adding_bookmark ? this.setState({url: text}) : null}
+            onChangeText={(text) => !posting.is_adding_bookmark ? this.setState({url: text}) : null}
           />
           <Button
             title="Save Bookmark"
 					  color="#f80"
 					  onPress={this._add_bookmark}
-            //disabled={posting.is_adding_bookmark}
+            disabled={posting.is_adding_bookmark}
           />
           <ActivityIndicator 
-            animating={false}
+            animating={posting.is_adding_bookmark}
             style={{
               marginTop: 15
             }}
