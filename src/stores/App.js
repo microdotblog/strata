@@ -425,6 +425,9 @@ export default App = types.model('App', {
     theme_selected_button_color() {
       return self.theme === "dark" ? "#1c2028" : "#F9FAFB"
     },
+    theme_header_button_background_color() {
+      return self.theme === "dark" ? "#27303d" : "#f8f8f8"
+    },
     now() {
       let now = new Date()
       now.setHours(0, 0, 0, 0)

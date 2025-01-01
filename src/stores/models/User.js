@@ -28,6 +28,9 @@ export default User = types.model('User', {
   recent_tags: types.optional(types.array(types.string), []),
   posting: types.maybeNull(Posting)
 })
+.volatile(self => ({
+  selected_tag: types.maybe(types.string)
+}))
   .actions(self => ({
 
     hydrate: flow(function*() {
@@ -335,11 +338,19 @@ export default User = types.model('User', {
         self.tags = tags
       }
       const recent_tags = yield MicroBlogApi.get_tags(true)
-      if(recent_tags !== API_ERROR & recent_tags){
+      if(recent_tags !== API_ERROR && recent_tags){
         self.recent_tags = recent_tags
       }
       App.set_is_loading_highlights(false)
-      console.log("User:fetch_tags:count", self.tags.length)
+      console.log("User:fetch_tags:count", self.tags.length, self.recent_tags.length)
+    }),
+    
+    set_selected_tag: flow(function* (tag = null) {
+      console.log("User:set_selected_tag", tag)
+      self.selected_tag = tag
+      if(tag == null){
+        self.set_bookmark_tag_filter_query(null)
+      }
     }),
 
   }))
