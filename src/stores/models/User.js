@@ -335,7 +335,7 @@ export default User = types.model('User', {
       if(tags !== API_ERROR && tags){
         self.tags = tags
       }
-      const recent_tags = yield MicroBlogApi.get_tags(true)
+      const recent_tags = yield MicroBlogApi.get_tags(true, 5)
       if(recent_tags !== API_ERROR && recent_tags){
         self.recent_tags = recent_tags
       }
