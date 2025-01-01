@@ -315,7 +315,10 @@ export default App = types.model('App', {
         Toast.showWithGravity("Bookmark added!", Toast.SHORT, Toast.CENTER)
       }
       else if (message === "bookmark_removed") {
-        Toast.showWithGravity("Bookmark removed!", Toast.SHORT, Toast.CENTER)
+        Toast.showWithGravity("Bookmark deleted!", Toast.SHORT, Toast.CENTER)
+      }
+      else if (message === "highlight_removed") {
+        Toast.showWithGravity("Highlight deleted!", Toast.SHORT, Toast.CENTER)
       }
     }),
 

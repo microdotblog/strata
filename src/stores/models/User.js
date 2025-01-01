@@ -287,6 +287,7 @@ export default User = types.model('User', {
     destroy_bookmark: flow(function* (bookmark) {
       console.log("User:destroy_bookmark", bookmark)
       destroy(bookmark)
+      App.show_toast_message("bookmark_removed")
     }),
     
     fetch_more_bookmarks: flow(function* () {
@@ -323,6 +324,7 @@ export default User = types.model('User', {
     destroy_highlight: flow(function* (highlight) {
       console.log("User:destroy_highlight", highlight)
       destroy(highlight)
+      App.show_toast_message("highlight_removed")
     }),
     
     fetch_tags: flow(function* () {
