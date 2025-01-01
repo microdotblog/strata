@@ -38,10 +38,14 @@ export default class PostToolbar extends React.Component{
 			<SafeAreaView
 				style={{
 					width: '100%',
-					position: 'absolute',
-					bottom: 0,
-					right: 0,
-					left: 0,
+					...Platform.select({
+						android: {
+							position: 'absolute',
+							bottom: 0,
+							right: 0,
+							left: 0,
+						}
+					})
 				}}
 			>
 				{this._render_destinations()}
