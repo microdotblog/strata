@@ -62,7 +62,6 @@ export const Bookmark = types.model('Bookmark', {
     if(data !== DELETE_ERROR){
       console.log("Bookmark::deleted")
       const parentNode = getParent(self, 2)
-      console.log("Bookmark::deleted::parentNode", parentNode)
       parentNode?.destroy_bookmark(self)
       parentNode?.fetch_bookmarks()
     }
