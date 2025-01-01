@@ -26,7 +26,7 @@ export default User = types.model('User', {
   highlights: types.optional(types.array(Highlight), []),
   tags: types.optional(types.array(types.string), []),
   recent_tags: types.optional(types.array(types.string), []),
-  posting: types.maybeNull(Posting),
+  posting: types.maybeNull(Posting)
 })
   .actions(self => ({
 
@@ -370,7 +370,7 @@ export default User = types.model('User', {
     },
     
     filtered_tags(){
-      return App.tag_filter_query != null && App.tag_filter_query != "" && self.tags.length > 0 ? self.tags.filter(tag => tag.includes(self.bookmark_tag_filter_query)) : self.tags
+      return App.tag_filter_query != null && App.tag_filter_query != "" && self.tags.length > 0 ? self.tags.filter(tag => tag.includes(App.tag_filter_query)) : self.tags
     }
 
   }))

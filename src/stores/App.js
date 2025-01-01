@@ -321,6 +321,19 @@ export default App = types.model('App', {
         Toast.showWithGravity("Highlight deleted!", Toast.SHORT, Toast.CENTER)
       }
     }),
+    
+    set_selected_tag: flow(function* (tag = null) {
+      console.log("App:set_selected_tag", tag)
+      //self.selected_tag = tag
+      if(tag == null){
+        self.tag_filter_query(null)
+      }
+    }),
+    
+    set_bookmark_tag_filter_query: flow(function* (query = "") {
+      console.log("App:set_bookmark_tag_filter_query", query)
+      self.tag_filter_query = query
+    }),
 
   }))
   .views(self => ({

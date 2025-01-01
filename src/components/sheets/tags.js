@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useRef } from 'react';
 import { observer } from 'mobx-react';
 import { ScrollView, TouchableOpacity, Text, Platform, TextInput, Keyboard, View } from 'react-native';
-import ActionSheet, { useScrollHandlers, ActionSheetRef, SheetManager } from "react-native-actions-sheet";
+import ActionSheet, { SheetManager } from "react-native-actions-sheet";
 import App from '../../stores/App'
 import { SvgXml } from 'react-native-svg';
 import { SFSymbol } from "react-native-sfsymbols";
@@ -10,22 +9,13 @@ import { SFSymbol } from "react-native-sfsymbols";
 @observer
 export default class TagsMenu extends React.Component{
   
-  constructor(props){
-    super(props);
-    this.actionSheetRef = useRef<ActionSheetRef>(null)
-    this.scrollHandlers = useScrollHandlers<ScrollView>(
-      "tag-scroll",
-      this.actionSheetRef
-    )
-  }
-  
   _render_tags = () => {
     return Auth.selected_user?.filtered_tags().map((tag) => {
       return(
         <TouchableOpacity
           key={`tag-${tag}`}
           onPress={() => {
-            Auth.selected_user.set_selected_tag(tag)
+            App.set_selected_tag(tag)
             SheetManager.hide(this.props.sheetId);
           }}
           style={{
@@ -61,7 +51,6 @@ export default class TagsMenu extends React.Component{
   render() {
     return(
       <ActionSheet
-        ref={this.actionSheetRef}
         id={this.props.sheetId}
         snapPoints={[40,95]}
         initialSnapIndex={[1]}
@@ -87,7 +76,6 @@ export default class TagsMenu extends React.Component{
           placeholder={"Search tags..."}
           returnKeyType={'search'}
           blurOnSubmit={true}
-          //autoFocus={true}
           autoCorrect={true}
           autoCapitalize="none"
           clearButtonMode={'always'}
@@ -105,13 +93,13 @@ export default class TagsMenu extends React.Component{
             color: App.theme_text_color()
           }}
           onSubmitEditing={Keyboard.dismiss}
-          onChangeText={(text) => Auth.selected_user.set_bookmark_tag_filter_query(text)}
-          value={Auth.selected_user.bookmark_tag_filter_query}
+          onChangeText={(text) => App.set_bookmark_tag_filter_query(text)}
+          value={App.tag_filter_query}
         />
       </View>
-      <ScrollView keyboardShouldPersistTaps={'always'} style={{maxHeight: 700, marginBottom: 25, paddingHorizontal: 25}} {...this.scrollHandlers}>
-        {this._render_tags()}
-      </ScrollView>
+        <ScrollView keyboardShouldPersistTaps={'always'} style={{maxHeight: 700, marginBottom: 25, paddingHorizontal: 25}} {...this.scrollHandlers}>
+          {this._render_tags()}
+        </ScrollView>
       </ActionSheet>
     )
   }

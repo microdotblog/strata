@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BookmarksScreen from '../bookmarks/Bookmarks';
 import ProfileImage from './../../components/header/profile_image';
 import AddBookmarkButton from '../../components/header/add_bookmark';
+import { View } from 'react-native';
+import TagsButton from '../../components/header/tags_button';
 
 const BookmarksStack = createNativeStackNavigator();
 
@@ -18,7 +20,12 @@ export default class Bookmarks extends React.Component{
           component={BookmarksScreen}
           options={{
             headerLeft: () => <ProfileImage />,
-            headerRight: () => <AddBookmarkButton />,
+            headerRight: () => (
+              <View style={{ justifyContent: 'center', alignItems: 'center', gap: 15, flexDirection: 'row' }}>
+                <TagsButton />
+                <AddBookmarkButton />
+              </View>
+            ),
             headerTintColor: App.theme_text_color()
           }}
         />
