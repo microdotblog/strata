@@ -284,6 +284,11 @@ export default User = types.model('User', {
       console.log("User:fetch_bookmarks:count", self.bookmarks.length)
     }),
     
+    destroy_bookmark: flow(function* (bookmark) {
+      console.log("User:destroy_bookmark", bookmark)
+      destroy(bookmark)
+    }),
+    
     fetch_more_bookmarks: flow(function* () {
       console.log("User:fetch_more_bookmarks", self.bookmarks.length > 0)
       

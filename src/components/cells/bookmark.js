@@ -33,7 +33,7 @@ export default class Bookmark extends React.Component{
   )
   
   _trigger_remove = () => {
-    //this.props.bookmark?.remove()
+    this.props.bookmark?.delete()
   }
   
   _return_action = (text, color, x, progress, icon, item, stroke = "#fff") => {

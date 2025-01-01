@@ -261,6 +261,28 @@ class MicroBlogApi {
     }
   }
   
+  async delete_bookmark(id) {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.json()
+      if (data.error) {
+        return DELETE_ERROR
+      } else {
+        return true
+      }
+    }
+    catch(error) {
+      console.log(error)
+      return DELETE_ERROR
+    }
+  }
+  
   async get_bookmark_tags(recent = false, count = 10) {
     const path = recent ? `tags?recent=1&count=${count}` : 'tags'
     try{

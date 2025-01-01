@@ -48,7 +48,7 @@ export default class BookmarksScreen extends React.Component{
       Auth.is_logged_in() && !Auth.is_selecting_user ?
         this._return_list()
       :
-      null // TODO: Add a fallback screen prompting for log in
+      null
     )
   }
 

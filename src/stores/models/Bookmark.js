@@ -1,6 +1,7 @@
-import { types } from 'mobx-state-tree';
+import { types, flow, getParent } from 'mobx-state-tree';
 import App from '../App';
 import Auth from '../Auth';
+import MicroBlogApi, { DELETE_ERROR } from '../../api/MicroBlogApi';
 
 const MicroblogLink = types.model('MicroblogLink', {
   id: types.number,
@@ -53,7 +54,22 @@ export const Bookmark = types.model('Bookmark', {
     else if(id){
       App.open_url(`https://micro.blog/hybrid/signin?token=${Auth.selected_user.token()}&redirect_to=https://micro.blog/hybrid/bookmarks/${id}`)
     }
-  }
+  },
+  
+  delete: flow(function*() {
+    console.log("Bookmark::delete", self.id)
+    const data = yield MicroBlogApi.delete_bookmark(self.id)
+    if(data !== DELETE_ERROR){
+      console.log("Bookmark::deleted")
+      const parentNode = getParent(self, 2)
+      console.log("Bookmark::deleted::parentNode", parentNode)
+      parentNode?.destroy_bookmark(self)
+      parentNode?.fetch_bookmarks()
+    }
+    else{
+      alert("Something went wrong. Please try again.")
+    }
+  })
   
 }))
 .views(self => ({
