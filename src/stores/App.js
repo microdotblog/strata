@@ -21,7 +21,7 @@ export default App = types.model('App', {
   is_loading_bookmarks: types.optional(types.boolean, false),
   is_loading_highlights: types.optional(types.boolean, false),
   is_loading_tags: types.optional(types.boolean, false),
-  tag_filter_query: types.optional(types.string, ""),
+  tag_filter_query: types.maybeNull(types.string, ""),
   max_characters_allowed: types.optional(types.number, 300)
 })
   .volatile(self => ({

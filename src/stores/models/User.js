@@ -26,11 +26,9 @@ export default User = types.model('User', {
   highlights: types.optional(types.array(Highlight), []),
   tags: types.optional(types.array(types.string), []),
   recent_tags: types.optional(types.array(types.string), []),
-  posting: types.maybeNull(Posting)
+  posting: types.maybeNull(Posting),
+  selected_tag: types.maybeNull(types.string)
 })
-.volatile(self => ({
-  selected_tag: types.maybe(types.string)
-}))
   .actions(self => ({
 
     hydrate: flow(function*() {
@@ -349,7 +347,7 @@ export default User = types.model('User', {
       console.log("User:set_selected_tag", tag)
       self.selected_tag = tag
       if(tag == null){
-        self.set_bookmark_tag_filter_query(null)
+        App.set_bookmark_tag_filter_query(null)
       }
     }),
 

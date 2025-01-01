@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 import Bookmark from '../../components/cells/bookmark';
+import TagFilterHeader from '../../components/bookmarks/tag_filter_header';
 
 @observer
 export default class BookmarksScreen extends React.Component{
@@ -46,7 +47,10 @@ export default class BookmarksScreen extends React.Component{
   render() {
     return (
       Auth.is_logged_in() && !Auth.is_selecting_user ?
-        this._return_list()
+        <>
+          <TagFilterHeader />
+          {this._return_list()}
+        </>
       :
       null
     )
