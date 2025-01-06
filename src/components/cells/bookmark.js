@@ -6,6 +6,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
 import RenderHtml, { HTMLContentModel, defaultHTMLElementModels } from 'react-native-render-html';
+import { SFSymbol } from 'react-native-sfsymbols';
 
 @observer
 export default class Bookmark extends React.Component{
@@ -134,6 +135,49 @@ export default class Bookmark extends React.Component{
     )
   }
   
+  tags = () => {
+    const { bookmark } = this.props
+    return(
+      <TouchableOpacity onPress={() => null}
+        style={{ 
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 5
+        }}
+      >
+        {
+          Platform.OS === 'ios' ?
+            <SFSymbol
+              name={'tag'}
+              color={App.theme_text_color()}
+              style={{ height: 14, width: 14 }}
+            />
+            :
+            <SvgXml
+              style={{
+                height: 14,
+                width: 14
+              }}
+              color={App.theme_text_color()}
+              xml={`
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+              </svg>
+              `}
+            />
+        }
+        <Text style={{ color: App.theme_text_color(), fontSize: 14, opacity: .8 }}>
+          {bookmark.tags ? 
+            bookmark.tags.length > 0 ?
+              `Tags: ${bookmark.tags.split(',').map(t => t.trim()).join(', ')}` :
+              'Tag...' :
+            'Tag...'}
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+  
   render() {
     const { bookmark } = this.props
     return(
@@ -179,6 +223,7 @@ export default class Bookmark extends React.Component{
               </Text>
             </TouchableOpacity>
             {this.render_html()}
+            {this.tags()}
             <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
               <Text style={{ color: App.theme_text_color(), fontSize: 14, opacity: .6 }}>
                 { bookmark.relativeDate }
