@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { View, Text, Animated, Dimensions, TouchableOpacity, Image } from 'react-native';
 import App from '../../stores/App'
+import Auth from '../../stores/Auth'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
@@ -138,7 +139,7 @@ export default class Bookmark extends React.Component{
   tags = () => {
     const { bookmark } = this.props
     return(
-      <TouchableOpacity onPress={() => null}
+      <TouchableOpacity onPress={() => Auth.selected_user.open_bookmark_tag_sheet(bookmark)}
         style={{ 
           flexDirection: 'row',
           alignItems: 'center',

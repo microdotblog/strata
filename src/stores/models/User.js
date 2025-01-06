@@ -27,7 +27,8 @@ export default User = types.model('User', {
   tags: types.optional(types.array(types.string), []),
   recent_tags: types.optional(types.array(types.string), []),
   posting: types.maybeNull(Posting),
-  selected_tag: types.maybeNull(types.string)
+  selected_tag: types.maybeNull(types.string),
+  selected_bookmark: types.maybeNull(types.reference(Bookmark))
 })
   .actions(self => ({
 
@@ -366,6 +367,11 @@ export default User = types.model('User', {
         self.fetch_bookmarks_with_selected_tag()
       }
     }),
+    
+    open_bookmark_tag_sheet: flow(function* (bookmark) {
+      self.selected_bookmark = bookmark
+      App.open_sheet("add-tags")
+    })
 
   }))
   .views(self => ({

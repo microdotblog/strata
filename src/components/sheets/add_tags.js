@@ -20,13 +20,14 @@ export default class AddTagsMenu extends React.Component{
   }
   
   _render_tags = () => {
+    const { selected_bookmark } = Auth.selected_user
     return Auth.selected_user?.filtered_tags().map((tag) => {
-      const is_selected = Auth.selected_user.temporary_tags_for_bookmark.filter(t => t === tag)?.length > 0
+      const is_selected = selected_bookmark.temporary_tags_for_bookmark.filter(t => t === tag)?.length > 0
       return(
         <TouchableOpacity
           key={`tag-${tag}`}
           onPress={() => {
-            Auth.selected_user.set_selected_temp_tag(tag)
+            selected_bookmark.set_selected_temp_tag(tag)
           }}
           style={{
             flexDirection: "row",
@@ -61,12 +62,12 @@ export default class AddTagsMenu extends React.Component{
   }
   
   _render_added_tags = () => {
-    return Auth.selected_user?.temporary_tags_for_bookmark.map((tag) => {
+    return Auth.selected_user?.selected_bookmark?.temporary_tags_for_bookmark.map((tag) => {
       return(
         <TouchableOpacity
           key={`tag-${tag}`}
           onPress={() => {
-            Auth.selected_user.delete_selected_temp_tag(tag)
+            //Auth.selected_user.delete_selected_temp_tag(tag)
           }}
           style={{
             flexDirection: "row",
@@ -113,6 +114,7 @@ export default class AddTagsMenu extends React.Component{
   }
   
   render() {
+    const { selected_bookmark } = Auth.selected_user
     return(
       <ActionSheet
         ref={this.actionSheetRef}
@@ -122,7 +124,7 @@ export default class AddTagsMenu extends React.Component{
         gestureEnabled={true}
         statusBarTranslucent={false}
         drawUnderStatusBar={false}
-        onBeforeClose={() => {Auth.selected_user.clear_temporary_tags_for_bookmark()}}
+        onBeforeClose={() => {selected_bookmark.clear_temporary_tags_for_bookmark()}}
         containerStyle={{
           backgroundColor: App.theme_background_color_secondary(),
           height: 450
@@ -148,7 +150,7 @@ export default class AddTagsMenu extends React.Component{
           >
             <Text style={{ fontWeight: '800', marginBottom: 15, color: App.theme_text_color() }}>Add Tags</Text>
             {
-              !Auth.selected_user?.is_updating_tags_for_bookmark && !Auth.selected_user?.is_fetching_tags_for_bookmark ?
+              !selected_bookmark.is_updating_tags ?
               <TouchableOpacity
                 onPress={() => Auth.selected_user.update_tags_for_bookmark()}
                 style={{
@@ -185,12 +187,12 @@ export default class AddTagsMenu extends React.Component{
               minWidth: "100%",
               color: App.theme_text_color()
             }}
-            onSubmitEditing={() => {Auth.selected_user.set_selected_temp_tag_from_input()}}
-            onChangeText={(text) => Auth.selected_user.set_bookmark_tag_filter_query(text)}
-            value={Auth.selected_user.bookmark_tag_filter_query}
+            onSubmitEditing={() => {selected_bookmark.set_selected_temp_tag_from_input()}}
+            onChangeText={(text) => selected_bookmark.set_bookmark_tag_filter_query(text)}
+            value={selected_bookmark.temp_tag_filter_query}
           />
           {
-            Auth.selected_user?.temporary_tags_for_bookmark.length > 0 ?
+            selected_bookmark.temporary_tags_for_bookmark.length > 0 ?
             <View 
               style={{
                 flexDirection: "row",
@@ -211,7 +213,7 @@ export default class AddTagsMenu extends React.Component{
         <ScrollView
           keyboardShouldPersistTaps={'always'}
           style={{
-            maxHeight: Auth.selected_user?.temporary_tags_for_bookmark.length > 0 ? 300 : 350,
+            maxHeight: selected_bookmark.temporary_tags_for_bookmark.length > 0 ? 300 : 350,
             marginBottom: 25,
             paddingHorizontal: 25
           }}

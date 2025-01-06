@@ -39,7 +39,10 @@ export const Bookmark = types.model('Bookmark', {
   date_published: types.string,
   tags: types.optional(types.string, ''),
   author: Author,
-  _microblog: MicroblogMeta
+  _microblog: MicroblogMeta,
+  temp_tag_filter_query: types.maybeNull(types.string),
+  temporary_tags_for_bookmark: types.optional(types.array(types.string), []),// We'll use this to set the temporary bookmarks for a given bookmark.
+  is_updating_tags: types.optional(types.boolean, false)
 })
 .actions(self => ({
   
@@ -68,7 +71,37 @@ export const Bookmark = types.model('Bookmark', {
     else{
       alert("Something went wrong. Please try again.")
     }
-  })
+  }),
+  
+  set_selected_temp_tag: flow(function* (tag) {
+    console.log("Bookmark:set_selected_temp_tag", self.id, tag)
+    const existing_tag = self.temporary_tags_for_bookmark.find(t => t === tag)
+    if(existing_tag == null){
+      self.temporary_tags_for_bookmark.push(tag)
+    }
+  }),
+  
+  delete_selected_temp_tag: flow(function* (tag) {
+    console.log("Bookmark:delete_selected_temp_tag", self.id, tag)
+    const existing_tag_index = self.temporary_tags_for_bookmark.findIndex(t => t === tag)
+    if(existing_tag_index > -1){
+      self.temporary_tags_for_bookmark.splice(existing_tag_index, 1)
+    }
+  }),
+  
+  set_selected_temp_tag_from_input: flow(function* () {
+    console.log("User:set_selected_temp_tag_from_input", self.temp_tag_filter_query)
+    const existing_tag = self.temporary_tags_for_bookmark.find(t => t === self.temp_tag_filter_query)
+    if(existing_tag == null){
+      self.temporary_tags_for_bookmark.push(self.temp_tag_filter_query)
+      self.temp_tag_filter_query = null
+    }
+  }),
+  
+  clear_temporary_tags_for_bookmark: flow(function* () {
+    self.temporary_tags_for_bookmark = []
+    self.temporary_bookmark_id = null
+  }),
   
 }))
 .views(self => ({
