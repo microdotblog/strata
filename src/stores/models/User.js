@@ -285,6 +285,18 @@ export default User = types.model('User', {
       console.log("User:fetch_bookmarks:count", self.bookmarks.length)
     }),
     
+    fetch_bookmarks_with_selected_tag: flow(function* () {
+      console.log("User:fetch_bookmarks_with_selected_tag", self.selected_tag)
+      App.set_is_loading_bookmarks(true)
+      const bookmarks = yield MicroBlogApi.get_bookmarks(null, self.selected_tag)
+      if(bookmarks !== API_ERROR && bookmarks.items){
+        self.bookmarks = bookmarks.items
+        self.last_bookmark_fetch = new Date
+      }
+      App.set_is_loading_bookmarks(false)
+      console.log("User:fetch_bookmarks_with_selected_tag:count", self.bookmarks.length)
+    }),
+    
     destroy_bookmark: flow(function* (bookmark) {
       console.log("User:destroy_bookmark", bookmark)
       destroy(bookmark)
@@ -348,6 +360,10 @@ export default User = types.model('User', {
       self.selected_tag = tag
       if(tag == null){
         App.set_bookmark_tag_filter_query(null)
+        self.fetch_bookmarks()
+      }
+      else{
+        self.fetch_bookmarks_with_selected_tag()
       }
     }),
 

@@ -5,6 +5,7 @@ import ActionSheet, { SheetManager } from "react-native-actions-sheet";
 import App from '../../stores/App'
 import { SvgXml } from 'react-native-svg';
 import { SFSymbol } from "react-native-sfsymbols";
+import Auth from '../../stores/Auth';
 
 @observer
 export default class TagsMenu extends React.Component{
@@ -15,7 +16,7 @@ export default class TagsMenu extends React.Component{
         <TouchableOpacity
           key={`tag-${tag}`}
           onPress={() => {
-            App.set_selected_tag(tag)
+            Auth.selected_user?.set_selected_tag(tag)
             SheetManager.hide(this.props.sheetId);
           }}
           style={{

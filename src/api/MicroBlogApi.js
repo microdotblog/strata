@@ -240,11 +240,14 @@ class MicroBlogApi {
     }    
   }
   
-  async get_bookmarks(before_id = null) {
+  async get_bookmarks(before_id = null, tag = null) {
     try {
       let request_path = 'posts/bookmarks'
-      if (before_id){
+      if (before_id && tag == null){
         request_path += `?before_id=${before_id}`
+      }
+      else if (tag){
+        request_path += `?tag=${tag}`
       }
       const response = await fetch(`${BASE_ENDPOINT}/${request_path}`, {
         method: 'GET',

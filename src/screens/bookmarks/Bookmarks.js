@@ -18,7 +18,7 @@ export default class BookmarksScreen extends React.Component{
   }
   
   _return_list = () => {
-    const { bookmarks, last_bookmark_fetch } = Auth.selected_user
+    const { bookmarks, last_bookmark_fetch, selected_tag } = Auth.selected_user
     return(
       <FlatList
         estimatedItemSize={150}
@@ -27,7 +27,7 @@ export default class BookmarksScreen extends React.Component{
         extraData={bookmarks?.length && !App.is_loading_bookmarks && last_bookmark_fetch}
         keyExtractor={this._key_extractor}
         renderItem={this.render_item}
-        onEndReached={Auth.selected_user.fetch_more_bookmarks}
+        onEndReached={selected_tag == null || selected_tag == "" ? Auth.selected_user.fetch_more_bookmarks : null}
         contentContainerStyle={{
           paddingTop: 0,
           paddingHorizontal: 12,
@@ -37,7 +37,7 @@ export default class BookmarksScreen extends React.Component{
           <RefreshControl
             tintColor={App.theme_accent_color()}
             refreshing={App.is_loading_bookmarks}
-            onRefresh={() => Auth.selected_user.fetch_highlights()}
+            onRefresh={() => selected_tag == null || selected_tag == "" ? Auth.selected_user.fetch_bookmarks : Auth.selected_user.fetch_bookmarks_with_selected_tag}
           />
         }
       />
