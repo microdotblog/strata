@@ -73,6 +73,11 @@ export const Bookmark = types.model('Bookmark', {
     }
   }),
   
+  set_temp_tags: flow(function*() {
+    console.log("Bookmark::set_temp_tags", self.id)
+    self.temporary_tags_for_bookmark = self.tags?.length > 0 ? self.tags.split(',') : []
+  }),
+  
   set_selected_temp_tag: flow(function* (tag) {
     console.log("Bookmark:set_selected_temp_tag", self.id, tag)
     const existing_tag = self.temporary_tags_for_bookmark.find(t => t === tag)
@@ -90,12 +95,17 @@ export const Bookmark = types.model('Bookmark', {
   }),
   
   set_selected_temp_tag_from_input: flow(function* () {
-    console.log("User:set_selected_temp_tag_from_input", self.temp_tag_filter_query)
+    console.log("Bookmark:set_selected_temp_tag_from_input", self.temp_tag_filter_query)
     const existing_tag = self.temporary_tags_for_bookmark.find(t => t === self.temp_tag_filter_query)
     if(existing_tag == null){
       self.temporary_tags_for_bookmark.push(self.temp_tag_filter_query)
       self.temp_tag_filter_query = null
     }
+  }),
+  
+  set_temp_tag_filter_query: flow(function* (text) {
+    console.log("Bookmark:set_temp_tag_filter_query", self.id, text)
+    self.temp_tag_filter_query = text == "" ? null : text
   }),
   
   clear_temporary_tags_for_bookmark: flow(function* () {

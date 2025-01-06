@@ -62,12 +62,13 @@ export default class AddTagsMenu extends React.Component{
   }
   
   _render_added_tags = () => {
-    return Auth.selected_user?.selected_bookmark?.temporary_tags_for_bookmark.map((tag) => {
+    const { selected_bookmark } = Auth.selected_user
+    return selected_bookmark?.temporary_tags_for_bookmark.map((tag) => {
       return(
         <TouchableOpacity
           key={`tag-${tag}`}
           onPress={() => {
-            //Auth.selected_user.delete_selected_temp_tag(tag)
+            selected_bookmark.delete_selected_temp_tag(tag)
           }}
           style={{
             flexDirection: "row",
@@ -188,7 +189,7 @@ export default class AddTagsMenu extends React.Component{
               color: App.theme_text_color()
             }}
             onSubmitEditing={() => {selected_bookmark.set_selected_temp_tag_from_input()}}
-            onChangeText={(text) => selected_bookmark.set_bookmark_tag_filter_query(text)}
+            onChangeText={(text) => selected_bookmark.set_temp_tag_filter_query(text)}
             value={selected_bookmark.temp_tag_filter_query}
           />
           {

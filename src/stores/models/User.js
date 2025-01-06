@@ -370,6 +370,7 @@ export default User = types.model('User', {
     
     open_bookmark_tag_sheet: flow(function* (bookmark) {
       self.selected_bookmark = bookmark
+      bookmark.set_temp_tags()
       App.open_sheet("add-tags")
     })
 
