@@ -22,7 +22,8 @@ export default class AddTagsMenu extends React.Component{
   _render_tags = () => {
     const { selected_bookmark } = Auth.selected_user
     return Auth.selected_user?.filtered_tags().map((tag) => {
-      const is_selected = selected_bookmark.temporary_tags_for_bookmark.filter(t => t === tag)?.length > 0
+      const is_selected = selected_bookmark.temporary_tags_for_bookmark
+            .some(t => t.trim() === tag.trim())
       return(
         <TouchableOpacity
           key={`tag-${tag}`}
@@ -54,7 +55,7 @@ export default class AddTagsMenu extends React.Component{
             />
           }
           <Text style={{ color: App.theme_button_text_color() }}>
-            {tag}
+            {tag.trim()}
           </Text>
         </TouchableOpacity>
       )

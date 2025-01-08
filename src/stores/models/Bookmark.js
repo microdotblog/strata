@@ -75,14 +75,17 @@ export const Bookmark = types.model('Bookmark', {
   
   set_temp_tags: flow(function*() {
     console.log("Bookmark::set_temp_tags", self.id)
-    self.temporary_tags_for_bookmark = self.tags?.length > 0 ? self.tags.split(',') : []
+    self.temporary_tags_for_bookmark = self.tags?.length > 0 
+      ? self.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+      : []
   }),
   
   set_selected_temp_tag: flow(function* (tag) {
     console.log("Bookmark:set_selected_temp_tag", self.id, tag)
-    const existing_tag = self.temporary_tags_for_bookmark.find(t => t === tag)
-    if(existing_tag == null){
-      self.temporary_tags_for_bookmark.push(tag)
+    const trimmedTag = tag.trim()
+    const existing_tag = self.temporary_tags_for_bookmark.find(t => t === trimmedTag)
+    if(existing_tag == null && trimmedTag.length > 0){
+      self.temporary_tags_for_bookmark.push(trimmedTag)
     }
   }),
   
@@ -96,9 +99,12 @@ export const Bookmark = types.model('Bookmark', {
   
   set_selected_temp_tag_from_input: flow(function* () {
     console.log("Bookmark:set_selected_temp_tag_from_input", self.temp_tag_filter_query)
-    const existing_tag = self.temporary_tags_for_bookmark.find(t => t === self.temp_tag_filter_query)
-    if(existing_tag == null){
-      self.temporary_tags_for_bookmark.push(self.temp_tag_filter_query)
+    if (!self.temp_tag_filter_query) return
+    
+    const trimmedTag = self.temp_tag_filter_query.trim()
+    const existing_tag = self.temporary_tags_for_bookmark.find(t => t === trimmedTag)
+    if(existing_tag == null && trimmedTag.length > 0){
+      self.temporary_tags_for_bookmark.push(trimmedTag)
       self.temp_tag_filter_query = null
     }
   }),
@@ -119,6 +125,8 @@ export const Bookmark = types.model('Bookmark', {
     const data = yield MicroBlogApi.save_tags_for_bookmark(self.id, self.temporary_tags_for_bookmark.toString())
     if(data !== API_ERROR){
       self.tags = self.temporary_tags_for_bookmark.toString()
+      const parentNode = getParent(self, 2)
+      parentNode?.fetch_tags()
       App.close_sheet("add-tags")
     }
     self.is_updating_tags = false
