@@ -359,6 +359,31 @@ class MicroBlogApi {
       return API_ERROR
     }
   }
+  
+  async save_tags_for_bookmark(id, tags) {
+    console.log('MicroBlogApi: save_tags_for_bookmark', id, tags);
+    
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/${id}?tags=${tags}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+            'Content-Type': 'application/json'
+          }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data || API_ERROR;
+        
+    } catch (error) {
+        console.log('MicroBlogApi: save_tags_for_bookmark_by_id', error);
+        return API_ERROR;
+    }
+  }
 
 }
 

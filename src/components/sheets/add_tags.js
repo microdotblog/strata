@@ -153,7 +153,7 @@ export default class AddTagsMenu extends React.Component{
             {
               !selected_bookmark.is_updating_tags ?
               <TouchableOpacity
-                onPress={() => Auth.selected_user.update_tags_for_bookmark()}
+                onPress={() => selected_bookmark.update_tags()}
                 style={{
                   borderColor: App.theme_border_color(),
                   marginBottom: 20

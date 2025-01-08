@@ -1,7 +1,7 @@
 import { types, flow, getParent } from 'mobx-state-tree';
 import App from '../App';
 import Auth from '../Auth';
-import MicroBlogApi, { DELETE_ERROR } from '../../api/MicroBlogApi';
+import MicroBlogApi, { DELETE_ERROR, API_ERROR } from '../../api/MicroBlogApi';
 
 const MicroblogLink = types.model('MicroblogLink', {
   id: types.number,
@@ -111,6 +111,17 @@ export const Bookmark = types.model('Bookmark', {
   clear_temporary_tags_for_bookmark: flow(function* () {
     self.temporary_tags_for_bookmark = []
     self.temporary_bookmark_id = null
+  }),
+  
+  update_tags: flow(function* () {
+    console.log("Bookmark:update_tags", self.id)
+    self.is_updating_tags = true
+    const data = yield MicroBlogApi.save_tags_for_bookmark(self.id, self.temporary_tags_for_bookmark.toString())
+    if(data !== API_ERROR){
+      self.tags = self.temporary_tags_for_bookmark.toString()
+      App.close_sheet("add-tags")
+    }
+    self.is_updating_tags = false
   }),
   
 }))
