@@ -24,7 +24,12 @@ export default class BookmarksScreen extends React.Component{
         estimatedItemSize={150}
         initialNumToRender={15}
         data={bookmarks}
-        extraData={bookmarks?.length && !App.is_loading_bookmarks && last_bookmark_fetch}
+        extraData={[
+          bookmarks?.length,
+          App.is_loading_bookmarks,
+          last_bookmark_fetch,
+          selected_tag
+        ]}
         keyExtractor={this._key_extractor}
         renderItem={this.render_item}
         onEndReached={selected_tag == null || selected_tag == "" ? Auth.selected_user.fetch_more_bookmarks : null}
@@ -37,7 +42,13 @@ export default class BookmarksScreen extends React.Component{
           <RefreshControl
             tintColor={App.theme_accent_color()}
             refreshing={App.is_loading_bookmarks}
-            onRefresh={() => selected_tag == null || selected_tag == "" ? Auth.selected_user.fetch_bookmarks : Auth.selected_user.fetch_bookmarks_with_selected_tag}
+            onRefresh={() => {
+              if (selected_tag == null || selected_tag == "") {
+                Auth.selected_user.fetch_bookmarks()
+              } else {
+                Auth.selected_user.fetch_bookmarks_with_selected_tag()
+              }
+            }}
           />
         }
       />
