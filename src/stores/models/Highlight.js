@@ -41,6 +41,6 @@ export default Highlight = types.model('Highlight', {
     return `${self.url}#:~:text=${self.content_text}`
   },
   markdown(){
-    return `[${self.title}](${self.url})\n> ${self.content_text}`
+    return `[${self.title}](${self.url})\n\n> ${self.content_text}`
   }
 }))
