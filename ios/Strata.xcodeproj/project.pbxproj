@@ -12,6 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2D5C60B7354A37276398C55F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */; };
 		4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */; };
 		4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1BECA72B6F235B0077F593 /* Security.framework */; };
 		4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECAA2B6F25420077F593 /* MBNotesCryptoModule.m */; };
@@ -21,6 +22,7 @@
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,9 @@
 		5709B34CF0A7D63546082F79 /* Pods-Strata.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.release.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Strata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Strata.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Strata/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Strata/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		BF25BD2D2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTInputAccessoryShadowView.h; path = Strata/RCTInputAccessoryShadowView.h; sourceTree = "<group>"; };
+		BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTInputAccessoryShadowView.m; path = Strata/RCTInputAccessoryShadowView.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -122,12 +127,15 @@
 				4B6630DF2B7AB35A00D961AA /* MBHighlightingTextStorage.m */,
 				4B6630E02B7AB35A00D961AA /* MBHighlightingTextView.h */,
 				4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */,
+				BF25BD2D2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.h */,
+				BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */,
 				3E2ECE45115A6ECD65E76DF8 /* PrivacyInfo.xcprivacy */,
+				AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */,
 			);
 			name = Strata;
 			sourceTree = "<group>";
@@ -276,6 +284,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				2D5C60B7354A37276398C55F /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +386,7 @@
 				4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */,
 				4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */,
 				4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */,
+				BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,7 +459,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Strata/Strata.entitlements;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 3F9MDJ6K4E;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Strata/Info.plist;
@@ -458,7 +468,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -484,7 +494,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Strata/Strata.entitlements;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 3F9MDJ6K4E;
 				INFOPLIST_FILE = Strata/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Strata;
@@ -492,7 +502,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -514,6 +524,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -541,6 +552,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CXX = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -560,6 +572,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -582,6 +596,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -590,6 +605,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -617,6 +633,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CXX = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
@@ -629,6 +646,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD = "";
+				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

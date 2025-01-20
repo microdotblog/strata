@@ -239,6 +239,151 @@ class MicroBlogApi {
       return API_ERROR
     }    
   }
+  
+  async get_bookmarks(before_id = null, tag = null) {
+    try {
+      let request_path = 'posts/bookmarks'
+      if (before_id && tag == null){
+        request_path += `?before_id=${before_id}`
+      }
+      else if (tag){
+        request_path += `?tag=${tag}`
+      }
+      const response = await fetch(`${BASE_ENDPOINT}/${request_path}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    } catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+  
+  async delete_bookmark(id) {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.json()
+      if (data.error) {
+        return DELETE_ERROR
+      } else {
+        return true
+      }
+    }
+    catch(error) {
+      console.log(error)
+      return DELETE_ERROR
+    }
+  }
+  
+  async get_bookmark_tags(recent = false, count = 10) {
+    const path = recent ? `tags?recent=1&count=${count}` : 'tags'
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/${path}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'    
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    }
+    catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+  
+  async get_highlights() {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/highlights`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    } catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+  
+  async delete_highlight(id) {
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/highlights/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      return await response.json()
+    }
+    catch(error) {
+      console.log(error)
+      return DELETE_ERROR
+    }
+  }
+  
+  async get_tags(recent = null, count = 10) {
+    let params = ""
+    if(recent){
+      params = `?recent=1&count=${count}`
+    }
+    try{
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/tags${params}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+          'Content-Type': 'application/json'          
+        }
+      })
+      const data = await response.text()
+      return JSON.parse(data)
+    } catch(error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+  
+  async save_tags_for_bookmark(id, tags) {
+    console.log('MicroBlogApi: save_tags_for_bookmark', id, tags);
+    
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/posts/bookmarks/${id}?tags=${tags}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${Auth.selected_user?.token()}`,
+            'Content-Type': 'application/json'
+          }
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data || API_ERROR;
+        
+    } catch (error) {
+        console.log('MicroBlogApi: save_tags_for_bookmark_by_id', error);
+        return API_ERROR;
+    }
+  }
 
 }
 
