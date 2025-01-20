@@ -122,6 +122,7 @@ export default class Bookmark extends React.Component{
             paddingHorizontal: 12,
             paddingVertical: 8,
             marginTop: 20,
+            marginBottom: 7,
             backgroundColor: App.theme === "dark" ? "#1e252f" : "#f4f6f9",
             alignSelf: 'flex-start',
             color: App.theme === "dark" ? "#f4f6f9" : "#1e252f",
@@ -143,7 +144,9 @@ export default class Bookmark extends React.Component{
         style={{ 
           flexDirection: 'row',
           alignItems: 'center',
-          gap: 5
+          gap: 5,
+          marginTop: 7,
+          marginBottom: 15
         }}
       >
         {
@@ -217,7 +220,7 @@ export default class Bookmark extends React.Component{
             <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
           }
           </TouchableOpacity>
-          <View style={{ flex: 1, gap: 12 }}>
+          <View style={{ flex: 1, gap: 4 }}>
             <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
               <Text style={{ color: App.theme_text_color(), fontSize: App.theme_default_font_size(18), fontWeight: '700', marginTop: 2 }}>
                 { bookmark.author._microblog.username }
