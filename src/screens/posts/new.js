@@ -28,7 +28,7 @@ export default class PostingScreen extends React.Component{
   render() {
     const { posting } = Auth.selected_user
     return(
-      <View style={{ flex: 1, backgroundColor: App.theme_background_color() }}>
+      <View style={{ flex: 1, backgroundColor: App.theme_background_color(), flexDirection: 'column' }}>
         {
           posting.should_show_title() ?
           <TextInput
@@ -66,13 +66,11 @@ export default class PostingScreen extends React.Component{
             style={{
               minHeight: 300,
               fontSize: 18,
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
               marginTop: 0,
               paddingBottom: posting.post_text_length() > posting.max_post_length() ? 150 : 50,
-              flex: 1,
               padding: 8,
-              color: App.theme_text_color()
+              color: App.theme_text_color(),
+              textAlignVertical: 'top'
             }}
             editable={!posting.is_sending_post}
             multiline={true}
