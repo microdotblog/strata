@@ -5,6 +5,9 @@ import App from './../App';
 import MicroBlogApi, { API_ERROR, DELETE_ERROR, POST_ERROR, LOGIN_TOKEN_INVALID, LOGIN_ERROR } from '../../api/MicroBlogApi';
 import { Alert, NativeModules, Platform } from 'react-native';
 import { SheetManager } from 'react-native-actions-sheet';
+import { Bookmark } from './Bookmark';
+import Highlight from './Highlight';
+import Posting from './Posting';
 const { MBNotesCloudModule } = NativeModules;
 
 export default User = types.model('User', {
@@ -17,7 +20,15 @@ export default User = types.model('User', {
   selected_notebook: types.maybeNull(types.reference(Notebook)),
   is_saving_new_notebook: types.optional(types.boolean, false),
   is_syncing_with_icloud: types.optional(types.boolean, false),
-  plan: types.maybeNull(types.string)
+  plan: types.maybeNull(types.string),
+  bookmarks: types.optional(types.array(Bookmark), []),
+  last_bookmark_fetch: types.optional(types.Date, new Date),
+  highlights: types.optional(types.array(Highlight), []),
+  tags: types.optional(types.array(types.string), []),
+  recent_tags: types.optional(types.array(types.string), []),
+  posting: types.maybeNull(Posting),
+  selected_tag: types.maybeNull(types.string),
+  selected_bookmark: types.maybeNull(types.reference(Bookmark))
 })
   .actions(self => ({
 
@@ -29,6 +40,16 @@ export default User = types.model('User', {
         yield self.fetch_notebooks()
         // Let's also check if their account premium status changed.
         self.check_for_update_account_status()
+        self.fetch_highlights()
+        self.fetch_bookmarks()
+        self.fetch_tags()
+        
+        if(self.posting == null){
+          self.posting = Posting.create({username: self.username})
+        }
+        else {
+          self.posting.hydrate()
+        }
       }
 
     }),
@@ -252,6 +273,106 @@ export default User = types.model('User', {
         self.set_selected_notebook(found_notebook)
       }
     }),
+    
+    fetch_bookmarks: flow(function* () {
+      console.log("User:fetch_bookmarks")
+      App.set_is_loading_bookmarks(true)
+      const bookmarks = yield MicroBlogApi.get_bookmarks()
+      if(bookmarks !== API_ERROR && bookmarks.items){
+        self.bookmarks = bookmarks.items
+        self.last_bookmark_fetch = new Date
+      }
+      App.set_is_loading_bookmarks(false)
+      console.log("User:fetch_bookmarks:count", self.bookmarks.length)
+    }),
+    
+    fetch_bookmarks_with_selected_tag: flow(function* () {
+      console.log("User:fetch_bookmarks_with_selected_tag", self.selected_tag)
+      App.set_is_loading_bookmarks(true)
+      const bookmarks = yield MicroBlogApi.get_bookmarks(null, self.selected_tag)
+      if(bookmarks !== API_ERROR && bookmarks.items){
+        self.bookmarks = bookmarks.items
+        self.last_bookmark_fetch = new Date
+      }
+      App.set_is_loading_bookmarks(false)
+      console.log("User:fetch_bookmarks_with_selected_tag:count", self.bookmarks.length)
+    }),
+    
+    destroy_bookmark: flow(function* (bookmark) {
+      console.log("User:destroy_bookmark", bookmark)
+      destroy(bookmark)
+      App.show_toast_message("bookmark_removed")
+    }),
+    
+    fetch_more_bookmarks: flow(function* () {
+      console.log("User:fetch_more_bookmarks", self.bookmarks.length > 0)
+      
+      if(self.bookmarks.length > 0){
+        console.log("User:fetch_more_bookmarks:before_id", self.bookmarks[self.bookmarks.length - 1]?.id)
+        const bookmarks = yield MicroBlogApi.get_bookmarks(self.bookmarks[self.bookmarks.length - 1].id)
+        console.log("User:fetch_more_bookmarks:count", bookmarks?.items?.length)
+        if(bookmarks !== API_ERROR && bookmarks.items){
+          bookmarks.items.map(bookmark => {
+            const existing_bookmark = self.bookmarks.find(b => b.id === bookmark.id)
+            if(existing_bookmark != null) return
+            self.bookmarks.push(bookmark)
+          })
+          self.last_bookmark_fetch = new Date
+          console.log("User:fetch_more_bookmarks:total_count", self.bookmarks.length)
+        }
+      }
+      
+    }),
+    
+    fetch_highlights: flow(function* () {
+      console.log("User:fetch_highlights")
+      App.set_is_loading_highlights(true)
+      const highlights = yield MicroBlogApi.get_highlights()
+      if(highlights !== API_ERROR && highlights.items){
+        self.highlights = highlights.items
+      }
+      App.set_is_loading_highlights(false)
+      console.log("User:fetch_highlights:count", self.highlights.length)
+    }),
+    
+    destroy_highlight: flow(function* (highlight) {
+      console.log("User:destroy_highlight", highlight)
+      destroy(highlight)
+      App.show_toast_message("highlight_removed")
+    }),
+    
+    fetch_tags: flow(function* () {
+      console.log("User:fetch_tags")
+      App.set_is_loading_highlights(true)
+      const tags = yield MicroBlogApi.get_tags()
+      if(tags !== API_ERROR && tags){
+        self.tags = tags
+      }
+      const recent_tags = yield MicroBlogApi.get_tags(true, 5)
+      if(recent_tags !== API_ERROR && recent_tags){
+        self.recent_tags = recent_tags
+      }
+      App.set_is_loading_highlights(false)
+      console.log("User:fetch_tags:count", self.tags.length, self.recent_tags.length)
+    }),
+    
+    set_selected_tag: flow(function* (tag = null) {
+      console.log("User:set_selected_tag", tag)
+      self.selected_tag = tag
+      if(tag == null){
+        App.set_bookmark_tag_filter_query(null)
+        self.fetch_bookmarks()
+      }
+      else{
+        self.fetch_bookmarks_with_selected_tag()
+      }
+    }),
+    
+    open_bookmark_tag_sheet: flow(function* (bookmark) {
+      self.selected_bookmark = bookmark
+      bookmark.set_temp_tags()
+      App.open_sheet("add-tags")
+    })
 
   }))
   .views(self => ({
@@ -263,17 +384,25 @@ export default User = types.model('User', {
     secret_token() {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
     },
-
-    can_create_notebook() {
+    
+    is_premium_user() {
       return self.is_premium || self.plan !== "free"
     },
 
+    can_create_notebook() {
+      return this.is_premium_user()
+    },
+
     can_use_notes() {
-      return self.is_premium || self.plan !== "free"
+      return this.is_premium_user()
     },
 
     is_appletest() {
       return (self.username == "appletest")
+    },
+    
+    filtered_tags(){
+      return App.tag_filter_query != null && App.tag_filter_query != "" && self.tags.length > 0 ? self.tags.filter(tag => tag.includes(App.tag_filter_query)) : self.tags
     }
 
   }))

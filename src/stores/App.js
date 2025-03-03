@@ -1,10 +1,12 @@
 import { types, flow } from 'mobx-state-tree'
 import Auth from './Auth'
 import { Appearance, AppState, Linking, Alert } from 'react-native'
+import { InAppBrowser } from 'react-native-inappbrowser-reborn'
 import { SheetManager } from "react-native-actions-sheet";
 import Login from './Login';
 import Tokens from './Tokens';
 import Posting from './Posting';
+import Toast from 'react-native-simple-toast';
 
 let NAVIGATION = null;
 
@@ -16,7 +18,18 @@ export default App = types.model('App', {
   search_open: types.optional(types.boolean, false),
   search_query: types.optional(types.string, ""),
   has_unsaved_note: types.optional(types.boolean, false),
+  is_loading_bookmarks: types.optional(types.boolean, false),
+  is_loading_highlights: types.optional(types.boolean, false),
+  is_loading_tags: types.optional(types.boolean, false),
+  tag_filter_query: types.maybeNull(types.string, ""),
+  max_characters_allowed: types.optional(types.number, 300)
 })
+  .volatile(self => ({
+    navigation_ref: null,
+    current_tab_key: null,
+    current_raw_tab_key: null,
+    current_tab_index: null
+  }))
   .actions(self => ({
 
     hydrate: flow(function*() {
@@ -29,6 +42,48 @@ export default App = types.model('App', {
         // Now we want to check if the user is premium
         App.check_current_user_can_use_notes()
       })
+    }),
+    
+    set_navigation: flow(function* (navigation = null) {
+      if (navigation) {
+        self.navigation_ref = navigation
+      }
+    }),
+    
+    set_current_tab_key: flow(function* (tab_key) {
+      console.log("App:set_current_tab_key", tab_key)
+      self.current_raw_tab_key = tab_key
+      if (tab_key.includes("Notes")) {
+        self.current_tab_key = "Notes"
+      }
+      else if (tab_key.includes("Bookmarks")) {
+        self.current_tab_key = "Bookmarks"
+        if(Auth.is_logged_in() && Auth.selected_user != null){
+          if(Auth.selected_user.selected_tag != null && Auth.selected_user.selected_tag != ""){
+            Auth.selected_user.fetch_bookmarks_with_selected_tag()
+          }
+          else{
+            Auth.selected_user.fetch_bookmarks()
+          }
+          Auth.selected_user.fetch_tags()
+        }
+      }
+      else if (tab_key.includes("Highlights")) {
+        self.current_tab_key = "Highlights"
+        if(Auth.is_logged_in() && Auth.selected_user != null){
+          Auth.selected_user.fetch_highlights()
+        }
+      }
+      else {
+        self.current_tab_key = tab_key
+      }
+    }),
+    
+    set_current_tab_index: flow(function* (tab_index) {
+      console.log("App:set_current_tab_index", tab_index)
+      if(tab_index === self.current_tab_index){return}
+      self.current_tab_index = tab_index
+      // AsyncStorage.setItem("App:tab_index", JSON.stringify(self.current_tab_index))
     }),
 
     set_is_hydrating: flow(function*(is_hydrating) {
@@ -116,10 +171,7 @@ export default App = types.model('App', {
     open_sheet: flow(function*(sheet_name = null) {
       console.log("App:open_sheet", sheet_name)
       if (sheet_name != null) {
-        const sheet_is_open = SheetManager.get(sheet_name)?.current?.isOpen()
-        if (!sheet_is_open) {
-          SheetManager.show(sheet_name)
-        }
+        SheetManager.show(sheet_name)
       }
     }),
 
@@ -137,10 +189,20 @@ export default App = types.model('App', {
       }
     }),
 
-    navigate_to_screen: flow(function*(screen_name = null) {
+    navigate_to_screen: flow(function*(screen_name = null, action_data = null) {
       console.log("App:navigate_to_screen", screen_name)
       if (screen_name != null && NAVIGATION != null) {
-        NAVIGATION.navigate(screen_name)
+        switch (screen_name) {
+          case "Posting":
+          if (action_data != null) {
+            // Action data is usually markdown text from a highlight
+            Auth.selected_user?.posting.hydrate_post_with_markdown(action_data)
+            NAVIGATION.navigate(screen_name)
+          }
+          default:
+            NAVIGATION.navigate(screen_name)
+        }
+        
       }
     }),
 
@@ -207,7 +269,76 @@ export default App = types.model('App', {
           }
         })
       }
-    })
+    }),
+    
+    set_is_loading_highlights: flow(function* (loading) {
+      console.log("App:set_is_loading_highlights", loading)
+      self.is_loading_highlights = loading
+    }),
+    
+    set_is_loading_bookmarks: flow(function* (loading) {
+      console.log("App:set_is_loading_bookmarks", loading)
+      self.is_loading_bookmarks = loading
+    }),
+    
+    set_is_loading_tags: flow(function* (loading) {
+      console.log("App:set_is_loading_tags", loading)
+      self.is_loading_tags = loading
+    }),
+    
+    open_url: flow(function* (url) {    
+      Linking.canOpenURL(url).then(async (supported) => {
+        if (supported) {
+          const is_inapp_browser_avail = await InAppBrowser.isAvailable()
+          if (is_inapp_browser_avail) {
+            return InAppBrowser.open(url, {
+              dismissButtonStyle: 'close',
+              preferredControlTintColor: App.theme_accent_color(),
+              animated: true,
+              modalEnabled: false
+            })
+          }
+          else {
+            Linking.openURL(url);
+          }
+        }
+        else {
+          try {
+            Linking.openURL(url)
+          }
+          catch (error) {
+            console.log("App:open_url:error", error)
+            alert("Something went wrong with that link...")
+          }
+        }
+      })
+    }),
+    
+    show_toast_message: flow(function* (message) {
+      console.log("App:handle_view_message", message)
+      if (message === "bookmark_added") {
+        Toast.showWithGravity("Bookmark added!", Toast.SHORT, Toast.CENTER)
+      }
+      else if (message === "bookmark_removed") {
+        Toast.showWithGravity("Bookmark deleted!", Toast.SHORT, Toast.CENTER)
+      }
+      else if (message === "highlight_removed") {
+        Toast.showWithGravity("Highlight deleted!", Toast.SHORT, Toast.CENTER)
+      }
+    }),
+    
+    set_selected_tag: flow(function* (tag = null) {
+      console.log("App:set_selected_tag", tag)
+      //self.selected_tag = tag
+      if(tag == null){
+        self.tag_filter_query(null)
+      }
+    }),
+    
+    set_bookmark_tag_filter_query: flow(function* (query = "") {
+      console.log("App:set_bookmark_tag_filter_query", query)
+      self.tag_filter_query = query
+    }),
 
   }))
   .views(self => ({
@@ -236,13 +367,13 @@ export default App = types.model('App', {
       return self.theme === "dark" ? "#171c24" : "#f2f2f2"
     },
     theme_text_color() {
-      return self.theme === "dark" ? "#fff" : "#000"
+      return self.theme === "dark" ? "#E5E7EB" : "#000"
     },
     theme_placeholder_text_color() {
       return self.theme === "dark" ? "#374151" : "lightgray"
     },
-    theme_default_font_size() {
-      return 17
+    theme_default_font_size(size = 17) {
+      return size
     },
     theme_navbar_background_color() {
       return self.theme === "dark" ? "#212936" : "#fff"
@@ -277,6 +408,30 @@ export default App = types.model('App', {
     theme_confirm_color() {
       return self.theme_text_color()
       // return "#6EE7B7"
+    },
+    theme_tabbar_divider_color() {
+      return self.theme === "dark" ? "#383f4a" : "#AAA"
+    },
+    theme_highlight_background_color(){
+      return self.theme === "dark" ? "#1F2937" : "rgb(254,249,195)"
+    },
+    theme_highlight_border_color(){
+      return self.theme === "dark" ? "#f2dede" : "rgb(254,240,138)"
+    },
+    theme_highlight_meta_text_color() {
+      return "gray"
+    },
+    theme_tag_button_background_color() {
+      return self.theme === "dark" ? "#F9FAFB" : "#374151"
+    },
+    theme_tag_button_text_color() {
+      return self.theme === "dark" ? "#374151" : "#F9FAFB"
+    },
+    theme_selected_button_color() {
+      return self.theme === "dark" ? "#1c2028" : "#F9FAFB"
+    },
+    theme_header_button_background_color() {
+      return self.theme === "dark" ? "#27303d" : "#f8f8f8"
     },
     now() {
       let now = new Date()
