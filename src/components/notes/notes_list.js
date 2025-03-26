@@ -199,7 +199,6 @@ export default class NotesList extends React.Component {
                 onRefresh={() => {
                   selected_user.selected_notebook.fetch_notes();
                 }}
-                tintColor={App.theme_accent_color()}
               />
             }
             ListEmptyComponent={
