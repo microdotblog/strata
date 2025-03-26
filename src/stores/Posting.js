@@ -83,12 +83,12 @@ export default Posting = types.model('Posting', {
             App.go_back()
           }
           else {
-            Alert.alert("Whoops", "Could not save note. Please try again.")
+            Alert.alert("Error Saving Note", "Could not save note. Please try again.")
           }
           self.is_sending_note = false
         }
         else {
-          Alert.alert("Whoops", "Could not create note. Please try again.")
+          Alert.alert("Error Saving Note", "Could not create note. Please try again.")
         }
       }
     }),
