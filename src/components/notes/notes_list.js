@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
+import { reaction } from 'mobx';
 import { RefreshControl, View, TouchableOpacity, Text, TextInput, Keyboard, Platform } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 import Auth from './../../stores/Auth';
@@ -10,6 +11,32 @@ import { SvgXml } from 'react-native-svg';
 
 @observer
 export default class NotesList extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      recent_date_modified: null
+    };
+  }
+
+  componentDidMount() {
+    // create a reaction that tracks the date_modified field of the first note in the ordered list
+    this.reaction_disposer = reaction(
+      () => {
+        const notes = Auth.selected_user.selected_notebook.ordered_notes_with_query();
+        return notes.length > 0 ? notes[0].date_modified : null;
+      },
+      (note_date) => {
+        this.setState({ recent_date_modified: note_date });
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    if (this.reaction_disposer) {
+      this.reaction_disposer();
+    }
+  }
 
   _return_header = () => {
     const { selected_notebook } = Auth.selected_user
@@ -137,11 +164,13 @@ export default class NotesList extends React.Component {
     )
   }
 
-  _key_extractor = (item) => item.id
+  _key_extractor = (item) => {
+    return item.id;
+  }
 
   render_note = ({ item }) => {
     return (
-      <NoteItem note={item} key={item.id} />
+      <NoteItem note={item} key={item.id} recent_state={this.state.recent_date_modified} />
     )
   }
 
@@ -156,7 +185,7 @@ export default class NotesList extends React.Component {
             estimatedItemSize={150}
             initialNumToRender={15}
             data={selected_user.selected_notebook.ordered_notes_with_query()}
-            extraData={selected_user.selected_notebook.ordered_notes_with_query()?.length}
+            extraData={this.state.recent_date_modified}
             keyExtractor={this._key_extractor}
             renderItem={this.render_note}
             contentContainerStyle={{
@@ -167,7 +196,9 @@ export default class NotesList extends React.Component {
             refreshControl={
               <RefreshControl
                 refreshing={false}
-                onRefresh={selected_user.selected_notebook.fetch_notes}
+                onRefresh={() => {
+                  selected_user.selected_notebook.fetch_notes();
+                }}
                 tintColor={App.theme_accent_color()}
               />
             }
