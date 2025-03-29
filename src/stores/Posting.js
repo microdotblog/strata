@@ -83,12 +83,14 @@ export default Posting = types.model('Posting', {
             App.go_back()
           }
           else {
-            Alert.alert("Whoops", "Could not save note. Please try again.")
+            const debug_notebook_id = Auth.selected_user.selected_notebook?.id;
+            const debug_token_first = Auth.selected_user.token().substring(0, 2);
+            Alert.alert("Error Saving Note", `Could not save note. Please try again. (Notebook: ${debug_notebook_id} / ${debug_token_first})`);
           }
           self.is_sending_note = false
         }
         else {
-          Alert.alert("Whoops", "Could not create note. Please try again.")
+          Alert.alert("Error Saving Note", "Could not create note. Please try again.")
         }
       }
     }),
