@@ -28,7 +28,7 @@ export default User = types.model('User', {
   recent_tags: types.optional(types.array(types.string), []),
   posting: types.maybeNull(Posting),
   selected_tag: types.maybeNull(types.string),
-  selected_bookmark: types.maybeNull(types.reference(Bookmark))
+  selected_bookmark: types.maybeNull(types.safeReference(Bookmark))
 })
   .actions(self => ({
 

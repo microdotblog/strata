@@ -154,7 +154,10 @@ export default class AddTagsMenu extends React.Component{
             {
               !selected_bookmark.is_updating_tags ?
               <TouchableOpacity
-                onPress={() => selected_bookmark.update_tags()}
+                onPress={() => {
+                  selected_bookmark.set_selected_temp_tag_from_input();
+                  selected_bookmark.update_tags();
+                }}
                 style={{
                   borderColor: App.theme_border_color(),
                   marginBottom: 20

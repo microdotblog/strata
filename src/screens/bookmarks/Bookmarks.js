@@ -40,7 +40,6 @@ export default class BookmarksScreen extends React.Component{
         }}
         refreshControl={
           <RefreshControl
-            tintColor={App.theme_accent_color()}
             refreshing={App.is_loading_bookmarks}
             onRefresh={() => {
               if (selected_tag == null || selected_tag == "") {

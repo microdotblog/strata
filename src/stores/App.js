@@ -346,7 +346,7 @@ export default App = types.model('App', {
       return self.theme === "dark"
     },
     theme_accent_color() {
-      return "#f80"
+      return "#FF8800"
     },
     theme_border_color() {
       return self.theme === "dark" ? "#374151" : "#E5E7EB"

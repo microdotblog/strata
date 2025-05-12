@@ -149,7 +149,7 @@ export default Service = types.model('Service', {
       self.update_posts_for_active_destination()
     }
     else{
-      Alert.alert("Whoops", "Could not delete post. Please try again.")
+      Alert.alert("Error Deleting Post", "Could not delete post. Please try again.")
     }
   }),
 
@@ -161,7 +161,7 @@ export default Service = types.model('Service', {
       self.update_pages_for_active_destination()
     }
     else{
-      Alert.alert("Whoops", "Could not delete post. Please try again.")
+      Alert.alert("Error Deleting Post", "Could not delete post. Please try again.")
     }
   }),
 
