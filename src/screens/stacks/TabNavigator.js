@@ -53,10 +53,7 @@ export default class TabNavigator extends React.Component{
           },
           focus: (e) => {
             App.set_current_tab_key(e.target)
-          },
-          // tabPress: (e) => {
-          //   App.scroll_web_view_to_top(e.target)
-          // }
+          }
         }}
       >
         <Tab.Screen
