@@ -28,15 +28,16 @@ export default class MainApp extends React.Component {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SheetProvider>
-          <NavigationContainer theme={{
-            dark: App.is_dark_mode(),
-            colors: {
-              background: App.theme_background_color(),
-              text: App.theme_text_color(),
-              card: App.theme_navbar_background_color()
-            },
-            fonts: DefaultTheme.fonts
-          }}>
+          <NavigationContainer
+            theme={{
+              dark: App.is_dark_mode(),
+              colors: {
+                background: App.theme_background_color(),
+                text: App.theme_text_color(),
+                card: App.theme_navbar_background_color()
+              },
+              fonts: DefaultTheme.fonts
+            }}>
             <Stack.Navigator initialRouteName={"Tabs"} screenOptions={{ headerShown: false, headerTintColor: App.theme_text_color() }}>
               <>
                 <Stack.Screen name="Tabs" component={TabNavigator} />
