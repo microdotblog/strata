@@ -2,11 +2,13 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import App from '../../stores/App';
+import Auth from '../../stores/Auth';
 import NotesStack from './NotesStack';
 import BookmarksStack from './BookmarksStack';
 import HighlightsStack from './HighlightsStack';
 import TabIcon from '../../components/tabs/tab';
-
+import LoadingScreen from '../loading/Loading';
+import LoginScreen from '../login/Login';
 const Tab = createBottomTabNavigator();
 
 @observer
@@ -21,6 +23,12 @@ export default class TabNavigator extends React.Component{
   }
 
   render() {
+    if(Auth.is_hydrating){
+      return <LoadingScreen />
+    }
+    else if(!Auth.is_logged_in()){
+      return <LoginScreen />
+    }
     return(
       <Tab.Navigator
         id="tab_navigator"
