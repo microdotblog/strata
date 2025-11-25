@@ -42,7 +42,10 @@ export default class TabNavigator extends React.Component{
             return <TabIcon route={route} focused={focused} size={size} color={color} />;
           },
           headerShown: false,
-          tabBarActiveTintColor: App.theme_accent_color()
+          tabBarActiveTintColor: App.theme_accent_color(),
+          tabBarLabelStyle: {
+            fontSize: 12
+          }
         })}
         screenListeners={{
           state: (e) => {
