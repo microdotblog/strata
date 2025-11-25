@@ -40,7 +40,7 @@ export default class BookmarksScreen extends React.Component{
         }}
         refreshControl={
           <RefreshControl
-            refreshing={App.is_loading_bookmarks}
+            refreshing={false}
             onRefresh={() => {
               if (selected_tag == null || selected_tag == "") {
                 Auth.selected_user.fetch_bookmarks()

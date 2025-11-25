@@ -33,7 +33,7 @@ export default class HighlightsScreen extends React.Component{
         }}
         refreshControl={
           <RefreshControl
-            refreshing={App.is_loading_highlights}
+            refreshing={false}
             onRefresh={() => Auth.selected_user.fetch_highlights()}
           />
         }
