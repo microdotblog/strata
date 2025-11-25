@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* StrataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* StrataTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-Strata.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Strata.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D5C60B7354A37276398C55F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */; };
 		4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BECA52B6F23270077F593 /* MBNoteCrypto.swift */; };
 		4B1BECA82B6F235B0077F593 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1BECA72B6F235B0077F593 /* Security.framework */; };
@@ -23,6 +21,7 @@
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */; };
+		BFB963552ED6353100C9F77E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB963542ED6353100C9F77E /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,11 +39,8 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* StrataTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StrataTests.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Strata.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Strata.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Strata/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Strata/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Strata/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Strata/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Strata/main.m; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Strata.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.debug.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.debug.xcconfig"; sourceTree = "<group>"; };
 		3E2ECE45115A6ECD65E76DF8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Strata/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4B08D7A62B48B1AF000B31E2 /* OpenSSL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = "Pods/OpenSSL-Universal/Frameworks/OpenSSL.xcframework"; sourceTree = "<group>"; };
@@ -69,6 +65,7 @@
 		AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Strata/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BF25BD2D2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTInputAccessoryShadowView.h; path = Strata/RCTInputAccessoryShadowView.h; sourceTree = "<group>"; };
 		BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTInputAccessoryShadowView.m; path = Strata/RCTInputAccessoryShadowView.m; sourceTree = "<group>"; };
+		BFB963542ED6353100C9F77E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Strata/AppDelegate.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -114,8 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				4BB026AF2B4C9E0B009CE37C /* Strata.entitlements */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				4B9D28472B4EF647000D49AF /* MBNotesCloudModule.h */,
 				4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */,
 				4B1BECA92B6F25420077F593 /* MBNotesCryptoModule.h */,
@@ -132,10 +127,10 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
-				13B07FB71A68108700A75B9A /* main.m */,
 				4B1BECA42B6F23260077F593 /* Strata-Bridging-Header.h */,
 				3E2ECE45115A6ECD65E76DF8 /* PrivacyInfo.xcprivacy */,
 				AD135D47AD05E068BD635562 /* PrivacyInfo.xcprivacy */,
+				BFB963542ED6353100C9F77E /* AppDelegate.swift */,
 			);
 			name = Strata;
 			sourceTree = "<group>";
@@ -315,9 +310,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Strata/Pods-Strata-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Strata/Pods-Strata-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -354,9 +353,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Strata/Pods-Strata-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Strata/Pods-Strata-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -381,11 +384,10 @@
 				4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */,
 				4B1BECAB2B6F25420077F593 /* MBNotesCryptoModule.m in Sources */,
 				4B6630E62B7AB35B00D961AA /* MBHighlightingTextManager.m in Sources */,
-				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				4B6630E52B7AB35B00D961AA /* MBHighlightingTextStorage.m in Sources */,
 				4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */,
 				4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */,
+				BFB963552ED6353100C9F77E /* AppDelegate.swift in Sources */,
 				BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
