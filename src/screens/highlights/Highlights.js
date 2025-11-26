@@ -27,8 +27,8 @@ export default class HighlightsScreen extends React.Component{
         keyExtractor={this._key_extractor}
         renderItem={this.render_highlight_item}
         contentContainerStyle={{
-          paddingTop: 0,
-          paddingHorizontal: 12,
+          paddingTop: 3,
+          paddingHorizontal: 15,
           paddingBottom: 45
         }}
         refreshControl={
