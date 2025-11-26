@@ -16,7 +16,8 @@ export default class NotesList extends React.Component {
     super(props);
     this.state = {
       recent_date_modified: null,
-      search_text: App.search_query
+      search_text: App.search_query,
+      is_searching: false
     };
   }
 
@@ -46,20 +47,23 @@ export default class NotesList extends React.Component {
     }
     if (this.state.search_text === "") {
       App.set_search_query("")
+      this.setState({ is_searching: false })
       Keyboard.dismiss()
       return
     }
+    this.setState({ is_searching: true })
     try {
       await notebook.fetch_all_notes()
     }
     finally {
       App.set_search_query(this.state.search_text)
+      this.setState({ is_searching: false })
       Keyboard.dismiss()
     }
   }
 
   handle_cancel_search = () => {
-    this.setState({ search_text: "" })
+    this.setState({ search_text: "", is_searching: false })
     App.set_search_query("")
     App.toggle_search_is_open()
   }
@@ -169,7 +173,7 @@ export default class NotesList extends React.Component {
                 }}
                 value={this.state.search_text}
               />
-              {is_loading_search ? (
+              {this.state.is_searching && is_loading_search ? (
                 <ActivityIndicator
                   style={{ marginLeft: 8 }}
                   size="small"

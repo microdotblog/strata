@@ -32,10 +32,12 @@ export default Notebook = types.model('Notebook', {
       self.temp_notebook_name = null
       self.is_renaming_notebook = false
       self.is_setting_notebook_name = false
+      self.is_loading_search = false
       yield self.fetch_notes()
     }),
 
     afterCreate: flow(function*() {
+      self.is_loading_search = false
       if (!self.notes) {
         yield self.hydrate()
       }
@@ -69,15 +71,38 @@ export default Notebook = types.model('Notebook', {
     }),
 
     fetch_all_notes: flow(function*(note_id_to_update = false) {
-      console.log("Notebook:fetch_all_notes", self.id)
+      const fetch_start = Date.now()
+      console.log("Notebook:fetch_all_notes:start", self.id)
       self.is_loading_search = true
       try {
-        const data = yield MicroBlogApi.fetch_all_notes_for_notebook(self.id, 50, self.token())
+        const data = yield MicroBlogApi.fetch_all_notes_for_notebook(self.id, 100, self.token())
         if (data !== API_ERROR && Array.isArray(data.items)) {
           self.notes = data.items.map(note => ({
             username: self.username,
             ...note
           }))
+          console.log("Notebook:fetch_all_notes:items_loaded", self.notes.length, "duration_ms", Date.now() - fetch_start)
+          const search_query_snapshot = App.search_query
+          if (search_query_snapshot && search_query_snapshot.length > 0) {
+            const unlock_start = Date.now()
+            let rejected_count = 0
+            for (let i = 0; i < self.notes.length; i++) {
+              const note = self.notes[i]
+              try {
+                yield note.unlock()
+              }
+              catch (error) {
+                rejected_count++
+                console.log('Notebook:unlock_failed', note.id, error)
+              }
+              if (i > 0 && i % 100 === 0) {
+                console.log('Notebook:unlock_progress', i, '/', self.notes.length, 'elapsed_ms', Date.now() - unlock_start)
+                // yield to let the JS thread breathe on large notebooks
+                yield Promise.resolve()
+              }
+            }
+            console.log('Notebook:unlock_duration_ms', Date.now() - unlock_start, 'count', self.notes.length, 'rejected', rejected_count)
+          }
         }
         if (note_id_to_update) {
           self.update_note_by_id(note_id_to_update)
@@ -85,6 +110,7 @@ export default Notebook = types.model('Notebook', {
       }
       finally {
         self.is_loading_search = false
+        console.log("Notebook:fetch_all_notes:done", self.id, "duration_ms", Date.now() - fetch_start, "search_query", App.search_query)
       }
     }),
 
@@ -135,7 +161,12 @@ export default Notebook = types.model('Notebook', {
       console.log("update_note_by_id", id)
       const note = self.get_note_by_id(id)
       if(note){
-        note.unlock()
+        try {
+          yield note.unlock()
+        }
+        catch(error){
+          console.log('Notebook:update_note_by_id unlock_failed', id, error)
+        }
       }
     })
 
