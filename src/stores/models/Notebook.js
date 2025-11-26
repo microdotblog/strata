@@ -32,10 +32,12 @@ export default Notebook = types.model('Notebook', {
       self.temp_notebook_name = null
       self.is_renaming_notebook = false
       self.is_setting_notebook_name = false
+      self.is_loading_search = false
       yield self.fetch_notes()
     }),
 
     afterCreate: flow(function*() {
+      self.is_loading_search = false
       if (!self.notes) {
         yield self.hydrate()
       }
@@ -72,12 +74,21 @@ export default Notebook = types.model('Notebook', {
       console.log("Notebook:fetch_all_notes", self.id)
       self.is_loading_search = true
       try {
-        const data = yield MicroBlogApi.fetch_all_notes_for_notebook(self.id, 50, self.token())
+        const data = yield MicroBlogApi.fetch_all_notes_for_notebook(self.id, 100, self.token())
         if (data !== API_ERROR && Array.isArray(data.items)) {
           self.notes = data.items.map(note => ({
             username: self.username,
             ...note
           }))
+          if (App.search_query && App.search_query.length > 0) {
+            yield Promise.allSettled(
+              self.notes.map(note =>
+                note.unlock().catch(error => {
+                  console.log('Notebook:unlock_failed', note.id, error)
+                })
+              )
+            )
+          }
         }
         if (note_id_to_update) {
           self.update_note_by_id(note_id_to_update)
@@ -135,7 +146,12 @@ export default Notebook = types.model('Notebook', {
       console.log("update_note_by_id", id)
       const note = self.get_note_by_id(id)
       if(note){
-        note.unlock()
+        try {
+          yield note.unlock()
+        }
+        catch(error){
+          console.log('Notebook:update_note_by_id unlock_failed', id, error)
+        }
       }
     })
 

@@ -110,7 +110,7 @@ class MicroBlogApi {
     }
   }
 
-  async fetch_notes_paginated(notebook_id, count = 50, offset = 0, user_token = Auth.selected_user?.token()) {
+  async fetch_notes_paginated(notebook_id, count = 100, offset = 0, user_token = Auth.selected_user?.token()) {
     console.log('MicroBlogApi:fetch_notes_paginated', notebook_id, count, offset);
 
     try {
@@ -131,7 +131,7 @@ class MicroBlogApi {
     }
   }
 
-  async fetch_all_notes_for_notebook(notebook_id, count = 50, user_token = Auth.selected_user?.token()) {
+  async fetch_all_notes_for_notebook(notebook_id, count = 100, user_token = Auth.selected_user?.token()) {
     console.log('MicroBlogApi:fetch_all_notes_for_notebook', notebook_id);
     let offset = 0
     let has_more = true
