@@ -123,10 +123,10 @@ export default class Bookmark extends React.Component{
             paddingVertical: 8,
             marginTop: 20,
             marginBottom: 7,
-            backgroundColor: App.theme === "dark" ? "#1e252f" : "#f4f6f9",
+            backgroundColor: App.theme === "dark" ? "#141824" : "#f4f6f9",
             alignSelf: 'flex-start',
             color: App.theme === "dark" ? "#f4f6f9" : "#1e252f",
-            borderColor: App.theme === "dark" ? "#3a414f" : "#EFEFEF",
+            borderColor: App.theme === "dark" ? "#141824" : "#EFEFEF",
             borderWidth: 1
           }
         }}
