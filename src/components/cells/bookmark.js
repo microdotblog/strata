@@ -222,7 +222,7 @@ export default class Bookmark extends React.Component{
           </TouchableOpacity>
           <View style={{ flex: 1, gap: 4 }}>
             <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
-              <Text style={{ color: App.theme_text_color(), fontSize: App.theme_default_font_size(18), fontWeight: '700', marginTop: 2 }}>
+              <Text style={{ color: App.theme_text_color(), fontSize: App.theme_default_font_size(18), fontWeight: '700', marginTop: 2, marginBottom: 8 }}>
                 { bookmark.author._microblog.username }
               </Text>
             </TouchableOpacity>
