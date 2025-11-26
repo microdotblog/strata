@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { reaction } from 'mobx';
-import { RefreshControl, View, TouchableOpacity, Text, TextInput, Keyboard, Platform } from 'react-native';
+import { RefreshControl, View, TouchableOpacity, Text, TextInput, Keyboard, Platform, ActivityIndicator } from 'react-native';
 import { FlashList } from "@shopify/flash-list";
 import Auth from './../../stores/Auth';
 import App from '../../stores/App';
@@ -15,7 +15,8 @@ export default class NotesList extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      recent_date_modified: null
+      recent_date_modified: null,
+      search_text: App.search_query
     };
   }
 
@@ -37,9 +38,35 @@ export default class NotesList extends React.Component {
       this.reaction_disposer();
     }
   }
+  
+  handle_search_submit = async () => {
+    const notebook = Auth.selected_user?.selected_notebook
+    if (!notebook || notebook.is_loading_search) {
+      return
+    }
+    if (this.state.search_text === "") {
+      App.set_search_query("")
+      Keyboard.dismiss()
+      return
+    }
+    try {
+      await notebook.fetch_all_notes()
+    }
+    finally {
+      App.set_search_query(this.state.search_text)
+      Keyboard.dismiss()
+    }
+  }
+
+  handle_cancel_search = () => {
+    this.setState({ search_text: "" })
+    App.set_search_query("")
+    App.toggle_search_is_open()
+  }
 
   _return_header = () => {
     const { selected_notebook } = Auth.selected_user
+    const is_loading_search = selected_notebook?.is_loading_search
     return (
       <View
         style={{
@@ -130,15 +157,25 @@ export default class NotesList extends React.Component {
       						fontSize: 16,
       						borderColor: App.theme_border_color(), 
       						borderWidth: 1,
-      						borderRadius: 15,
+                  borderRadius: 15,
       						paddingHorizontal: 11,
       						paddingVertical: 4,
       						color: App.theme_text_color()
                 }}
-                onSubmitEditing={() => { Keyboard.dismiss() }}
-                onChangeText={(text) => App.set_search_query(text)}
-                value={App.search_query}
+                onSubmitEditing={this.handle_search_submit}
+                onChangeText={(text) => {
+                  this.setState({ search_text: text })
+                  App.set_search_query(text)
+                }}
+                value={this.state.search_text}
               />
+              {is_loading_search ? (
+                <ActivityIndicator
+                  style={{ marginLeft: 8 }}
+                  size="small"
+                  color={App.theme_text_color()}
+                />
+              ) : null}
               <TouchableOpacity
        					style={{
         						justifyContent: "center",
@@ -147,7 +184,7 @@ export default class NotesList extends React.Component {
         						marginLeft: 8,
         						marginRight: 8,
        					}}
-       					onPress={App.toggle_search_is_open}
+       					onPress={this.handle_cancel_search}
       				>
        					<Text
           				style={{

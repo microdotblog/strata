@@ -372,7 +372,7 @@ export default App = types.model('App', {
     theme_placeholder_text_color() {
       return self.theme === "dark" ? "#374151" : "lightgray"
     },
-    theme_default_font_size(size = 17) {
+    theme_default_font_size(size = 15) {
       return size
     },
     theme_navbar_background_color() {

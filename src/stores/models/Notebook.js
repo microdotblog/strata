@@ -22,6 +22,7 @@ export default Notebook = types.model('Notebook', {
   temp_notebook_name: types.maybeNull(types.string),
   is_renaming_notebook: types.optional(types.boolean, false),
   is_setting_notebook_name: types.optional(types.boolean, false),
+  is_loading_search: types.optional(types.boolean, false),
   _microblog: types.maybeNull(Microblog),
 })
   .actions(self => ({
@@ -64,6 +65,26 @@ export default Notebook = types.model('Notebook', {
       }
       if(note_id_to_update){
         self.update_note_by_id(note_id_to_update)
+      }
+    }),
+
+    fetch_all_notes: flow(function*(note_id_to_update = false) {
+      console.log("Notebook:fetch_all_notes", self.id)
+      self.is_loading_search = true
+      try {
+        const data = yield MicroBlogApi.fetch_all_notes_for_notebook(self.id, 50, self.token())
+        if (data !== API_ERROR && Array.isArray(data.items)) {
+          self.notes = data.items.map(note => ({
+            username: self.username,
+            ...note
+          }))
+        }
+        if (note_id_to_update) {
+          self.update_note_by_id(note_id_to_update)
+        }
+      }
+      finally {
+        self.is_loading_search = false
       }
     }),
 
