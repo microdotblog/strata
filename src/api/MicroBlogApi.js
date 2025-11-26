@@ -110,6 +110,52 @@ class MicroBlogApi {
     }
   }
 
+  async fetch_notes_paginated(notebook_id, count = 50, offset = 0, user_token = Auth.selected_user?.token()) {
+    console.log('MicroBlogApi:fetch_notes_paginated', notebook_id, count, offset);
+
+    try {
+      const response = await fetch(`${BASE_ENDPOINT}/notes/notebooks/${notebook_id}?count=${count}&offset=${offset}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user_token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await response.text()
+      return JSON.parse(data)
+
+    } catch (error) {
+      console.log(error)
+      return API_ERROR
+    }
+  }
+
+  async fetch_all_notes_for_notebook(notebook_id, count = 50, user_token = Auth.selected_user?.token()) {
+    console.log('MicroBlogApi:fetch_all_notes_for_notebook', notebook_id);
+    let offset = 0
+    let has_more = true
+    const items = []
+
+    while (has_more) {
+      const data = await this.fetch_notes_paginated(notebook_id, count, offset, user_token)
+      if (data === API_ERROR || !Array.isArray(data?.items)) {
+        has_more = false
+        continue
+      }
+
+      items.push(...data.items)
+      if (data.items.length < count) {
+        has_more = false
+      }
+      else {
+        offset += count
+      }
+    }
+
+    return { items }
+  }
+
   async post_note(text = null, user_token, notebook_id = null, id = null, is_encrypted = true, is_sharing = null, is_unsharing = null) {
     console.log('MicroBlogApi:post_note')
 
