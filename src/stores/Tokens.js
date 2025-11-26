@@ -11,14 +11,19 @@ export default Tokens = types.model('Tokens', {
 
     hydrate: flow(function*(return_data = false) {
       console.log("Tokens:hydrate")
-      const data = yield SFInfo.getItem('Tokens', {})
-      if (data) {
-        applySnapshot(self, JSON.parse(data))
-        self.temp_secret_token = null
-        console.log("Tokens:hydrate:with_data")
-      }
-      if (return_data) {
-        return data ? JSON.parse(data) : null
+      try {
+        const data = yield SFInfo.getItem('Tokens', {})
+        if (data) {
+          applySnapshot(self, JSON.parse(data))
+          self.temp_secret_token = null
+          console.log("Tokens:hydrate:with_data")
+        }
+        if (return_data) {
+          return data ? JSON.parse(data) : null
+        }
+      } catch (error) {
+        console.error("Tokens:hydrate:error", error)
+        return null
       }
     }),
 

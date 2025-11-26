@@ -2,8 +2,9 @@ import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
   "Require cycle:",
-  "Sending `appearanceChanged` with no listeners registered",// Seems to be new in 17.2
+  "Sending `appearanceChanged` with no listeners registered",
   "Sending `onAnimatedValueUpdate` with no listeners registered",
   "RCTBridge required dispatch_sync to load RCTAccessibilityManager",
-  "Support for defaultProps will be removed"
+  "Support for defaultProps will be removed",
+  "Open debugger"
 ])
