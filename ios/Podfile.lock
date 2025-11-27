@@ -2257,12 +2257,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: 4cb898d0bf20404aab1850c656dcea009429d6c1
-  DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
+  boost: 1dca942403ed9342f98334bf4c3621f011aa7946
+  DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: b60fe06f0f15b7d7408f169442176e69e8eeacde
-  fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
+  fmt: 01b82d4ca6470831d1cc0852a1af644be019e8f6
+  glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   hermes-engine: 13c84524b3b6e884b2cf3b3b1e002ffd147d88a3
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: b9b1716eec53aaeaa859aa45e27de7b615cff732
@@ -2346,4 +2346,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 195b75d7246a28e8d66b036534745351d0eeef40
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2
