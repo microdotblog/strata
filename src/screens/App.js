@@ -16,6 +16,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import './../components/sheets/sheets';
 import PostingStack from './stacks/PostingStack';
 import {
+  isAndroidStatusBarSupported,
   nativeStackStatusBarOptions,
   statusBarStyleForTheme,
 } from '../utils/status_bar';
@@ -35,14 +36,17 @@ export default class MainApp extends React.Component {
       App.theme,
       statusBarBackgroundColor,
     );
+    const showStatusBar = isAndroidStatusBarSupported();
 
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor={statusBarBackgroundColor}
-          barStyle={statusBarStyleForTheme(App.theme)}
-          translucent={false}
-        />
+        {showStatusBar && (
+          <StatusBar
+            backgroundColor={statusBarBackgroundColor}
+            barStyle={statusBarStyleForTheme(App.theme)}
+            translucent={false}
+          />
+        )}
         <SheetProvider>
           <NavigationContainer
             theme={{
