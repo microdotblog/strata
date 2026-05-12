@@ -14,8 +14,7 @@ export default class ProfileImage extends React.Component {
           onPress={() => App.open_sheet("menu-sheet")}
           style={{
             width: 28,
-            height: 28,
-            marginRight: 12
+            height: 28
           }}
         >
           {
