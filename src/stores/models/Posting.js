@@ -8,7 +8,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import md from 'markdown-it';
 const parser = md({ html: true });
 
-export default Posting = types.model('Posting', {
+const Posting = types.model('Posting', {
   username: types.identifier,
   services: types.optional(types.array(Service), []),
   selected_service: types.maybeNull(types.reference(Service)),
@@ -317,3 +317,5 @@ export default Posting = types.model('Posting', {
   }
   
 }))
+
+export default Posting;

@@ -5,7 +5,7 @@ import Config from './Config'
 import { Alert } from 'react-native'
 import App from '../../App'
 
-export default Service = types.model('Service', {
+const Service = types.model('Service', {
   id: types.identifier,
   name: types.maybeNull(types.string),
   url: types.maybeNull(types.string),
@@ -220,3 +220,5 @@ export default Service = types.model('Service', {
   }
   
 }))
+
+export default Service;

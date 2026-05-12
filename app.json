@@ -1,4 +1,7 @@
 {
-  "name": "Strata",
-  "displayName": "Strata"
+  "expo": {
+    "name": "Strata",
+    "slug": "strata",
+    "version": "1.3.0"
+  }
 }

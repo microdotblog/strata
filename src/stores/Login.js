@@ -5,7 +5,7 @@ import { Alert, Platform } from 'react-native';
 import Auth from './Auth';
 import { SheetManager } from "react-native-actions-sheet";
 
-export default Login = types.model('Login', {
+const Login = types.model('Login', {
   input_value: types.optional(types.string, ""),
   is_loading: types.optional(types.boolean, false),
   message: types.maybeNull(types.string),
@@ -137,3 +137,5 @@ export default Login = types.model('Login', {
 
   }))
   .create();
+
+export default Login;

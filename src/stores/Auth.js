@@ -1,12 +1,13 @@
 import { types, flow, applySnapshot, destroy } from 'mobx-state-tree';
 import { Keyboard, Platform } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import App from './App';
 import User from './models/User'
 import Tokens from './Tokens'
 import Toast from 'react-native-simple-toast';
 import { SheetManager } from "react-native-actions-sheet";
 
-export default Auth = types.model('Auth', {
+const Auth = types.model('Auth', {
   users: types.optional(types.array(User), []),
   selected_user: types.maybeNull(types.reference(User)),
   is_selecting_user: types.optional(types.boolean, true),
@@ -131,3 +132,5 @@ export default Auth = types.model('Auth', {
 
   }))
   .create();
+
+export default Auth;

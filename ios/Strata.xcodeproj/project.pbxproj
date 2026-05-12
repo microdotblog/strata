@@ -19,6 +19,7 @@
 		4B6630E72B7AB35B00D961AA /* MBHighlightingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6630E42B7AB35B00D961AA /* MBHighlightingTextView.m */; };
 		4B9D28462B4EE866000D49AF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9D28452B4EE866000D49AF /* CloudKit.framework */; };
 		4B9D28492B4EF647000D49AF /* MBNotesCloudModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */; };
+		618921E952F01B51FA6029A6 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B3900A914313DC75D18B8A /* ExpoModulesProvider.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF25BD2E2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m */; };
 		BFB963552ED6353100C9F77E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB963542ED6353100C9F77E /* AppDelegate.swift */; };
@@ -59,6 +60,7 @@
 		4B9D28472B4EF647000D49AF /* MBNotesCloudModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MBNotesCloudModule.h; path = Strata/MBNotesCloudModule.h; sourceTree = "<group>"; };
 		4B9D28482B4EF647000D49AF /* MBNotesCloudModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MBNotesCloudModule.m; path = Strata/MBNotesCloudModule.m; sourceTree = "<group>"; };
 		4BB026AF2B4C9E0B009CE37C /* Strata.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Strata.entitlements; path = Strata/Strata.entitlements; sourceTree = "<group>"; };
+		56B3900A914313DC75D18B8A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Strata/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Strata.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Strata.release.xcconfig"; path = "Target Support Files/Pods-Strata/Pods-Strata.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Strata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Strata.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Strata/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -107,6 +109,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		11808B4D7AAF1851731CC1C8 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				4919FCC1D6862E5E506B7525 /* Strata */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* Strata */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +157,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4919FCC1D6862E5E506B7525 /* Strata */ = {
+			isa = PBXGroup;
+			children = (
+				56B3900A914313DC75D18B8A /* ExpoModulesProvider.swift */,
+			);
+			name = Strata;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +181,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				11808B4D7AAF1851731CC1C8 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -213,6 +232,7 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Strata" */;
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				CDEFEC916E4A679437724EC9 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -300,7 +320,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli')\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
 		};
 		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -340,6 +360,30 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CDEFEC916E4A679437724EC9 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/Strata/Strata.entitlements",
+				"$(SRCROOT)/Pods/Target Support Files/Pods-Strata/expo-configure-project.sh",
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Pods/Target Support Files/Pods-Strata/ExpoModulesProvider.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Strata/expo-configure-project.sh\"\n";
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -381,6 +425,7 @@
 				4B1BECA62B6F23270077F593 /* MBNoteCrypto.swift in Sources */,
 				BFB963552ED6353100C9F77E /* AppDelegate.swift in Sources */,
 				BF25BD2F2D22EDFF00EC4232 /* RCTInputAccessoryShadowView.m in Sources */,
+				618921E952F01B51FA6029A6 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,8 +461,10 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Strata.app/Strata";
 			};
 			name = Debug;
@@ -440,8 +487,10 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Strata.app/Strata";
 			};
 			name = Release;
@@ -468,6 +517,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = blog.micro.strata;
 				PRODUCT_NAME = Strata;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -502,6 +552,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = blog.micro.strata;
 				PRODUCT_NAME = Strata;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -591,6 +642,7 @@
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -663,6 +715,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};

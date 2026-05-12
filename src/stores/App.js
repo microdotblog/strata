@@ -10,7 +10,7 @@ import Toast from 'react-native-simple-toast';
 
 let NAVIGATION = null;
 
-export default App = types.model('App', {
+const App = types.model('App', {
   is_hydrating: types.optional(types.boolean, false),
   theme: types.optional(types.string, "light"),
   is_creating_notebook: types.optional(types.boolean, false),
@@ -456,3 +456,5 @@ export default App = types.model('App', {
     }
   }))
   .create();
+
+export default App;

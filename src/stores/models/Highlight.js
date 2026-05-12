@@ -2,7 +2,7 @@ import { types, getParent, flow } from 'mobx-state-tree';
 import { URL } from 'react-native-url-polyfill';
 import MicroBlogApi, { DELETE_ERROR } from '../../api/MicroBlogApi';
 
-export default Highlight = types.model('Highlight', {
+const Highlight = types.model('Highlight', {
   id: types.identifierNumber,
   title: types.maybe(types.string),
   content_text: types.maybe(types.string),
@@ -44,3 +44,5 @@ export default Highlight = types.model('Highlight', {
     return `[${self.title}](${self.url})\n\n> ${self.content_text}`
   }
 }))
+
+export default Highlight;

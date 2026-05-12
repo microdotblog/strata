@@ -12,7 +12,7 @@ const Microblog = types.model('_microblog', {
   })
 })
 
-export default Notebook = types.model('Notebook', {
+const Notebook = types.model('Notebook', {
   id: types.identifierNumber,
   username: types.maybeNull(types.string),
   title: types.maybeNull(types.string),
@@ -210,3 +210,5 @@ export default Notebook = types.model('Notebook', {
     }
 
   }))
+
+export default Notebook;

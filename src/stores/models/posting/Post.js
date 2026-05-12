@@ -5,7 +5,7 @@ let html_parser = new DOMParser({ onError: (error) => {
   // silently ignore errors
 }});
 
-export default Post = types.model('Post', {
+const Post = types.model('Post', {
   uid: types.identifierNumber,
   name: types.maybe(types.string),
   content: types.maybe(types.string),
@@ -57,3 +57,5 @@ export default Post = types.model('Post', {
   }
   
 }))
+
+export default Post;

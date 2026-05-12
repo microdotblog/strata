@@ -1,6 +1,7 @@
 import { types, flow, getParent } from 'mobx-state-tree';
 import App from '../App';
 import Posting from '../Posting';
+import Tokens from '../Tokens';
 import CryptoUtils from '../../utils/crypto';
 import MicroBlogApi, { DELETE_ERROR, POST_ERROR } from '../../api/MicroBlogApi';
 import { Alert } from 'react-native';
@@ -13,7 +14,7 @@ const Microblog = types.model('_microblog', {
   shared_url: types.maybeNull(types.string)
 })
 
-export default Note = types.model('Note', {
+const Note = types.model('Note', {
   id: types.identifierNumber,
   username: types.maybeNull(types.string),
   title: types.maybeNull(types.string),
@@ -202,3 +203,5 @@ export default Note = types.model('Note', {
     }
 
   }))
+
+export default Note;
