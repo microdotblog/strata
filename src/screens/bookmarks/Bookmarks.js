@@ -3,6 +3,7 @@ import { RefreshControl, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
+import {tabListBottomPadding} from '../../utils/tab_bar_insets';
 import Bookmark from '../../components/cells/bookmark';
 import TagFilterHeader from '../../components/bookmarks/tag_filter_header';
 
@@ -36,7 +37,7 @@ export default class BookmarksScreen extends React.Component{
         contentContainerStyle={{
           paddingTop: 0,
           paddingHorizontal: 12,
-          paddingBottom: 45
+          paddingBottom: tabListBottomPadding()
         }}
         refreshControl={
           <RefreshControl

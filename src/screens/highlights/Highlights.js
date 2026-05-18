@@ -3,6 +3,7 @@ import { RefreshControl, FlatList } from 'react-native';
 import { observer } from 'mobx-react';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
+import {tabListBottomPadding} from '../../utils/tab_bar_insets';
 import Highlight from '../../components/cells/highlight';
 
 @observer
@@ -29,7 +30,7 @@ export default class HighlightsScreen extends React.Component{
         contentContainerStyle={{
           paddingTop: 3,
           paddingHorizontal: 15,
-          paddingBottom: 45
+          paddingBottom: tabListBottomPadding()
         }}
         refreshControl={
           <RefreshControl
