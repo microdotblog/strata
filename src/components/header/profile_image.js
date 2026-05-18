@@ -28,13 +28,13 @@ export default class ProfileImage extends React.Component {
                 style={{ width: 28, height: 28, borderRadius: 50 }}
               />
               :
-              <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
+              <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }} />
           }
         </TouchableOpacity>
       )
     }
     return (
-      <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
+      <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }} />
     )
   }
 

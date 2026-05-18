@@ -22,8 +22,7 @@ export default function QRScanner({ onCodeScanned }) {
   }
   else if(device == null && __DEV__){
     return(
-      <View style={{ backgroundColor: 'black', marginBottom: 12, height: 370, width: "100%", borderRadius: 8 }}>
-      </View>
+      <View style={{ backgroundColor: 'black', marginBottom: 12, height: 370, width: "100%", borderRadius: 8 }} />
     )
   }
   return null

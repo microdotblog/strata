@@ -217,7 +217,7 @@ export default class Bookmark extends React.Component{
                 style={{ width: 28, height: 28, borderRadius: 50 }}
               />
             :
-            <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
+            <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }} />
           }
           </TouchableOpacity>
           <View style={{ flex: 1, gap: 4 }}>

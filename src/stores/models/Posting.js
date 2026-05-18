@@ -40,7 +40,7 @@ const Posting = types.model('Posting', {
     console.log("Posting:hydrate", self.username, blog_services)
     // We want to keep everything generic, but for now load just Micro.blog
     if(self.services.length === 0){
-      const blog_service = blog_services["microblog"]
+      const blog_service = blog_services.microblog
       if(blog_service){
         console.log("Posting:hydrate:blog_service", blog_service)
         const new_service = Service.create({
