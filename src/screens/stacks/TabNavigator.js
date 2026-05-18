@@ -29,9 +29,9 @@ const iosTabIcons = {
     type: 'sfSymbol',
     name: 'note.text',
   }),
-  BookmarksStack: ({focused}) => ({
+  BookmarksStack: () => ({
     type: 'sfSymbol',
-    name: focused ? 'star.fill' : 'star',
+    name: 'star',
   }),
   HighlightsStack: () => ({
     type: 'sfSymbol',
