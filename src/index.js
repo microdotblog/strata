@@ -1,4 +1,4 @@
-import { AppRegistry } from 'react-native';
+import {AppRegistry} from 'react-native';
 import MainApp from './screens/App';
 import './utils/snapshots';
 import './utils/string_checker';

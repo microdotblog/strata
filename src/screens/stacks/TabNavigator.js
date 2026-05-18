@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Platform} from 'react-native';
+import {Platform, View} from 'react-native';
 import {observer} from 'mobx-react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeBottomTabNavigator} from '@react-navigation/bottom-tabs/unstable';
@@ -8,7 +8,14 @@ import Auth from '../../stores/Auth';
 import NotesStack from './NotesStack';
 import BookmarksStack from './BookmarksStack';
 import HighlightsStack from './HighlightsStack';
+import NotesScreen from '../notes/Notes';
+import BookmarksScreen from '../bookmarks/Bookmarks';
+import HighlightsScreen from '../highlights/Highlights';
 import TabIcon from '../../components/tabs/tab';
+import ProfileImage from '../../components/header/profile_image';
+import NewNoteButton from '../../components/header/new_note';
+import TagsButton from '../../components/header/tags_button';
+import AddBookmarkButton from '../../components/header/add_bookmark';
 import LoadingScreen from '../loading/Loading';
 import LoginScreen from '../login/Login';
 
@@ -32,26 +39,119 @@ const iosTabIcons = {
   }),
 };
 
+const bookmarksHeaderRight = () => (
+  <View
+    style={{
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 15,
+      flexDirection: 'row',
+    }}>
+    <TagsButton />
+    <AddBookmarkButton />
+  </View>
+);
+
 const tabScreens = [
   {
     name: 'NotesStack',
-    component: NotesStack,
     label: 'Notes',
     title: 'Notes',
+    component: useNativeTabs ? NotesScreen : NotesStack,
+    nativeHeaderOptions: {
+      headerLeft: () => <ProfileImage />,
+      headerRight: () => <NewNoteButton />,
+    },
   },
   {
     name: 'BookmarksStack',
-    component: BookmarksStack,
     label: 'Bookmarks',
     title: 'Bookmarks',
+    component: useNativeTabs ? BookmarksScreen : BookmarksStack,
+    nativeHeaderOptions: {
+      headerLeft: () => <ProfileImage />,
+      headerRight: bookmarksHeaderRight,
+    },
   },
   {
     name: 'HighlightsStack',
-    component: HighlightsStack,
     label: 'Highlights',
     title: 'Highlights',
+    component: useNativeTabs ? HighlightsScreen : HighlightsStack,
+    nativeHeaderOptions: {
+      headerLeft: () => <ProfileImage />,
+    },
   },
 ];
+
+const tabScreenListeners = {
+  state: e => {
+    const {index, routes} = e.data.state;
+    App.set_current_tab_index(index);
+    const routeName = routes[index]?.name;
+    if (routeName) {
+      App.set_current_tab_key(routeName);
+    }
+  },
+};
+
+const AuthenticatedTabNavigator = React.memo(function AuthenticatedTabNavigator({
+  accentColor,
+  textColor,
+  dividerColor,
+}) {
+  const screenOptions = React.useMemo(() => {
+    if (useNativeTabs) {
+      return ({route}) => ({
+        tabBarIcon: iosTabIcons[route.name],
+        tabBarActiveTintColor: accentColor,
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
+        tabBarMinimizeBehavior: 'onScrollDown',
+        headerShown: true,
+        headerTintColor: textColor,
+        lazy: false,
+      });
+    }
+
+    return ({route}) => ({
+      tabBarStyle: {
+        borderTopColor: dividerColor,
+        borderTopWidth: 0.5,
+      },
+      tabBarIcon: ({focused, color, size}) => (
+        <TabIcon route={route} focused={focused} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: accentColor,
+      tabBarLabelStyle: {
+        fontSize: 12,
+      },
+      headerShown: false,
+    });
+  }, [accentColor, textColor, dividerColor]);
+
+  return (
+    <Tab.Navigator
+      id="tab_navigator"
+      initialRouteName="NotesStack"
+      screenOptions={screenOptions}
+      screenListeners={tabScreenListeners}>
+      {tabScreens.map(screen => (
+        <Tab.Screen
+          key={screen.name}
+          name={screen.name}
+          component={screen.component}
+          options={{
+            tabBarLabel: screen.label,
+            headerTitle: screen.title,
+            ...(useNativeTabs ? screen.nativeHeaderOptions : null),
+          }}
+        />
+      ))}
+    </Tab.Navigator>
+  );
+});
 
 @observer
 export default class TabNavigator extends React.Component {
@@ -63,35 +163,6 @@ export default class TabNavigator extends React.Component {
     App.set_navigation(this.props.navigation);
   }
 
-  getScreenOptions = route => {
-    if (useNativeTabs) {
-      return {
-        tabBarIcon: iosTabIcons[route.name],
-        tabBarActiveTintColor: App.theme_accent_color(),
-        tabBarLabelStyle: {
-          fontSize: 12,
-        },
-        tabBarMinimizeBehavior: 'onScrollDown',
-      };
-    }
-
-    return {
-      tabBarStyle: {
-        borderTopColor: App.theme_tabbar_divider_color(),
-        borderTopWidth: 0.5,
-      },
-      tabBarIcon: ({focused, color, size}) => {
-        return (
-          <TabIcon route={route} focused={focused} size={size} color={color} />
-        );
-      },
-      tabBarActiveTintColor: App.theme_accent_color(),
-      tabBarLabelStyle: {
-        fontSize: 12,
-      },
-    };
-  };
-
   render() {
     if (Auth.is_hydrating) {
       return <LoadingScreen />;
@@ -101,33 +172,11 @@ export default class TabNavigator extends React.Component {
     }
 
     return (
-      <Tab.Navigator
-        id="tab_navigator"
-        initialRouteName="NotesStack"
-        screenOptions={({route}) => ({
-          ...this.getScreenOptions(route),
-          headerShown: false,
-        })}
-        screenListeners={{
-          state: e => {
-            App.set_current_tab_index(e.data.state.index);
-          },
-          focus: e => {
-            App.set_current_tab_key(e.target);
-          },
-        }}>
-        {tabScreens.map(screen => (
-          <Tab.Screen
-            key={screen.name}
-            name={screen.name}
-            component={screen.component}
-            options={{
-              tabBarLabel: screen.label,
-              headerTitle: screen.title,
-            }}
-          />
-        ))}
-      </Tab.Navigator>
+      <AuthenticatedTabNavigator
+        accentColor={App.theme_accent_color()}
+        textColor={App.theme_text_color()}
+        dividerColor={App.theme_tabbar_divider_color()}
+      />
     );
   }
 }
