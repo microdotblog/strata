@@ -33,7 +33,7 @@
     "react-native-inappbrowser-reborn": "^3.7.0",
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^5.6.2",
-    "react-native-screens": "~4.23.0",
+    "react-native-screens": "~4.25.1",
     "react-native-sensitive-info": "5.5.8",
     "react-native-sfsymbols": "^1.2.2",
     "react-native-simple-toast": "^3.3.2",
@@ -69,7 +69,8 @@
     "node": ">=20.19.4"
   },
   "patchedDependencies": {
-    "react-native-sensitive-info@5.5.8": "patches/react-native-sensitive-info@5.5.8.patch"
+    "react-native-sensitive-info@5.5.8": "patches/react-native-sensitive-info@5.5.8.patch",
+    "@react-navigation/bottom-tabs@7.16.0": "patches/@react-navigation%2Fbottom-tabs@7.16.0.patch"
   },
   "expo": {
     "doctor": {

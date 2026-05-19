@@ -105,6 +105,7 @@ const AuthenticatedTabNavigator = React.memo(function AuthenticatedTabNavigator(
       return ({route}) => ({
         tabBarIcon: iosTabIcons[route.name],
         tabBarActiveTintColor: accentColor,
+        tabBarInactiveTintColor: textColor,
         tabBarLabelStyle: {
           fontSize: 12,
         },
@@ -142,11 +143,13 @@ const AuthenticatedTabNavigator = React.memo(function AuthenticatedTabNavigator(
           key={screen.name}
           name={screen.name}
           component={screen.component}
-          options={{
-            tabBarLabel: screen.label,
-            headerTitle: screen.title,
-            ...(useNativeTabs ? screen.nativeHeaderOptions : null),
-          }}
+            options={{
+              tabBarLabel: screen.label,
+              headerTitle: screen.title,
+              tabBarActiveTintColor: accentColor,
+              tabBarInactiveTintColor: textColor,
+              ...(useNativeTabs ? screen.nativeHeaderOptions : null),
+            }}
         />
       ))}
     </Tab.Navigator>

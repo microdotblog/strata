@@ -55,6 +55,7 @@ export default class MainApp extends React.Component {
                 background: App.theme_background_color(),
                 text: App.theme_text_color(),
                 card: statusBarBackgroundColor,
+                primary: App.theme_accent_color(),
               },
               fonts: DefaultTheme.fonts,
             }}>
