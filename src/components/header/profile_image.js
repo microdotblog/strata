@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { TouchableOpacity, View, Image } from 'react-native';
+import {TouchableOpacity, View, Image, Platform} from 'react-native';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 
@@ -14,7 +14,8 @@ export default class ProfileImage extends React.Component {
           onPress={() => App.open_sheet("menu-sheet")}
           style={{
             width: 28,
-            height: 28
+            height: 28,
+            ...(Platform.OS === 'android' ? {marginRight: 12} : null),
           }}
         >
           {
