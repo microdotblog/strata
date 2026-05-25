@@ -50,7 +50,7 @@ export default class BookmarksScreen extends React.Component{
         onEndReached={selected_tag == null || selected_tag == "" ? Auth.selected_user.fetch_more_bookmarks : null}
         contentContainerStyle={{
           paddingTop: 0,
-          paddingHorizontal: 12,
+          paddingHorizontal: 20,
           paddingBottom: tabListBottomPadding()
         }}
         refreshControl={

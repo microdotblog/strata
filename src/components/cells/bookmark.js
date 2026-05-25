@@ -212,7 +212,7 @@ export default class Bookmark extends React.Component{
             gap: 12
           }}
         >
-          <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75}>
+          <TouchableOpacity onPress={() => bookmark.open()} activeOpacity={.75} style={{ paddingTop: 2 }}>
           {
             bookmark.author.avatar != null && bookmark.author.avatar !== "" ?
               <Image

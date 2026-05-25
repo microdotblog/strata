@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { View, Text, TouchableOpacity, Animated, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import App from '../../stores/App'
-import Auth from '../../stores/Auth';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
@@ -92,38 +91,46 @@ export default class Highlight extends React.Component{
         renderRightActions={(progress) => this._right_actions(progress, highlight)}
         containerStyle={{
           marginTop: 15,
-          position: "relative",
-          paddingBottom: 15,
-          borderColor: App.theme_border_color(),
-          borderBottomWidth: 0.5
+          position: "relative"
         }}
       >
-        <TouchableOpacity
-          onPress={() => App.navigate_to_screen("Posting", highlight.markdown())}
-        >
-          {
-            highlight.content_text && 
-            <Text style={{color: App.theme_text_color(), fontSize: App.theme_default_font_size()}}>{highlight.content_text}</Text>
-          }
-        </TouchableOpacity>
-        {
-          highlight.title && (
-          <TouchableOpacity onPress={() => App.open_url(highlight.url_with_text_fragment())}>
-            <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: App.theme_default_font_size(), marginTop: 15}}>{highlight.hostname()}: {highlight.title}</Text>
-          </TouchableOpacity>)
-        }
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 20
+            paddingVertical: 12,
+            paddingHorizontal: 14,
+            backgroundColor: App.theme === "dark" ? "#141824" : "#f4f6f9",
+            borderColor: App.theme === "dark" ? "#141824" : "#EFEFEF",
+            borderWidth: 1,
+            borderRadius: 12
           }}
         >
-          <TouchableOpacity onPress={() => App.open_url(highlight.url)}>
-            <Text style={{ color: App.theme_highlight_meta_text_color(), fontSize: 14 }}>
-              { highlight.nice_local_published_date() }
-            </Text>
+          <TouchableOpacity
+            onPress={() => App.navigate_to_screen("Posting", highlight.markdown())}
+          >
+            {
+              highlight.content_text && 
+              <Text style={{color: App.theme_text_color(), fontSize: App.theme_default_font_size()}}>{highlight.content_text}</Text>
+            }
           </TouchableOpacity>
+          {
+            highlight.title && (
+            <TouchableOpacity onPress={() => App.open_url(highlight.url_with_text_fragment())}>
+              <Text style={{color: App.theme_highlight_meta_text_color(), fontSize: App.theme_default_font_size(), marginTop: 15}}>{highlight.hostname()}: {highlight.title}</Text>
+            </TouchableOpacity>)
+          }
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 20
+            }}
+          >
+            <TouchableOpacity onPress={() => App.open_url(highlight.url)}>
+              <Text style={{ color: App.theme_highlight_meta_text_color(), fontSize: 14 }}>
+                { highlight.nice_local_published_date() }
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Swipeable>
     )
