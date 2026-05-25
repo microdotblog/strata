@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useRef } from 'react';
 import { observer } from 'mobx-react';
 import { ScrollView, TouchableOpacity, Text, Platform, TextInput, View, ActivityIndicator } from 'react-native';
-import ActionSheet, { useScrollHandlers, ActionSheetRef } from "react-native-actions-sheet";
+import ActionSheet from "react-native-actions-sheet";
 import App from '../../stores/App'
+import Auth from '../../stores/Auth'
 import { SvgXml } from 'react-native-svg';
 import { SFSymbol } from "react-native-sfsymbols";
 
@@ -12,11 +12,7 @@ export default class AddTagsMenu extends React.Component{
   
   constructor(props){
     super(props);
-    this.actionSheetRef = useRef<ActionSheetRef>(null)
-    this.scrollHandlers = useScrollHandlers<ScrollView>(
-      "tag-scroll",
-      this.actionSheetRef
-    )
+    this.actionSheetRef = React.createRef()
   }
   
   _render_tags = () => {
@@ -222,7 +218,6 @@ export default class AddTagsMenu extends React.Component{
             marginBottom: 25,
             paddingHorizontal: 25
           }}
-          {...this.scrollHandlers}
         >
           {this._render_tags()}
         </ScrollView>
