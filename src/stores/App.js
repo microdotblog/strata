@@ -403,7 +403,7 @@ const App = types.model('App', {
       return self.theme === "dark" ? "#374151" : "#E5E7EB"
     },
     theme_danger_color() {
-      return self.theme === "dark" ? "#a94442" : "#a94442"
+      return "rgb(239,68,68)"
     },
     theme_confirm_color() {
       return self.theme_text_color()
