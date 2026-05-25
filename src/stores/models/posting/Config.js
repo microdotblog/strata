@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 import Destination from './Destination';
 
-export default Config = types.model('Config', {
+const Config = types.model('Config', {
   "media-endpoint": types.maybeNull(types.string),
   destination: types.optional(types.array(Destination), []),
   selected_posts_destination: types.maybeNull(types.string, "")
@@ -98,3 +98,5 @@ export default Config = types.model('Config', {
   }
   
 }))
+
+export default Config;

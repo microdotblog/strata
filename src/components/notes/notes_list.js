@@ -5,6 +5,7 @@ import { RefreshControl, View, TouchableOpacity, Text, TextInput, Keyboard, Plat
 import { FlashList } from "@shopify/flash-list";
 import Auth from './../../stores/Auth';
 import App from '../../stores/App';
+import {tabListBottomPadding} from '../../utils/tab_bar_insets';
 import NoteItem from './note_item';
 import { SFSymbol } from "react-native-sfsymbols";
 import { SvgXml } from 'react-native-svg';
@@ -232,7 +233,7 @@ export default class NotesList extends React.Component {
             contentContainerStyle={{
               paddingTop: 0,
               paddingHorizontal: 12,
-              paddingBottom: 45
+              paddingBottom: tabListBottomPadding()
             }}
             refreshControl={
               <RefreshControl

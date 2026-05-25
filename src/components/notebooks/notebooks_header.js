@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Text, View, TouchableOpacity, TextInput, Button, Keyboard, ActivityIndicator } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Button, Keyboard, ActivityIndicator, Platform } from 'react-native';
 import App from '../../stores/App'
 import Auth from '../../stores/Auth'
 import { SFSymbol } from 'react-native-sfsymbols';

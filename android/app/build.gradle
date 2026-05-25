@@ -52,6 +52,11 @@ react {
     
     /* Autolinking */
 	  autolinkLibrariesWithApp()
+    //
+    // Added by install-expo-modules
+    entryFile = file(["node", "-e", "require('expo/scripts/resolveAppEntry')", rootDir.getAbsoluteFile().getParentFile().getAbsolutePath(), "android", "absolute"].execute(null, rootDir).text.trim())
+    cliFile = new File(["node", "--print", "require.resolve('@expo/cli')"].execute(null, rootDir).text.trim())
+    bundleCommand = "export:embed"
 }
 
 /**
@@ -82,8 +87,8 @@ android {
         applicationId "blog.micro.strata"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.3"
+        versionCode 15
+        versionName "1.4"
     }
     signingConfigs {
         debug {

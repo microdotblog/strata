@@ -1,12 +1,12 @@
 import { types, flow } from 'mobx-state-tree';
-import { Platform, Alert } from 'react-native'
+import { Platform, Alert, Linking } from 'react-native'
 import MicroBlogApi, { POST_ERROR } from '../api/MicroBlogApi'
 import Auth from './Auth'
 import App from './App';
 import Clipboard from '@react-native-clipboard/clipboard'
 import CryptoUtils from '../utils/crypto';
 
-export default Posting = types.model('Posting', {
+const Posting = types.model('Posting', {
   note_text: types.optional(types.string, ""),
   is_sending_note: types.optional(types.boolean, false),
   is_shared: types.optional(types.boolean, false),
@@ -159,3 +159,5 @@ export default Posting = types.model('Posting', {
 
   }))
   .create({})
+
+export default Posting;

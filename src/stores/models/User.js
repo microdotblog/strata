@@ -10,7 +10,7 @@ import Highlight from './Highlight';
 import Posting from './Posting';
 const { MBNotesCloudModule } = NativeModules;
 
-export default User = types.model('User', {
+const User = types.model('User', {
   username: types.identifier,
   avatar: types.maybeNull(types.string),
   has_site: types.optional(types.boolean, false),
@@ -406,3 +406,5 @@ export default User = types.model('User', {
     }
 
   }))
+
+export default User;

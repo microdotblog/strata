@@ -3,7 +3,7 @@ import Token from './models/Token'
 import App from './App';
 import SFInfo from 'react-native-sensitive-info'
 
-export default Tokens = types.model('Tokens', {
+const Tokens = types.model('Tokens', {
   tokens: types.optional(types.array(Token), []),
   temp_secret_token: types.maybeNull(types.string)
 })
@@ -120,3 +120,5 @@ export default Tokens = types.model('Tokens', {
 
   }))
   .create();
+
+export default Tokens;

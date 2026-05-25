@@ -1,6 +1,7 @@
 /* eslint-env jest */
 
 import {
+  isAndroidStatusBarSupported,
   nativeStackStatusBarOptions,
   nativeStackStatusBarStyleForTheme,
   statusBarStyleForTheme,
@@ -20,9 +21,14 @@ describe('status bar styling', () => {
   });
 
   it('builds native-stack status bar options with the app header colour', () => {
-    expect(nativeStackStatusBarOptions('dark', '#212936')).toEqual({
+    expect(nativeStackStatusBarOptions('dark', '#212936', 'android')).toEqual({
       statusBarBackgroundColor: '#212936',
       statusBarStyle: 'light',
     });
+  });
+
+  it('does not pass native-stack status bar options on iOS', () => {
+    expect(isAndroidStatusBarSupported('ios')).toBe(false);
+    expect(nativeStackStatusBarOptions('dark', '#212936', 'ios')).toEqual({});
   });
 });

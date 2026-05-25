@@ -8,7 +8,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import md from 'markdown-it';
 const parser = md({ html: true });
 
-export default Posting = types.model('Posting', {
+const Posting = types.model('Posting', {
   username: types.identifier,
   services: types.optional(types.array(Service), []),
   selected_service: types.maybeNull(types.reference(Service)),
@@ -40,7 +40,7 @@ export default Posting = types.model('Posting', {
     console.log("Posting:hydrate", self.username, blog_services)
     // We want to keep everything generic, but for now load just Micro.blog
     if(self.services.length === 0){
-      const blog_service = blog_services["microblog"]
+      const blog_service = blog_services.microblog
       if(blog_service){
         console.log("Posting:hydrate:blog_service", blog_service)
         const new_service = Service.create({
@@ -317,3 +317,5 @@ export default Posting = types.model('Posting', {
   }
   
 }))
+
+export default Posting;

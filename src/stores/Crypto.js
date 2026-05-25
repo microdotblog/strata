@@ -1,7 +1,7 @@
 import { types, flow } from 'mobx-state-tree'
 import CryptoUtils from '../utils/crypto';
 
-export default Crypto = types.model('Crypto', {})
+const Crypto = types.model('Crypto', {})
   .actions(self => ({
 
     decrypt: flow(function*() {
@@ -28,3 +28,5 @@ export default Crypto = types.model('Crypto', {})
 
   }))
   .create();
+
+export default Crypto;

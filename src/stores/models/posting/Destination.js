@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree';
 import Post from "./Post";
 
-export default Destination = types.model('Destination', {
+const Destination = types.model('Destination', {
 	uid: types.identifier,
 	name: types.maybeNull(types.string),
 	"microblog-audio": types.optional(types.boolean, false),
@@ -57,3 +57,5 @@ export default Destination = types.model('Destination', {
 	}
 
 }))
+
+export default Destination;

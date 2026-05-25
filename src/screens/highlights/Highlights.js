@@ -1,13 +1,20 @@
 import * as React from 'react';
-import { RefreshControl, FlatList } from 'react-native';
+import {RefreshControl, FlatList, View} from 'react-native';
 import { observer } from 'mobx-react';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
+import {tabListBottomPadding} from '../../utils/tab_bar_insets';
 import Highlight from '../../components/cells/highlight';
 
 @observer
 export default class HighlightsScreen extends React.Component{
-  
+
+  componentDidMount() {
+    if (Auth.selected_user != null) {
+      Auth.selected_user.fetch_highlights();
+    }
+  }
+
   _key_extractor = (item) => item.id;
   
   render_highlight_item = ({ item, index}) => {
@@ -20,6 +27,7 @@ export default class HighlightsScreen extends React.Component{
     const { highlights } = Auth.selected_user
     return(
       <FlatList
+        style={{flex: 1}}
         estimatedItemSize={150}
         initialNumToRender={15}
         data={highlights}
@@ -29,7 +37,7 @@ export default class HighlightsScreen extends React.Component{
         contentContainerStyle={{
           paddingTop: 3,
           paddingHorizontal: 15,
-          paddingBottom: 45
+          paddingBottom: tabListBottomPadding()
         }}
         refreshControl={
           <RefreshControl
@@ -42,12 +50,11 @@ export default class HighlightsScreen extends React.Component{
   }
 
   render() {
-    return (
-      Auth.is_logged_in() && !Auth.is_selecting_user ?
-        this._return_highlights_list()
-      :
-      null
-    )
+    if (!Auth.is_logged_in()) {
+      return null;
+    }
+
+    return <View style={{flex: 1}}>{this._return_highlights_list()}</View>;
   }
 
 }

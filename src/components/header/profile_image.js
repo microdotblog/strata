@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { TouchableOpacity, View, Image } from 'react-native';
+import {TouchableOpacity, View, Image, Platform} from 'react-native';
 import Auth from './../../stores/Auth';
 import App from './../../stores/App';
 
@@ -15,7 +15,7 @@ export default class ProfileImage extends React.Component {
           style={{
             width: 28,
             height: 28,
-            marginRight: 12
+            ...(Platform.OS === 'android' ? {marginRight: 12} : null),
           }}
         >
           {
@@ -29,13 +29,13 @@ export default class ProfileImage extends React.Component {
                 style={{ width: 28, height: 28, borderRadius: 50 }}
               />
               :
-              <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
+              <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }} />
           }
         </TouchableOpacity>
       )
     }
     return (
-      <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }}></View>
+      <View style={{ width: 28, height: 28, borderRadius: 50, backgroundColor: App.theme_border_color() }} />
     )
   }
 
