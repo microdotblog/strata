@@ -117,12 +117,6 @@ export default class Highlight extends React.Component{
               { highlight.nice_local_published_date() }
             </Text>
           </TouchableOpacity>
-          {
-            Platform.OS === "android" &&
-            <TouchableOpacity onPress={this._trigger_delete} style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: "rgb(239,68,68)", fontSize: 15}}>Delete...</Text>
-            </TouchableOpacity>
-          }
         </View>
       </Swipeable>
     )
