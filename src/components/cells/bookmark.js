@@ -18,8 +18,8 @@ export default class Bookmark extends React.Component{
   }
   
   _right_actions = (progress, item) => (
-    <View style={{ flexDirection: "row" }}>
-      <View>
+    <View style={{ flexDirection: "row", alignSelf: "stretch" }}>
+      <View style={{ alignSelf: "stretch" }}>
         {
           this._return_action(
             'Delete',
@@ -53,24 +53,31 @@ export default class Bookmark extends React.Component{
     }
     
     return (
-        <Animated.View style={{ flex: 1, backgroundColor: color, transform: [{ translateX: trans }] }}>
+        <Animated.View style={{ width: 88, flex: 1, transform: [{ translateX: trans }] }}>
           <RectButton
             style={{
-              backgroundColor: color,
               alignItems: 'center',
               flex: 1,
               justifyContent: 'center',
-              padding: 5,
               paddingHorizontal: 15
             }}
             onPress={press_handler}>
-            <SvgXml
-              xml={icon}
-              width={24}
-              height={24}
-              stroke={stroke}
-            />
-            <Text style={{ color: stroke, marginTop: 5, fontWeight: '600', textAlign: 'center' }}>{text}</Text>
+            <View
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 28,
+                backgroundColor: color,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+              <SvgXml
+                xml={icon}
+                width={24}
+                height={24}
+                stroke={stroke}
+              />
+            </View>
           </RectButton>
         </Animated.View>
       )

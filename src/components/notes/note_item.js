@@ -32,8 +32,8 @@ export default class NoteItem extends React.Component {
   }
 
   _right_actions = (progress) => (
-    <View style={{ flexDirection: "row" }}>
-      <View>
+    <View style={{ flexDirection: "row", alignSelf: "stretch" }}>
+      <View style={{ alignSelf: "stretch" }}>
         {
           this._return_action(
             'Delete',
@@ -68,6 +68,7 @@ export default class NoteItem extends React.Component {
       <Animated.View
         style={{
           transform: [{ translateX: trans }],
+          width: 88,
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center'
@@ -81,24 +82,33 @@ export default class NoteItem extends React.Component {
             borderRadius: 12
           }}
           onPress={press_handler}>
-          {
-            Platform.OS === 'ios' ?
-              <SFSymbol
-                name={symbol}
-                color={color}
-                style={{ height: 22, width: 22 }}
-                multicolor={true}
-              />
-              :
-              <SvgXml
-                style={{
-                  height: 22,
-                  width: 22
-                }}
-                color={color}
-                xml={icon}
-              />
-          }
+          <View
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: 28,
+              backgroundColor: color,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+            {
+              Platform.OS === 'ios' ?
+                <SFSymbol
+                  name={symbol}
+                  color={'#fff'}
+                  style={{ height: 22, width: 22 }}
+                />
+                :
+                <SvgXml
+                  style={{
+                    height: 22,
+                    width: 22
+                  }}
+                  color={'#fff'}
+                  xml={icon}
+                />
+            }
+          </View>
         </RectButton>
       </Animated.View>
     );
