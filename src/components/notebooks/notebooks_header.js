@@ -36,27 +36,7 @@ export default class NotebooksHeader extends React.Component {
             {
               !App.is_creating_notebook ?
                 <>
-                  {
-                    Platform.OS === 'ios' ?
-                      <SFSymbol
-                        name={'plus'}
-                        color={App.theme_accent_color()}
-                        style={{ height: 14, width: 14 }}
-                        multicolor={true}
-                      />
-                      :
-                      <SvgXml
-                        style={{
-                          height: 16,
-                          width: 16
-                        }}
-                        color={App.theme_accent_color()}
-                        xml='<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>'
-                      />
-                  }
-                  <Text style={{ color: App.theme_accent_color(), marginLeft: 5, marginRight: 5, fontSize: 15 }}>
+                  <Text style={{ color: App.theme_accent_color(), marginLeft: 5, marginRight: 10, fontSize: 15 }}>
                     New
                   </Text>
                 </>
