@@ -10,7 +10,7 @@ export default class NoteSaveEditButton extends React.Component {
   render() {
     const posting_enabled = Posting.posting_button_enabled()
     return (
-      <TouchableOpacity style={{ opacity: posting_enabled ? 1 : .25 }} onPress={() => posting_enabled ? Posting.send_note() : null}>
+      <TouchableOpacity style={{ opacity: posting_enabled ? 1 : .25, paddingHorizontal: 8 }} onPress={() => posting_enabled ? Posting.send_note() : null}>
         <Text style={{ color: App.theme_accent_color(), fontSize: 16 }}>{this.props.title}</Text>
       </TouchableOpacity>
     )
