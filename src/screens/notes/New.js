@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { TextInput, KeyboardAvoidingView, InputAccessoryView, ActivityIndicator, View } from 'react-native';
+import { TextInput, KeyboardAvoidingView, InputAccessoryView, ActivityIndicator, View, Platform } from 'react-native';
 import Posting from '../../stores/Posting'
 import PostingToolbar from '../../components/keyboard/posting_toolbar';
 import App from '../../stores/App'
