@@ -109,7 +109,7 @@ const AuthenticatedTabNavigator = React.memo(function AuthenticatedTabNavigator(
         tabBarLabelStyle: {
           fontSize: 12,
         },
-        tabBarMinimizeBehavior: 'none',
+        tabBarMinimizeBehavior: 'never',
         headerShown: true,
         headerTintColor: textColor,
         lazy: false,
