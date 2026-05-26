@@ -39,7 +39,6 @@ const App = types.model('App', {
       Auth.hydrate().then(async () => {
         App.set_is_hydrating(false)
         App.set_up_url_listener()
-        // Now we want to check if the user is premium
         App.check_current_user_can_use_notes()
       })
     }),

@@ -385,16 +385,12 @@ const User = types.model('User', {
       return Tokens.secret_token_for_username(self.username, "secret")?.token
     },
     
-    is_premium_user() {
-      return self.is_premium || self.plan !== "free"
-    },
-
     can_create_notebook() {
-      return this.is_premium_user()
+      return self.can_use_notes()
     },
 
     can_use_notes() {
-      return this.is_premium_user()
+      return (self.plan != "") && (self.plan !== "free") && (self.plan !== "one")
     },
 
     is_appletest() {
