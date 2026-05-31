@@ -88,7 +88,7 @@ export default class SecretKeyInput extends React.Component {
     }
     
     return (
-      <SafeAreaView style={{ marginLeft: 10, marginRight: 10 }}>
+      <SafeAreaView style={{ marginLeft: 10, marginRight: 10, paddingBottom: 20 }}>
         <Text style={{ color: App.theme_text_color(), fontWeight: "400", paddingVertical: 15 }}>
           Notes in Micro.blog are encrypted. To sync notes across devices, you will need the secret key from Micro.blog on the web so the notes can be decrypted. If you lose your key, you will lose access to your notes too.
         </Text>
