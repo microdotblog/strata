@@ -6,49 +6,32 @@ import Auth from '../../stores/Auth'
 import Tokens from "../../stores/Tokens";
 import { SvgXml } from 'react-native-svg';
 import QRScanner from './_code_scanner';
-import {
-  VisionCamera,
-  getAllCameraDevices,
-  addOnCameraDevicesChangedListener,
-} from 'react-native-vision-camera';
+import { Camera } from 'react-native-vision-camera';
 
 @observer
 export default class SecretKeyInput extends React.Component {
   
   state = {
     isScanning: false,
-    canScan: this.hasCameraHardware(),
-  };
-
-  cameraDevicesListener = null;
-
-  hasCameraHardware() {
-    return __DEV__ || getAllCameraDevices().length > 0 || Platform.OS === 'android';
-  }
-
-  componentDidMount() {
-    const cameraPermission = VisionCamera.cameraPermissionStatus;
-    if (cameraPermission === 'denied' || cameraPermission === 'restricted') {
-      this.setState({canScan: false});
-    }
-
-    this.cameraDevicesListener = addOnCameraDevicesChangedListener(devices => {
-      if (devices.length > 0 && !this.state.canScan) {
-        this.setState({canScan: true});
-      }
-    });
+    canScan: __DEV__ || Camera.getAvailableCameraDevices()?.length > 0
   }
   
-  componentWillUnmount() {
-    this.cameraDevicesListener?.remove();
-    if (this.state.isScanning) {
-      this.setState({isScanning: false});
+  componentDidMount(){
+    const cameraPermission = Camera.getCameraPermissionStatus()
+    if((cameraPermission == "denied" || cameraPermission == "restricted") && Platform.OS == "ios"){
+      this.setState({ canScan: false })
+    }
+  }
+  
+  componentWillUnmount(){
+    if(this.state.isScanning){
+      this.setState({ isScanning: false })
     }
   }
   
   handleCodeScanned = (codes) => {
-    if (codes.length > 0 && codes[0].rawValue) {
-      const codeValue = codes[0].rawValue;
+    if (codes.length > 0 && codes[0].value) {
+      const codeValue = codes[0].value
       if(codeValue?.includes("strata://qrcode/")){
         Tokens.set_temp_secret_token(codeValue.replace("strata://qrcode/", ""))
         this.setState({ isScanning: false })
@@ -57,16 +40,17 @@ export default class SecretKeyInput extends React.Component {
   }
   
   toggleScanner = async () => {
-    const cameraPermission = VisionCamera.cameraPermissionStatus;
-    if (cameraPermission === 'authorized') {
-      this.setState(prevState => ({isScanning: !prevState.isScanning}));
-    } else {
-      const granted = await VisionCamera.requestCameraPermission();
-      if (granted) {
-        this.setState(prevState => ({isScanning: !prevState.isScanning}));
+    const cameraPermission = Camera.getCameraPermissionStatus()
+    if(cameraPermission == "granted"){
+      this.setState(prevState => ({ isScanning: !prevState.isScanning }))
+    }
+    else{
+      const permission = await Camera.requestCameraPermission()
+      if(permission == "granted"){
+        this.setState(prevState => ({ isScanning: !prevState.isScanning }))
       }
     }
-  };
+  }
 
   render() {
     
@@ -145,7 +129,7 @@ export default class SecretKeyInput extends React.Component {
             }}
           >
             {
-              this.state.canScan ?
+              this.state.canScan && Platform.OS === 'ios' ?
               <TouchableOpacity
                 onPress={this.toggleScanner}
                 style={{
