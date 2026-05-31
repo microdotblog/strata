@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Text, TextInput, Button, ActivityIndicator, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Text, TextInput, TouchableOpacity, ActivityIndicator, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
 import Login from './../../stores/Login';
 import App from '../../stores/App'
 
@@ -41,12 +41,25 @@ export default class LoginScreen extends React.Component {
           onSubmitEditing={() => { Login.trigger_login(); Keyboard.dismiss() }}
           value={Login.input_value}
         />
-        <Button
-          title="Continue"
-          color={App.theme_accent_color()}
+        <TouchableOpacity
           onPress={() => { Login.trigger_login(); Keyboard.dismiss() }}
           disabled={!Login.can_submit()}
-        />
+          style={{
+            backgroundColor: Login.can_submit() ? App.theme_accent_color() : App.theme_button_background_color(),
+            borderRadius: 5,
+            paddingVertical: 12,
+            paddingHorizontal: 24,
+            alignItems: 'center',
+          }}>
+          <Text style={{
+            fontWeight: '700',
+            color: Login.can_submit() ? '#fff' : App.theme_button_text_color(),
+            fontSize: 17,
+            textTransform: 'uppercase',
+          }}>
+            Continue
+          </Text>
+        </TouchableOpacity>
         {
           Login.is_loading &&
           <ActivityIndicator
