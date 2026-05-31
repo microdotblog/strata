@@ -7,14 +7,13 @@ import Tokens from "../../stores/Tokens";
 import { SvgXml } from 'react-native-svg';
 import QRScanner from './_code_scanner';
 import { Camera } from 'react-native-vision-camera';
-import { scanNativeQRCode } from '../../utils/code_scanner';
 
 @observer
 export default class SecretKeyInput extends React.Component {
   
   state = {
     isScanning: false,
-    canScan: Platform.OS === 'android' || __DEV__ || Camera.getAvailableCameraDevices()?.length > 0
+    canScan: __DEV__ || Camera.getAvailableCameraDevices()?.length > 0
   }
   
   componentDidMount(){
@@ -41,18 +40,6 @@ export default class SecretKeyInput extends React.Component {
   }
   
   toggleScanner = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const codeValue = await scanNativeQRCode();
-        this.handleCodeScanned([{value: codeValue}]);
-      } catch (error) {
-        if (error?.code !== 'CANCELED') {
-          console.warn('QR scan failed:', error);
-        }
-      }
-      return;
-    }
-
     const cameraPermission = Camera.getCameraPermissionStatus()
     if(cameraPermission == "granted"){
       this.setState(prevState => ({ isScanning: !prevState.isScanning }))
