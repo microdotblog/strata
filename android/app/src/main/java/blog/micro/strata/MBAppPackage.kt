@@ -15,5 +15,8 @@ class MBAppPackage : ReactPackage {
 
     override fun createNativeModules(
         reactContext: ReactApplicationContext
-    ): MutableList<NativeModule> = listOf(MBNotesCryptoModule(reactContext)).toMutableList()
+    ): MutableList<NativeModule> = listOf(
+        MBNotesCryptoModule(reactContext),
+        MBCodeScannerModule(reactContext),
+    ).toMutableList()
 }
